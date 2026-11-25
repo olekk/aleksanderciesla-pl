@@ -1,0 +1,100 @@
+---
+import '../styles/global.css';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { site } from '../config/site';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title,
+  description = 'Strony internetowe, Google Ads i porządek z zapytaniami dla małych firm. Jawne ceny, jedna osoba odpowiedzialna za wynik. Trójmiasto i Śląsk.',
+} = Astro.props;
+
+const fullTitle = title ? `${title} | ${site.brandName}` : `${site.brandName} - strony, Google Ads i zapytania dla małych firm`;
+const canonical = new URL(Astro.url.pathname, site.url).href;
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'Person',
+      '@id': `${site.url}/#person`,
+      name: site.personName,
+      url: site.url,
+      jobTitle: 'Strony internetowe i marketing dla małych firm',
+      ...(site.email ? { email: `mailto:${site.email}` } : {}),
+      ...(site.phone ? { telephone: site.phone } : {}),
+    },
+    {
+      '@type': 'ProfessionalService',
+      '@id': `${site.url}/#service`,
+      name: site.brandName,
+      url: site.url,
+      founder: { '@id': `${site.url}/#person` },
+      areaServed: ['Trójmiasto', 'Gdańsk', 'Gdynia', 'Gliwice', 'Śląsk'],
+    },
+  ],
+};
+---
+<!doctype html>
+<html lang="pl">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <meta name="theme-color" content="#faf7f1" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="pl_PL" />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={new URL('/media/seedpaper-desktop.webp', site.url).href} />
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+  </head>
+  <body>
+    <a class="skip" href="#tresc">Przejdź do treści</a>
+    <Header />
+    <main id="tresc">
+      <slot />
+    </main>
+    <Footer />
+    <script>
+      // Nagrania startują dopiero, gdy są widoczne, i zatrzymują się poza ekranem.
+      const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const videos = document.querySelectorAll<HTMLVideoElement>('video[data-autoplay]');
+      if (reduce) {
+        videos.forEach((v) => (v.controls = true));
+      } else if ('IntersectionObserver' in window) {
+        const io = new IntersectionObserver(
+          (entries) => {
+            for (const e of entries) {
+              const v = e.target as HTMLVideoElement;
+              if (e.isIntersecting) {
+                if (v.preload === 'none') v.preload = 'auto';
+                v.play().catch(() => {});
+              } else {
+                v.pause();
+              }
+            }
+          },
+          { threshold: 0.35 },
+        );
+        videos.forEach((v) => io.observe(v));
+      }
+    </script>
+    {site.cfAnalyticsToken && (
+      <script
+        defer
+        src="https://static.cloudflareinsights.com/beacon.min.js"
+        data-cf-beacon={JSON.stringify({ token: site.cfAnalyticsToken })}
+      />
+    )}
+  </body>
+</html>

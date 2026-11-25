@@ -1,0 +1,29 @@
+---
+import { site } from '../config/site';
+const year = new Date().getFullYear();
+---
+<footer class="site-footer">
+  <div class="wrap cols">
+    <div>
+      <strong>{site.personName}</strong>
+      <p class="muted small">Strony, Google Ads i porządek z zapytaniami dla małych firm. {site.area}.</p>
+      {site.companyInfo && <p class="muted small">{site.companyInfo}</p>}
+    </div>
+    <div class="small">
+      {site.phone && <p><a href={`tel:${site.phoneHref || site.phone}`}>{site.phone}</a></p>}
+      {site.email && <p><a href={`mailto:${site.email}`}>{site.email}</a></p>}
+    </div>
+  </div>
+  <div class="wrap small muted fine">
+    <p>© {year} {site.personName}. Ta strona jest zbudowana w Astro i stoi na darmowym hostingu Cloudflare, tak jak strony moich klientów. Bez ciasteczek śledzących.</p>
+  </div>
+</footer>
+
+<style>
+  .site-footer { background: var(--ink); color: #e9e5dc; padding: 48px 0 24px; }
+  .site-footer a { color: #fff; }
+  .site-footer .muted { color: #b5afa3; }
+  .cols { display: grid; gap: 24px; }
+  @media (min-width: 760px) { .cols { grid-template-columns: 2fr 1fr; } }
+  .fine { border-top: 1px solid #3a3833; margin-top: 24px; padding-top: 16px; }
+</style>

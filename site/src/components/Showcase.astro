@@ -1,0 +1,73 @@
+---
+// Nagranie strony: wersja komputerowa w ramce przeglądarki + wersja na telefon obok.
+interface Props {
+  video: string;
+  label: string;
+  url?: string;
+  mobile?: boolean;
+}
+const { video, label, url, mobile = true } = Astro.props;
+const host = url ? new URL(url).host : label;
+---
+<figure class="showcase" class:list={[{ 'no-phone': !mobile }]}>
+  <div class="browser">
+    <div class="chrome" aria-hidden="true">
+      <span></span><span></span><span></span>
+      <em>{host}</em>
+    </div>
+    <video
+      data-autoplay
+      muted
+      loop
+      playsinline
+      preload="none"
+      width="1280"
+      height="800"
+      poster={`/media/${video}-desktop.webp`}
+      aria-label={`Nagranie strony ${label} na komputerze`}
+    >
+      <source src={`/media/${video}-desktop.mp4`} type="video/mp4" />
+    </video>
+  </div>
+  {mobile && (
+    <div class="phone">
+      <video
+        data-autoplay
+        muted
+        loop
+        playsinline
+        preload="none"
+        width="520"
+        height="886"
+        poster={`/media/${video}-mobile.webp`}
+        aria-label={`Nagranie strony ${label} na telefonie`}
+      >
+        <source src={`/media/${video}-mobile.mp4`} type="video/mp4" />
+      </video>
+    </div>
+  )}
+</figure>
+
+<style>
+  .showcase { position: relative; margin: 0; padding-right: 13%; padding-bottom: 6%; }
+  .showcase.no-phone { padding: 0; }
+  .browser {
+    border-radius: 12px; overflow: hidden; background: #fff;
+    border: 1px solid var(--line); box-shadow: var(--shadow);
+  }
+  .chrome { display: flex; align-items: center; gap: 6px; padding: 8px 12px; background: #efebe3; border-bottom: 1px solid var(--line); }
+  .chrome span { width: 9px; height: 9px; border-radius: 50%; background: #d4cdbf; }
+  .chrome em {
+    font-style: normal; font-size: 0.72rem; color: var(--ink-3); margin-left: 10px;
+    background: #fff; border-radius: 6px; padding: 2px 10px; flex: 1; max-width: 60%;
+    overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  }
+  .browser video { width: 100%; height: auto; aspect-ratio: 16 / 10; object-fit: cover; object-position: top; background: #eee; }
+  .phone {
+    position: absolute; right: 0; bottom: 0; width: 24%;
+    border: 5px solid #1d1c1a; border-radius: 22px; overflow: hidden; background: #1d1c1a;
+    box-shadow: 0 12px 30px rgb(0 0 0 / 22%);
+  }
+  .phone video { width: 100%; height: auto; aspect-ratio: 390 / 664; object-fit: cover; object-position: top; border-radius: 16px; background: #eee; }
+  @media (max-width: 560px) { .phone { border-width: 3px; border-radius: 14px; } .phone video { border-radius: 10px; } }
+</style>

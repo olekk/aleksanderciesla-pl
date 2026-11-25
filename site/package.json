@@ -1,0 +1,22 @@
+{
+  "name": "aleksanderciesla-pl",
+  "type": "module",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "check": "astro check",
+    "videos": "bash scripts/encode-videos.sh",
+    "deploy": "npm run build && wrangler deploy --env=\"\"",
+    "deploy:podglad": "npm run build && wrangler deploy --env podglad"
+  },
+  "dependencies": {
+    "astro": "7.4.10"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^5.20261109.1",
+    "wrangler": "^4.159.0"
+  }
+}

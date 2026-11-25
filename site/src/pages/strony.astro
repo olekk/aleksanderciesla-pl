@@ -1,0 +1,44 @@
+---
+import Base from '../layouts/Base.astro';
+import Showcase from '../components/Showcase.astro';
+import Contact from '../components/Contact.astro';
+import { agencySites, agencyName } from '../data/projects';
+const agency = agencyName ? `agencji ${agencyName}` : 'agencji marketingowej, w której pracowałem';
+---
+<Base
+  title="Strony wdrożone w agencji"
+  description="Strony, które wdrażałem w kodzie, pracując w agencji marketingowej: Foto7, Liberta Okna, GiB Meble, Prodvisor i inne."
+>
+  <section class="hero">
+    <div class="wrap">
+      <p class="eyebrow"><a href="/#przyklady">Przykłady</a> · Strony</p>
+      <h1>Strony z czasów pracy w agencji</h1>
+      <p class="lead narrow">
+        Projekt graficzny: designerka {agency}. Wdrożenie, czyli kod, animacje i wersja na telefon: ja.
+        Nagrania pokazują strony tak, jak wyglądały po wdrożeniu.
+      </p>
+    </div>
+  </section>
+
+  {agencySites.map((s, i) => (
+    <section class:list={[{ band: i % 2 === 1 }]}>
+      <div class="wrap site">
+        <div class="text">
+          <h2>{s.name}</h2>
+          <p>{s.tagline}</p>
+        </div>
+        <Showcase video={s.video} label={s.name} />
+      </div>
+    </section>
+  ))}
+
+  <Contact />
+</Base>
+
+<style>
+  .hero { padding-top: clamp(40px, 7vw, 80px); padding-bottom: 32px; }
+  .eyebrow a { color: inherit; }
+  .site { display: grid; gap: 24px; align-items: center; }
+  @media (min-width: 900px) { .site { grid-template-columns: 1fr 2fr; gap: 48px; } }
+  .site h2 { font-size: clamp(1.5rem, 3vw, 2rem); }
+</style>

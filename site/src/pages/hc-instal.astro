@@ -1,0 +1,48 @@
+---
+import Base from '../layouts/Base.astro';
+import Showcase from '../components/Showcase.astro';
+import Contact from '../components/Contact.astro';
+import { featured } from '../data/projects';
+const hc = featured[1];
+---
+<Base
+  title="HC INSTAL - strona i marketing własnej firmy"
+  description="HC INSTAL to rodzinna firma elektryczna ze Śląska, w której jestem w zarządzie. Strona hcinstal.pl i marketing robię sam."
+>
+  <section class="hero">
+    <div class="wrap">
+      <p class="eyebrow"><a href="/#przyklady">Przykłady</a> · Własna firma</p>
+      <h1>HC INSTAL: robię to też dla własnej firmy</h1>
+      <p class="lead narrow">
+        HC INSTAL to rodzinna firma elektryczna ze Śląska: pomiary elektryczne, instalacje i automatyka budynkowa.
+        Prezesem jest mój tata, ja jestem w zarządzie. Stronę i marketing robię sam.
+      </p>
+      <div class="media"><Showcase video={hc.video} label={hc.name} url={hc.url} /></div>
+      <p class="muted small">Strona na żywo: <a href={hc.url} rel="noopener" target="_blank">hcinstal.pl</a></p>
+    </div>
+  </section>
+
+  <section class="band">
+    <div class="wrap narrow">
+      <h2>Dlaczego to pokazuję</h2>
+      <p>
+        To nie jest klient z zewnątrz i nie udaję, że jest. Pokazuję go, bo tu za reklamy i za każdą godzinę płacę
+        z własnej kieszeni. Rozwiązania, które sprawdzam u siebie, potem proponuję klientom.
+      </p>
+      <ul class="check">
+        <li>Strona o automatyce budynkowej (Loxone) i usługach elektrycznych.</li>
+        <li>Wersja na telefon z szybkim kontaktem.</li>
+        <li>Kilka wersji językowych.</li>
+      </ul>
+      <p class="muted">Liczby z kampanii HC INSTAL dopiszę, kiedy zbiorę pełny okres danych.</p>
+    </div>
+  </section>
+
+  <Contact />
+</Base>
+
+<style>
+  .hero { padding-top: clamp(40px, 7vw, 80px); }
+  .media { margin: 36px 0 12px; }
+  .eyebrow a { color: inherit; }
+</style>

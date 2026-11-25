@@ -1,0 +1,328 @@
+---
+import Base from '../layouts/Base.astro';
+import Showcase from '../components/Showcase.astro';
+import Contact from '../components/Contact.astro';
+import { site, priceSuffix } from '../config/site';
+import { featured, agencySites, quotes } from '../data/projects';
+
+const artPapier = featured[0];
+const hc = featured[1];
+const p = site.prices;
+---
+<Base>
+  <!-- 1. Kim jestem -->
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <p class="eyebrow">{site.personName} · {site.areaShort}</p>
+        <h1>Robię strony i reklamy Google dla małych firm. Tak, żebyś mógł mieć to z głowy.</h1>
+        <p class="lead">
+          Strona, reklamy i porządek z zapytaniami. Jedna osoba, która za to odpowiada, pokazuje liczby co miesiąc
+          i mówi wprost, co działa, a co nie.
+        </p>
+        <div class="btn-row">
+          <a class="btn btn-primary" href="#przyklady">Zobacz przykłady</a>
+          {site.phone
+            ? <a class="btn btn-ghost" href={`tel:${site.phoneHref || site.phone}`}>Zadzwoń</a>
+            : <a class="btn btn-ghost" href="#kontakt">Porozmawiajmy</a>}
+        </div>
+      </div>
+      <div class="portrait">
+        {site.photo
+          ? <img src={site.photo} alt={site.personName} width="560" height="560" />
+          : <div class="portrait-ph" aria-hidden="true">AC</div>}
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. Co robię -->
+  <section class="band" id="uslugi">
+    <div class="wrap">
+      <p class="eyebrow">Co robię</p>
+      <h2>Trzy rzeczy, które razem dają klientów z internetu</h2>
+      <p class="lead narrow">Klient Cię znajduje, wysyła zapytanie, a ktoś u Ciebie oddzwania. Pilnuję, żeby każdy z tych kroków działał.</p>
+      <div class="grid grid-3">
+        <article class="card">
+          <div class="num">1</div>
+          <h3>Strona internetowa</h3>
+          <p>Szybka, czytelna na telefonie, z jasnym "zadzwoń" i formularzem. Teksty piszę ja, Ty tylko poprawiasz.</p>
+          <p class="muted small"><strong>Dla kogo:</strong> stara strona wstydzi, wolno się ładuje albo nikt z niej nie dzwoni.</p>
+        </article>
+        <article class="card">
+          <div class="num">2</div>
+          <h3>Google Ads i widoczność</h3>
+          <p>Reklamy w Google ustawione pod zapytania, nie pod kliknięcia. Do tego profil firmy w Google i widoczność w ChatGPT i Copilocie.</p>
+          <p class="muted small"><strong>Dla kogo:</strong> płacisz za reklamy i nie wiesz, co z tego masz. Albo jeszcze nie reklamujesz się wcale.</p>
+        </article>
+        <article class="card">
+          <div class="num">3</div>
+          <h3>Porządek z zapytaniami</h3>
+          <p>Prosty arkusz albo Notion, w którym widać, kto pytał i komu trzeba oddzwonić. Powiadomienia na maila, żeby nic nie ginęło.</p>
+          <p class="muted small"><strong>Dla kogo:</strong> zapytania przychodzą z kilku miejsc i część z nich przepada.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. Przykłady z liczbami -->
+  <section id="przyklady">
+    <div class="wrap">
+      <p class="eyebrow">Przykłady</p>
+      <h2>Co zrobiłem i co z tego wyszło</h2>
+
+      <article class="case">
+        <div class="case-media">
+          <Showcase video={artPapier.video} label={artPapier.name} url={artPapier.url} />
+        </div>
+        <div class="case-text">
+          <h3>{artPapier.name}</h3>
+          <p>{artPapier.tagline}</p>
+          <div class="stats">
+            {artPapier.stats?.map((s) => <div class="stat"><strong>{s.value}</strong><span>{s.label}</span></div>)}
+          </div>
+          <a class="btn btn-ghost" href={artPapier.page}>Cała historia z liczbami</a>
+        </div>
+      </article>
+
+      <article class="case reverse">
+        <div class="case-media">
+          <Showcase video={hc.video} label={hc.name} url={hc.url} />
+        </div>
+        <div class="case-text">
+          <h3>{hc.name}</h3>
+          <p>{hc.tagline}</p>
+          <p class="muted">Własna firma to najlepszy poligon: za reklamy płacę z własnej kieszeni, więc każdą złotówkę liczę dwa razy.</p>
+          <a class="btn btn-ghost" href={hc.page}>Więcej o HC INSTAL</a>
+        </div>
+      </article>
+
+      <article class="case">
+        <div class="case-media">
+          <Showcase video={agencySites[2].video} label={agencySites[2].name} />
+        </div>
+        <div class="case-text">
+          <h3>Strony z czasów pracy w agencji</h3>
+          <p>
+            Zaczynałem w agencji marketingowej. Projekt graficzny robiła tam designerka, a ja wdrażałem strony w kodzie.
+            Foto7, Liberta Okna, GiB Meble, Prodvisor i inne.
+          </p>
+          <a class="btn btn-ghost" href="/strony/">Zobacz {agencySites.length} stron</a>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- 4. Co mówią klienci (pokazuje się po dodaniu cytatu w src/data/projects.ts) -->
+  {quotes.length > 0 && (
+    <section class="band">
+      <div class="wrap narrow">
+        <p class="eyebrow">Co mówią klienci</p>
+        {quotes.map((q) => (
+          <blockquote class="quote">
+            <p>"{q.text}"</p>
+            <footer><strong>{q.author}</strong>, {q.role}</footer>
+          </blockquote>
+        ))}
+      </div>
+    </section>
+  )}
+
+  <!-- 5. Ceny -->
+  <section id="ceny" class="band">
+    <div class="wrap">
+      <p class="eyebrow">Ceny</p>
+      <h2>Ceny wprost, bez "wyceny indywidualnej"</h2>
+      <p class="lead narrow">Dokładną kwotę podam po rozmowie, ale wiesz od razu, w jakich widełkach się poruszamy.</p>
+      <div class="grid grid-3 prices">
+        <article class="card">
+          <h3>Strona internetowa</h3>
+          <p class="price">{p.website}<small>{priceSuffix}, jednorazowo</small></p>
+          <ul class="check">
+            <li>Projekt, teksty i wdrożenie</li>
+            <li>Hosting za 0 zł (Cloudflare)</li>
+            <li>Płacisz tylko za domenę, ok. 50-100 zł rocznie</li>
+            <li>Strona i domena są Twoje</li>
+          </ul>
+        </article>
+        <article class="card featured">
+          <h3>Marketing co miesiąc</h3>
+          <p class="price">{p.marketing}<small>{priceSuffix}</small></p>
+          <ul class="check">
+            <li>Prowadzenie Google Ads</li>
+            <li>Profil firmy w Google, widoczność w AI</li>
+            <li>Raport co miesiąc: ile wydane, ile zapytań</li>
+            <li>Drobne zmiany na stronie w cenie</li>
+          </ul>
+          <p class="muted small">Budżet reklam płacisz bezpośrednio Google: {p.adBudget}.</p>
+        </article>
+        <article class="card">
+          <h3>Porządek z zapytaniami</h3>
+          <p class="price">{p.crm ? <>{p.crm}<small>{priceSuffix}</small></> : <>wycena po rozmowie</>}</p>
+          <ul class="check">
+            <li>Arkusz Google albo Notion</li>
+            <li>Powiadomienia o nowych zapytaniach</li>
+            <li>Krótkie szkolenie dla osoby w biurze</li>
+          </ul>
+        </article>
+      </div>
+      <p class="note narrow">
+        Cena i zakres zmieniają się razem. Jeśli budżet jest mniejszy, robię mniej, ale nie gorzej.
+        {site.noLongContract && ' Bez umowy na rok: współpraca z miesięcznym wypowiedzeniem.'}
+      </p>
+    </div>
+  </section>
+
+  <!-- 7. Jak wygląda współpraca -->
+  <section id="wspolpraca">
+    <div class="wrap">
+      <p class="eyebrow">Jak pracuję</p>
+      <h2>Jak wygląda współpraca</h2>
+      <ol class="steps">
+        <li><strong>Rozmowa.</strong> 30 minut, na miejscu albo przez telefon. Bezpłatnie.</li>
+        <li><strong>Przegląd.</strong> Bezpłatnie sprawdzam Twoją stronę i reklamy (jeśli są) i mówię, co bym zmienił.</li>
+        <li><strong>Propozycja na piśmie.</strong> Co robię, ile to kosztuje, czego potrzebuję od Ciebie.</li>
+        <li><strong>Pierwszy miesiąc.</strong> Porządkuję pomiar, żeby było wiadomo, skąd przychodzą klienci. Dopiero potem zwiększamy budżet.</li>
+        <li><strong>Raport 3. dnia miesiąca.</strong> Krótko: ile poszło na reklamy, ile przyszło zapytań, co zmieniam.</li>
+      </ol>
+      <p class="muted narrow">Pracuję z kilkoma firmami naraz, nie z setką. Dlatego znam Twoją kampanię, a nie tylko numer klienta.</p>
+    </div>
+  </section>
+
+  <!-- 8. Co nie wyszło -->
+  <section class="band">
+    <div class="wrap">
+      <p class="eyebrow">Szczerze</p>
+      <h2>Co nie wyszło i czego się nauczyłem</h2>
+      <p class="lead narrow">Każdy, kto robi marketing, ma takie historie. Wolę je pokazać niż udawać, że ich nie ma.</p>
+      <div class="grid grid-3">
+        <article class="card">
+          <h3>Reklamy w ChatGPT</h3>
+          <p>Testowaliśmy je dla Art Papier. 251 zł, 15 kliknięć, głównie z USA. Google Ads w tym samym czasie dawał kliknięcie za 2,76 zł, tam wyszło 16,74 zł.</p>
+          <p class="muted small"><strong>Lekcja:</strong> nowy kanał testuję małą kwotą i z pomiarem, zanim zaproponuję przeniesienie budżetu.</p>
+        </article>
+        <article class="card">
+          <h3>Budżet poszedł szybciej, niż miał</h3>
+          <p>W październiku reklamy wydawały ok. 1 400 zł miesięcznie przy planie 650 zł. Złapałem to przy przeglądzie i ustawiłem limity dzienne.</p>
+          <p class="muted small"><strong>Lekcja:</strong> budżety sprawdzam co tydzień, nie raz w miesiącu.</p>
+        </article>
+        <article class="card">
+          <h3>Sklep jeszcze nie sprzedaje z reklam</h3>
+          <p>Sklep Art Papier działa od 29.10. Zapytania z reklam przychodzą, ale zakupu prosto z reklamy jeszcze nie było. Duże zamówienia idą przez rozmowę.</p>
+          <p class="muted small"><strong>Lekcja:</strong> w B2B sklep to wizytówka cennika, a pieniądze robi szybkie oddzwonienie.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- 9. O mnie -->
+  <section id="o-mnie">
+    <div class="wrap about">
+      <div>
+        <p class="eyebrow">O mnie</p>
+        <h2>Programista, który zaczynał w agencji marketingowej</h2>
+        <p>
+          Mam na imię Olek. Od ponad 6 lat piszę strony i aplikacje jako programista. Pierwszą pracę po technikum
+          miałem w agencji marketingowej, więc od początku widziałem obie strony: kod i to, czy z reklamy dzwoni klient.
+        </p>
+        <p>
+          Jestem w zarządzie HC INSTAL, rodzinnej firmy elektrycznej. Wiem, jak to jest, kiedy właściciel ma na głowie
+          wszystko naraz, a marketing zawsze spada na koniec listy.
+        </p>
+        <p>
+          Dużo powtarzalnej pracy automatyzuję, także z pomocą AI. Dzięki temu jedna osoba robi tyle, co mały zespół,
+          a Ty płacisz za wynik, nie za godziny klikania. Decyzje i kontakt z Tobą zostają po mojej stronie.
+        </p>
+      </div>
+      <ul class="facts">
+        <li><strong>6+ lat</strong><span>jako programista stron i aplikacji</span></li>
+        <li><strong>{agencySites.length + 2} stron</strong><span>pokazanych na tej stronie</span></li>
+        <li><strong>{site.areaShort}</strong><span>jeżdżę między Gdańskiem a Gliwicami</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 10. FAQ -->
+  <section class="band" id="faq">
+    <div class="wrap narrow">
+      <p class="eyebrow">Pytania</p>
+      <h2>Najczęstsze pytania</h2>
+      <details>
+        <summary>Czy muszę podpisać umowę na rok?</summary>
+        <p>{site.noLongContract
+          ? 'Nie. Pracujemy miesiąc do miesiąca, z miesięcznym wypowiedzeniem. Jeśli przestanie Ci się opłacać, po prostu kończymy.'
+          : 'Ustalamy to przy propozycji. Zawsze z jasnym okresem wypowiedzenia.'}</p>
+      </details>
+      <details>
+        <summary>Czyje jest konto reklamowe, domena i strona?</summary>
+        <p>Twoje. Konto Google Ads, domena i kod strony są zakładane na Twoją firmę. Jeśli kiedyś się rozstaniemy, wszystko zostaje u Ciebie.</p>
+      </details>
+      <details>
+        <summary>Ile muszę wydać na same reklamy?</summary>
+        <p>Budżet reklam płacisz bezpośrednio Google, osobno od mojego wynagrodzenia. Dla małej firmy rozsądny start to zwykle od ok. 600 zł miesięcznie. Art Papier ma ok. 650 zł.</p>
+      </details>
+      <details>
+        <summary>Co jeśli nie będzie wyników?</summary>
+        <p>Zobaczysz to w raporcie, czarno na białym. Wtedy mówię wprost, co zmieniam albo że ten kanał się u Ciebie nie opłaca. Wolę stracić klienta niż brać pieniądze za coś, co nie działa.</p>
+      </details>
+      <details>
+        <summary>Muszę się znać na marketingu?</summary>
+        <p>Nie. Potrzebuję od Ciebie wiedzy o Twojej firmie i klientach, resztę biorę na siebie. Raport piszę tak, żeby dało się go przeczytać przy kawie.</p>
+      </details>
+    </div>
+  </section>
+
+  <!-- 6. Kontakt -->
+  <Contact />
+</Base>
+
+<style>
+  .hero { padding-top: clamp(40px, 7vw, 88px); }
+  .hero-grid { display: grid; gap: 40px; align-items: center; }
+  @media (min-width: 880px) { .hero-grid { grid-template-columns: 1.5fr 1fr; } }
+  .portrait img, .portrait-ph {
+    width: min(100%, 380px); aspect-ratio: 1; border-radius: 50%; object-fit: cover; margin-inline: auto;
+    box-shadow: var(--shadow); border: 6px solid #fff;
+  }
+  .portrait-ph {
+    display: grid; place-items: center; background: var(--accent); color: var(--accent-soft);
+    font: 600 clamp(4rem, 12vw, 7rem)/1 var(--serif);
+  }
+  @media (max-width: 879px) { .portrait { order: -1; } .portrait img, .portrait-ph { width: 140px; border-width: 4px; } .portrait-ph { font-size: 3rem; } .portrait img, .portrait-ph { margin-inline: 0; } }
+
+  .num {
+    width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center;
+    background: var(--accent-soft); color: var(--accent); font-weight: 700; margin-bottom: 12px;
+  }
+
+  .case { display: grid; gap: 28px; align-items: center; margin-top: 48px; }
+  @media (min-width: 900px) {
+    .case { grid-template-columns: 1.25fr 1fr; gap: 48px; }
+    .case.reverse .case-media { order: 2; }
+  }
+
+  .quote { margin: 0; font-family: var(--serif); font-size: clamp(1.3rem, 2.6vw, 1.7rem); line-height: 1.4; }
+  .quote footer { font-family: var(--sans); font-size: 1rem; color: var(--ink-2); margin-top: 12px; }
+
+  .prices .featured { border: 2px solid var(--accent); }
+  .price { font-family: var(--serif); font-size: 1.8rem; color: var(--accent); line-height: 1.2; }
+  .price small { display: block; font-family: var(--sans); font-size: 0.9rem; color: var(--ink-3); margin-top: 4px; }
+  .note { margin-top: 28px; }
+
+  .steps { counter-reset: s; list-style: none; padding: 0; margin: 28px 0; display: grid; gap: 14px; max-width: 760px; }
+  .steps li { counter-increment: s; position: relative; padding: 4px 0 4px 52px; }
+  .steps li::before {
+    content: counter(s); position: absolute; left: 0; top: 0; width: 36px; height: 36px; border-radius: 50%;
+    display: grid; place-items: center; background: var(--accent); color: #fff; font-weight: 700;
+  }
+
+  .about { display: grid; gap: 32px; }
+  @media (min-width: 880px) { .about { grid-template-columns: 1.6fr 1fr; align-items: start; } }
+  .facts { list-style: none; padding: 0; margin: 0; display: grid; gap: 12px; }
+  .facts li { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 16px 18px; }
+  .facts strong { display: block; font-family: var(--serif); font-size: 1.4rem; color: var(--accent); }
+  .facts span { color: var(--ink-2); font-size: 0.95rem; }
+
+  details { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 0 20px; margin-bottom: 10px; }
+  summary { cursor: pointer; font-weight: 600; padding: 16px 0; list-style-position: outside; }
+  details p { color: var(--ink-2); }
+</style>
