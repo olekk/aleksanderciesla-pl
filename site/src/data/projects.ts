@@ -54,6 +54,12 @@ export const agencyName = '';
 
 export const agencySites: Project[] = [
   {
+    slug: 'gib-meble',
+    name: 'GiB Meble',
+    video: 'gibmeble',
+    tagline: 'Producent mebli. Wielopoziomowe menu kolekcji i duże zdjęcia aranżacji.',
+  },
+  {
     slug: 'foto7',
     name: 'Foto7',
     video: 'foto7',
@@ -64,18 +70,6 @@ export const agencySites: Project[] = [
     name: 'Foto7 - Nasze marki',
     video: 'foto7-nasze-marki',
     tagline: 'Podstrona z logotypami marek, które obracają się po najechaniu myszką.',
-  },
-  {
-    slug: 'liberta',
-    name: 'Liberta Okna',
-    video: 'libertaokna',
-    tagline: 'Producent okien. Kampania "Hybrid X" przeniesiona na stronę.',
-  },
-  {
-    slug: 'gib-meble',
-    name: 'GiB Meble',
-    video: 'gibmeble',
-    tagline: 'Producent mebli. Wielopoziomowe menu kolekcji i duże zdjęcia aranżacji.',
   },
   {
     slug: 'prodvisor',
@@ -94,5 +88,11 @@ export const agencySites: Project[] = [
     name: 'Vibeon',
     video: 'vibeon',
     tagline: 'Sklep z kosmetykami CBD. Strona produktowa w dwóch językach.',
+  },
+  {
+    slug: 'liberta',
+    name: 'Liberta Okna',
+    video: 'libertaokna',
+    tagline: 'Producent okien. Kampania "Hybrid X" przeniesiona na stronę.',
   },
 ];
