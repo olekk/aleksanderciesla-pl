@@ -26,7 +26,12 @@
   // "d1_databases": [{ "binding": "DB", "database_name": "aleksanderciesla-pl", "database_id": "<id z komendy>", "migrations_dir": "migrations" }],
   // Odkomentować po włączeniu Email Routing dla domeny:
   // "send_email": [{ "name": "MAILER" }],
-  // Domena dojdzie po kupnie: "routes": [{ "pattern": "aleksanderciesla.pl", "custom_domain": true }, { "pattern": "www.aleksanderciesla.pl", "custom_domain": true }]
+  // Domena dodana do Cloudflare przez Olka 26.11.2026. Custom domain: Cloudflare sam tworzy rekordy DNS i certyfikat.
+  // www też trafia do Workera, który robi 301 na apex (worker/index.ts).
+  "routes": [
+    { "pattern": "aleksanderciesla.pl", "custom_domain": true },
+    { "pattern": "www.aleksanderciesla.pl", "custom_domain": true }
+  ],
   "env": {
     "podglad": {
       "name": "aleksanderciesla-pl-podglad",
