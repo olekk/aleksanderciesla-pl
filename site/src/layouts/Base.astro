@@ -1,5 +1,4 @@
 ---
-import '@fontsource-variable/inter';
 import '../styles/global.css';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
@@ -13,13 +12,13 @@ interface Props {
 
 const {
   title,
-  description = 'Strony internetowe, Google Ads i widoczność w AI dla małych firm. Zrobię to za Ciebie i co miesiąc pokażę, ile zapytań to dało. Jawne ceny.',
+  description = 'Strony internetowe, Google Ads i widoczność w AI dla małych i średnich przedsiębiorstw. Zrobię to za Ciebie i co miesiąc pokażę, ile zapytań to dało. Jawne ceny.',
   jsonLd: extraLd = [],
 } = Astro.props;
 
 const fullTitle = title
   ? `${title} | ${site.brandName}`
-  : `${site.brandName} – strony, Google Ads i widoczność w AI dla małych firm`;
+  : `${site.brandName} – strony, Google Ads i widoczność w AI dla MŚP`;
 const canonical = new URL(Astro.url.pathname, site.url).href;
 
 const jsonLd = {
@@ -30,7 +29,7 @@ const jsonLd = {
       '@id': `${site.url}/#person`,
       name: site.personName,
       url: site.url,
-      jobTitle: 'Strony internetowe i marketing dla małych firm',
+      jobTitle: 'Strony internetowe i marketing dla małych i średnich przedsiębiorstw',
       ...(site.email ? { email: `mailto:${site.email}` } : {}),
       ...(site.phone ? { telephone: site.phone } : {}),
       ...(site.photo ? { image: new URL(site.photo, site.url).href } : {}),
@@ -58,6 +57,9 @@ const jsonLd = {
     <link rel="canonical" href={canonical} />
     <meta name="theme-color" content="#06070b" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <!-- Font od razu, żeby nagłówek (LCP) nie czekał na podmianę fontu. -->
+    <link rel="preload" href="/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/inter-pl.woff2" as="font" type="font/woff2" crossorigin />
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="pl_PL" />
     <meta property="og:title" content={fullTitle} />
@@ -81,9 +83,36 @@ const jsonLd = {
     <Footer />
     <script>
       const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      addEventListener('load', () => setTimeout(() => document.documentElement.classList.add('smooth'), 500));
 
       // Nagrania startują dopiero, gdy są widoczne, i zatrzymują się poza ekranem.
       const videos = document.querySelectorAll<HTMLVideoElement>('video[data-autoplay]');
+
+      // Plakaty nagrań ładujemy dopiero blisko ekranu i w rozmiarze pod ekran (mały plik na telefonie).
+      const setPoster = (v: HTMLVideoElement) => {
+        const base = v.dataset.poster;
+        if (!base || v.poster) return;
+        const need = v.clientWidth * (devicePixelRatio || 1);
+        const small = base.endsWith('-mobile') ? 260 : 640;
+        v.poster = need <= small * 1.1 ? `${base}-${small}.webp` : `${base}.webp`;
+      };
+      // W karuzeli slajdy są przycięte przez kontener, więc obserwujemy całą karuzelę i ładujemy jej plakaty razem.
+      const posterGroups = new Map<Element, HTMLVideoElement[]>();
+      videos.forEach((v) => {
+        const key = v.closest('.carousel') || v;
+        posterGroups.set(key, [...(posterGroups.get(key) || []), v]);
+      });
+      const pio = new IntersectionObserver(
+        (entries) => {
+          for (const e of entries)
+            if (e.isIntersecting) {
+              posterGroups.get(e.target)?.forEach(setPoster);
+              pio.unobserve(e.target);
+            }
+        },
+        { rootMargin: '600px 0px' },
+      );
+      posterGroups.forEach((_, el) => pio.observe(el));
       if (reduce) {
         videos.forEach((v) => (v.controls = true));
       } else {
@@ -113,18 +142,38 @@ const jsonLd = {
         },
         { rootMargin: '0px 0px -8% 0px' },
       );
-      document.querySelectorAll('.reveal').forEach((el) => rio.observe(el));
+      // Wejście z #kotwicą: przeglądarka przewija dopiero po skrypcie, a układ zmienia się jeszcze po załadowaniu
+      // fontów, więc nie wiadomo, co będzie na pierwszym ekranie. Wtedy nic nie ukrywamy (LCP, Lighthouse).
+      if (!reduce && !location.hash)
+        document.querySelectorAll('.reveal').forEach((el) => {
+          const r = el.getBoundingClientRect();
+          if (r.top < innerHeight && r.bottom > 0) return; // widoczne od początku: bez animacji
+          el.classList.add('pre');
+          rio.observe(el);
+        });
 
-      // "Elastyczne" przewijanie: przy szybkim przewijaniu odstępy między sekcjami lekko się rozciągają,
-      // po zatrzymaniu wracają ze sprężynowaniem; przewinięcie za górę / dół strony rozciąga całość.
-      // Przesunięcia rosną monotonicznie od góry do dołu, więc sekcje nigdy na siebie nie nachodzą.
+      // "Bezwładne" przewijanie (na prośbę Olka 26.11.2026): przy przewijaniu sekcje lekko nie nadążają za stroną,
+      // a po zahamowaniu dojeżdżają na miejsce jednym płynnym ruchem (sprężyna prawie krytycznie tłumiona, bez
+      // drgań). Sekcje dalej w kierunku ruchu zostają odrobinę bardziej, więc odstępy tylko się rozciągają:
+      // przesunięcia rosną monotonicznie od góry do dołu i sekcje nigdy na siebie nie nachodzą.
+      // Przewinięcie kółkiem za górę / dół strony rozciąga całość.
       // Tylko transformy (bez zmian układu), wyłączone przy prefers-reduced-motion.
       const layer = document.querySelector<HTMLElement>('.aurora-layer');
-      const PARALLAX = 0.12; // tło jedzie w tę samą stronę co treść, ale ok. 8 razy wolniej
+      // Tło jedzie w tę samą stronę co treść, ale dużo wolniej: tak, żeby warstwa (300vh) starczyła do końca strony,
+      // najwyżej 0,15 prędkości treści.
+      let PARALLAX = 0.12;
+      const fitParallax = () => {
+        const max = document.documentElement.scrollHeight - innerHeight;
+        PARALLAX = max > 0 ? Math.min(0.15, (2 * innerHeight) / max) : 0;
+      };
+      fitParallax();
       const items = Array.from(document.querySelectorAll<HTMLElement>('main > *, body > footer'));
       if (!reduce && items.length) {
-        const K = 1.4; // siła rozciągania od prędkości
-        const MAX = 90; // maks. przesunięcie sekcji w px
+        const K = 1.1; // jak bardzo sekcje zostają w tyle przy danej prędkości
+        const SPREAD = 0.25; // o ile bardziej zostają sekcje dalej w kierunku ruchu
+        const MAX = 70; // maks. przesunięcie sekcji w px
+        const STIFF = 0.07; // sztywność sprężyny
+        const DAMP = 0.6; // tłumienie: przy 0.07 / 0.6 brak przestrzelenia, dojazd ok. 0,5 s
         const n = items.length;
         let centers: number[] = [];
         const x = new Float64Array(n);
@@ -136,7 +185,7 @@ const jsonLd = {
 
         const measure = () => {
           centers = items.map((el) => el.offsetTop + el.offsetHeight / 2);
-          if (layer) layer.style.height = `${innerHeight + Math.max(0, document.documentElement.scrollHeight - innerHeight) * PARALLAX + 40}px`;
+          fitParallax();
         };
         measure();
         addEventListener('resize', measure, { passive: true });
@@ -149,15 +198,16 @@ const jsonLd = {
           lastY = y;
           pull *= 0.86;
           if (Math.abs(pull) < 0.2) pull = 0;
+          if (Math.abs(speed) < 0.05) speed = 0;
           const vh = innerHeight;
           const mid = y + vh / 2;
           let moving = Math.abs(speed) > 0.05 || pull !== 0;
           for (let i = 0; i < n; i++) {
             const d = Math.max(-2, Math.min(2, (centers[i] - mid) / vh));
-            let target = Math.max(-MAX, Math.min(MAX, speed * K * d));
+            let target = Math.max(-MAX, Math.min(MAX, speed * K + Math.abs(speed) * K * SPREAD * d));
             if (pull > 0) target += pull * (0.35 + 0.18 * i);
             else if (pull < 0) target += pull * (0.35 + 0.18 * (n - 1 - i));
-            vel[i] = (vel[i] + (target - x[i]) * 0.085) * 0.8;
+            vel[i] = (vel[i] + (target - x[i]) * STIFF) * DAMP;
             x[i] += vel[i];
             if (Math.abs(x[i]) > 0.1 || Math.abs(vel[i]) > 0.05) moving = true;
             items[i].style.transform = Math.abs(x[i]) < 0.1 ? '' : `translate3d(0,${x[i].toFixed(2)}px,0)`;

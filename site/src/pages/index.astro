@@ -11,14 +11,14 @@ const hc = featured[1];
 const p = site.prices;
 
 const logos = [
-  { file: 'art-papier', name: 'Art Papier', h: 46 },
-  { file: 'hc-instal', name: 'HC INSTAL', h: 22 },
-  { file: 'gib-meble', name: 'GiB Meble', h: 38 },
-  { file: 'foto7', name: 'Foto7', h: 30 },
-  { file: 'prodvisor', name: 'Prodvisor', h: 22 },
-  { file: 'auto-centrum', name: 'Auto-Centrum', h: 40 },
-  { file: 'vibeon', name: 'vibeOn', h: 44 },
-  { file: 'liberta', name: 'Liberta Okna', h: 32 },
+  { file: 'art-papier', w: 137, name: 'Art Papier', h: 46 },
+  { file: 'hc-instal', w: 704, name: 'HC INSTAL', h: 22 },
+  { file: 'gib-meble', w: 302, name: 'GiB Meble', h: 38 },
+  { file: 'foto7', w: 352, name: 'Foto7', h: 30 },
+  { file: 'prodvisor', w: 703, name: 'Prodvisor', h: 22 },
+  { file: 'auto-centrum', w: 271, name: 'Auto-Centrum', h: 40 },
+  { file: 'vibeon', w: 112, name: 'vibeOn', h: 44 },
+  { file: 'liberta', w: 340, name: 'Liberta Okna', h: 32 },
 ];
 
 const pains = [
@@ -137,7 +137,17 @@ const faqLd = {
   <section class="hero" data-flow>
     <div class="wrap hero-grid">
       <div class="hero-text">
-        <p class="eyebrow">{site.personName} · marketing i rozwój małych firm</p>
+        <div class="intro">
+          {
+            site.avatar && (
+              <img src={site.avatar} alt={site.personName} width="112" height="112" decoding="async" />
+            )
+          }
+          <p>
+            <strong>{site.personName}</strong>
+            <span>marketing i rozwój małych i średnich przedsiębiorstw</span>
+          </p>
+        </div>
         <h1>Więcej klientów z internetu. <span class="grad">Bez zajmowania się marketingiem.</span></h1>
         <p class="lead">
           Strona, reklamy Google, widoczność w ChatGPT i porządek w sprzedaży. Biorę to na siebie i co miesiąc pokazuję, ile to
@@ -146,8 +156,8 @@ const faqLd = {
         <div class="hosting glass">
           <span class="hosting-ico" aria-hidden="true"><Icon name="bolt" /></span>
           <p>
-            <strong>Szybka strona na darmowym hostingu.</strong> Płacisz raz {p.website}{priceSuffix} za wykonanie i co rok tylko
-            za domenę.
+            Szybka strona, <strong>hosting za 0&nbsp;zł.</strong> Płacisz raz {p.website}{priceSuffix} za wykonanie, a potem co rok
+            tylko za domenę.
           </p>
         </div>
         <div class="btn-row">
@@ -174,38 +184,42 @@ const faqLd = {
           </div>
           <div class="kpis">
             <div>
-              <p class="small muted label">Koszt zapytania</p>
-              <p class="big"><span class="grad">33,29 zł</span></p>
+              <p class="small muted label"><i class="key red"></i>Koszt zapytania</p>
+              <p class="big red">33,29 zł</p>
               <p class="delta down">↓ z 75,80 zł</p>
             </div>
             <div>
-              <p class="small muted label">Zapytania z reklam</p>
-              <p class="big"><span class="grad">20</span></p>
+              <p class="small muted label"><i class="key green"></i>Zapytania z reklam</p>
+              <p class="big green">20</p>
               <p class="delta up">↑ z 14</p>
             </div>
           </div>
-          <svg viewBox="0 0 300 90" class="spark" aria-hidden="true">
+          <!-- Wykres poglądowy (na prośbę Olka 26.11.2026): koszt zapytania (czerwony) spada, liczba zapytań (zielony)
+               rośnie od zera; linie się przecinają. Liczby obok są z eksportu Art Papier. -->
+          <svg viewBox="0 0 300 100" class="spark" aria-hidden="true">
             <defs>
-              <linearGradient id="sg" x1="0" x2="1">
-                <stop offset="0" stop-color="#f472b6"></stop>
-                <stop offset="1" stop-color="#5eead4"></stop>
+              <linearGradient id="fr" x1="0" x2="0" y1="0" y2="1">
+                <stop offset="0" stop-color="#fb7185" stop-opacity=".22"></stop>
+                <stop offset="1" stop-color="#fb7185" stop-opacity="0"></stop>
               </linearGradient>
-              <linearGradient id="sf" x1="0" x2="0" y1="0" y2="1">
-                <stop offset="0" stop-color="#5eead4" stop-opacity=".28"></stop>
-                <stop offset="1" stop-color="#5eead4" stop-opacity="0"></stop>
+              <linearGradient id="fg" x1="0" x2="0" y1="0" y2="1">
+                <stop offset="0" stop-color="#4ade80" stop-opacity=".25"></stop>
+                <stop offset="1" stop-color="#4ade80" stop-opacity="0"></stop>
               </linearGradient>
             </defs>
-            <path d="M0 14 C40 16 60 22 90 30 S150 58 180 64 S250 72 300 74 L300 90 L0 90Z" fill="url(#sf)"></path>
-            <path d="M0 14 C40 16 60 22 90 30 S150 58 180 64 S250 72 300 74" fill="none" stroke="url(#sg)" stroke-width="3" stroke-linecap="round"></path>
-            <!-- Słupki: liczba zapytań z reklam rośnie (14 → 20). -->
-            <g font-size="11" font-weight="700" text-anchor="middle" font-family="inherit">
-              <rect x="214" y="58" width="24" height="32" rx="5" fill="#a78bfa" opacity=".75"></rect>
-              <text x="226" y="52" fill="#c4b5fd">14</text>
-              <rect x="252" y="44" width="24" height="46" rx="5" fill="#5eead4"></rect>
-              <text x="264" y="38" fill="#5eead4">20</text>
+            <g stroke="rgb(255 255 255 / 8%)" stroke-width="1">
+              <line x1="0" y1="25" x2="300" y2="25"></line>
+              <line x1="0" y1="50" x2="300" y2="50"></line>
+              <line x1="0" y1="75" x2="300" y2="75"></line>
             </g>
+            <path d="M0 12 C60 14 100 30 150 52 S240 80 300 84 L300 100 L0 100Z" fill="url(#fr)"></path>
+            <path d="M0 98 C60 96 100 80 150 52 S240 30 300 28 L300 100 L0 100Z" fill="url(#fg)"></path>
+            <path class="line" pathLength="1" d="M0 12 C60 14 100 30 150 52 S240 80 300 84" fill="none" stroke="#fb7185" stroke-width="3" stroke-linecap="round"></path>
+            <path class="line" pathLength="1" d="M0 98 C60 96 100 80 150 52 S240 30 300 28" fill="none" stroke="#4ade80" stroke-width="3" stroke-linecap="round"></path>
+            <circle cx="300" cy="84" r="4" fill="#fb7185"></circle>
+            <circle cx="300" cy="28" r="4" fill="#4ade80"></circle>
           </svg>
-          <p class="small muted caption">Linia: koszt zapytania. Słupki: liczba zapytań. Koszt: 6-19.10 → 20-31.10.2026. Zapytania: 6-31.10 → 20.10-18.11.2026.</p>
+          <p class="small muted caption">Koszt: 6-19.10 → 20-31.10.2026. Zapytania: 6-31.10 → 20.10-18.11.2026.</p>
         </div>
         <div class="chip-float glass c1"><strong>5 dni</strong><span>tyle zajęło zbudowanie sklepu</span></div>
         <div class="chip-float glass c2"><strong>55×</strong><span>tyle razy AI zacytowało stronę w odpowiedziach</span></div>
@@ -217,10 +231,11 @@ const faqLd = {
         {
           [...logos, ...logos].map((l, i) => (
             <img
-              src={`/logos/${l.file}.png`}
+              src={`/logos/${l.file}.webp`}
               alt={i < logos.length ? l.name : ''}
               aria-hidden={i >= logos.length ? 'true' : undefined}
-              style={`height:${l.h}px`}
+              width={Math.round((l.w * l.h) / 96)}
+              height={l.h}
               loading="lazy"
               decoding="async"
             />
@@ -347,7 +362,7 @@ const faqLd = {
 
       <div class="cases">
         <article class="case-card glass reveal">
-          <Showcase video={artPapier.video} label={artPapier.name} url={artPapier.url} />
+          <Showcase video={artPapier.video} label={artPapier.name} url={artPapier.url} eager />
           <div class="case-body">
             <p class="tag">Strona · Sklep · Google Ads · AI · Baza klientów</p>
             <h3>Art Papier</h3>
@@ -356,7 +371,7 @@ const faqLd = {
           </div>
         </article>
         <article class="case-card glass reveal">
-          <Showcase video={hc.video} label={hc.name} url={hc.url} />
+          <Showcase video={hc.video} label={hc.name} url={hc.url} eager />
           <div class="case-body">
             <p class="tag">Strona · Sklep · Marketing</p>
             <h3>HC INSTAL</h3>
@@ -379,8 +394,11 @@ const faqLd = {
       <div class="carousel" id="karuzela" tabindex="0" aria-label="Strony wdrożone w agencji">
         {
           agencySites.map((s) => (
-            <figure class="slide">
-              <Showcase video={s.video} label={s.name} mobile={false} />
+            <figure class:list={['slide', { pair: s.video2 }]}>
+              <div class="slide-media">
+                <Showcase video={s.video} label={s.name} mobile={false} />
+                {s.video2 && <Showcase video={s.video2} label={`${s.name}, podstrona`} mobile={false} />}
+              </div>
               <figcaption>
                 <strong>{s.name}</strong>
                 <span class="muted small">{s.tagline}</span>
@@ -389,7 +407,9 @@ const faqLd = {
           ))
         }
       </div>
-      <p class="reveal"><a href="/strony/">Wszystkie strony z wersjami na telefon →</a></p>
+      <div class="more reveal">
+        <a class="btn btn-glass more-btn" href="/strony/">Zobacz więcej <span aria-hidden="true">→</span></a>
+      </div>
     </div>
   </section>
 
@@ -555,15 +575,38 @@ const faqLd = {
 </Base>
 
 <script>
-  // Karuzela: strzałki przewijają o jeden slajd.
+  // Karuzela w pętli: za ostatnim slajdem wraca na początek (i odwrotnie); sama przewija się co 5 s,
+  // gdy jest widoczna i nikt jej nie dotyka (na prośbę Olka 26.11.2026).
   const car = document.querySelector<HTMLElement>('#karuzela');
-  document.querySelectorAll<HTMLButtonElement>('.nav-btn').forEach((b) =>
-    b.addEventListener('click', () => {
-      if (!car) return;
+  if (car) {
+    const step = (dir: number) => {
       const slide = car.querySelector<HTMLElement>('.slide');
-      car.scrollBy({ left: Number(b.dataset.dir) * ((slide?.offsetWidth || 400) + 20), behavior: 'smooth' });
-    }),
-  );
+      const w = (slide?.offsetWidth || 400) + 20;
+      const max = car.scrollWidth - car.clientWidth;
+      let left = car.scrollLeft + dir * w;
+      if (dir > 0 && car.scrollLeft >= max - 4) left = 0;
+      else if (dir < 0 && car.scrollLeft <= 4) left = max;
+      car.scrollTo({ left, behavior: 'smooth' });
+    };
+    document.querySelectorAll<HTMLButtonElement>('.nav-btn').forEach((b) =>
+      b.addEventListener('click', () => {
+        step(Number(b.dataset.dir));
+        pausedUntil = Date.now() + 10000;
+      }),
+    );
+    let pausedUntil = 0;
+    let hover = false;
+    let visible = false;
+    car.addEventListener('pointerenter', () => (hover = true));
+    car.addEventListener('pointerleave', () => (hover = false));
+    car.addEventListener('touchstart', () => (pausedUntil = Date.now() + 10000), { passive: true });
+    car.addEventListener('focusin', () => (pausedUntil = Date.now() + 10000));
+    new IntersectionObserver(([e]) => (visible = e.isIntersecting), { threshold: 0.5 }).observe(car);
+    if (!matchMedia('(prefers-reduced-motion: reduce)').matches)
+      setInterval(() => {
+        if (visible && !hover && Date.now() > pausedUntil && !document.hidden) step(1);
+      }, 5000);
+  }
 </script>
 
 <style>
@@ -616,6 +659,33 @@ const faqLd = {
     color: #06121a;
     background: linear-gradient(140deg, #99f6e4, #93c5fd);
   }
+  .intro {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 22px;
+  }
+  .intro img {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    object-fit: cover;
+    box-shadow:
+      0 0 0 2px rgb(255 255 255 / 18%),
+      0 8px 24px rgb(0 0 0 / 40%);
+  }
+  .intro p {
+    display: grid;
+    margin: 0;
+    line-height: 1.3;
+  }
+  .intro strong {
+    font-weight: 650;
+  }
+  .intro span {
+    font-size: 0.9rem;
+    color: var(--text-2);
+  }
   .hosting-ico :global(svg) {
     width: 20px;
     height: 20px;
@@ -663,9 +733,43 @@ const faqLd = {
     font-weight: 600;
     margin: 2px 0 0;
   }
-  .delta.down,
+  .big.red,
+  .delta.down {
+    color: #fb7185;
+  }
+  .big.green,
   .delta.up {
-    color: var(--teal);
+    color: #4ade80;
+  }
+  .key {
+    display: inline-block;
+    width: 10px;
+    height: 3px;
+    border-radius: 2px;
+    margin-right: 6px;
+    vertical-align: middle;
+  }
+  .key.red {
+    background: #fb7185;
+  }
+  .key.green {
+    background: #4ade80;
+  }
+  /* Linie wykresu rysują się raz przy wejściu (bez ruchu przy prefers-reduced-motion). */
+  .spark .line {
+    stroke-dasharray: 1;
+    stroke-dashoffset: 0;
+    animation: draw 1.6s cubic-bezier(0.3, 0.7, 0.2, 1) both 0.3s;
+  }
+  @keyframes draw {
+    from {
+      stroke-dashoffset: 1;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .spark .line {
+      animation: none;
+    }
   }
   .spark {
     width: 100%;
@@ -750,7 +854,8 @@ const faqLd = {
     animation: scroll 45s linear infinite;
   }
   .track img {
-    width: auto;
+    flex-shrink: 0;
+    max-width: none;
     opacity: 0.55;
     transition: opacity 0.3s;
   }
@@ -975,6 +1080,30 @@ const faqLd = {
   .slide {
     margin: 0;
     scroll-snap-align: start;
+  }
+  .slide.pair {
+    grid-column: span 2;
+  }
+  .slide-media {
+    display: grid;
+    gap: 20px;
+  }
+  .pair .slide-media {
+    grid-template-columns: 1fr 1fr;
+  }
+  .more {
+    display: flex;
+    justify-content: center;
+    margin-top: 18px;
+  }
+  .more-btn {
+    padding-inline: 1.8em;
+  }
+  .more-btn span {
+    transition: transform 0.2s ease;
+  }
+  .more-btn:hover span {
+    transform: translateX(4px);
   }
   .slide figcaption {
     display: grid;

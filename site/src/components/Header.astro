@@ -10,8 +10,14 @@ const links = [
 
 <header class="site-header">
   <div class="pill glass">
-    <a href="/" class="brand">
-      <span class="mono" aria-hidden="true">AC</span>
+    <a href="/" class="brand" aria-label={`${site.brandName} – strona główna`}>
+      {
+        site.avatar ? (
+          <img class="mono" src={site.avatar} alt="" width="64" height="64" decoding="async" />
+        ) : (
+          <span class="mono" aria-hidden="true">AC</span>
+        )
+      }
       <span class="name">{site.brandName}</span>
     </a>
     <nav aria-label="Główna">
@@ -58,6 +64,10 @@ const links = [
     font-size: 0.75rem;
     font-weight: 750;
     letter-spacing: 0.02em;
+  }
+  img.mono {
+    object-fit: cover;
+    box-shadow: 0 0 0 1.5px rgb(255 255 255 / 25%);
   }
   nav {
     display: flex;

@@ -27,7 +27,8 @@ const agency = agencyName ? `agencji ${agencyName}` : 'agencji marketingowej, w 
           <h2>{s.name}</h2>
           <p class="muted">{s.tagline}</p>
         </div>
-        <Showcase video={s.video} label={s.name} />
+        <Showcase video={s.video} label={s.name} eager={i === 0} />
+        {s.video2 && <Showcase video={s.video2} label={`${s.name}, podstrona`} />}
       </div>
     </section>
   ))}

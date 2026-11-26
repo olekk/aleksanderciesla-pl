@@ -23,6 +23,8 @@ export const site = {
 
   // TODO(Olek): zdjęcie twarzy, np. '/img/aleksander.webp' (kwadrat min. 800x800). Puste = monogram.
   photo: '/img/aleksander-ciesla-portret.webp',
+  // Mała wersja (112 px) do nagłówka i hero.
+  avatar: '/img/aleksander-ciesla-avatar.webp',
 
   // Ceny pokazywane na stronie. `net: true` dopisuje "netto".
   prices: {

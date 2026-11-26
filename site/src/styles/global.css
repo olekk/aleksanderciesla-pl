@@ -1,3 +1,23 @@
+/* Inter (zmienna grubość) lokalnie: podstawowa łacina + osobno tylko polskie litery z latin-ext (5 KB zamiast 85 KB).
+   Pliki w public/fonts/ (stałe nazwy, preload w Base.astro). Fonty z @fontsource-variable/inter, licencja OFL. */
+@font-face {
+  font-family: 'Inter Variable';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 100 900;
+  src: url('/fonts/inter-latin.woff2') format('woff2-variations');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329,
+    U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Inter Variable';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 100 900;
+  src: url('/fonts/inter-pl.woff2') format('woff2-variations');
+  unicode-range: U+0104-0107, U+0118-0119, U+0141-0144, U+015A-015B, U+0179-017C;
+}
+
 /* Ciemny motyw w stylu "Liquid Glass": półprzezroczyste tafle z rozmyciem nad kolorowym tłem. */
 :root {
   --bg: #06070b;
@@ -29,13 +49,14 @@
 }
 
 html {
-  scroll-behavior: smooth;
   -webkit-text-size-adjust: 100%;
   background: var(--bg);
 }
-@media (prefers-reduced-motion: reduce) {
-  html {
-    scroll-behavior: auto;
+/* Płynne przewijanie do kotwic dopiero po załadowaniu (klasa z Base.astro): wejście z #kotwicą skacze od razu,
+   inaczej przeglądarka nie mierzy LCP (Lighthouse dawał 0 pkt dla adresu z #realizacje). */
+@media (prefers-reduced-motion: no-preference) {
+  html.smooth {
+    scroll-behavior: smooth;
   }
 }
 
@@ -65,7 +86,8 @@ body {
 .aurora-layer {
   position: absolute;
   inset: 0 0 auto;
-  height: 100%;
+  /* Stała wysokość (zmiana wysokości przesuwałaby poświaty i psuła CLS); skrypt dobiera tempo paralaksy. */
+  height: 300vh;
   will-change: transform;
 }
 .aurora span {
@@ -75,7 +97,7 @@ body {
   opacity: 0.7;
   animation: drift 26s ease-in-out infinite alternate;
 }
-/* Poświaty rozłożone na całej (wyższej) warstwie tła; skrypt ustawia jej wysokość pod paralaksę. */
+/* Poświaty rozłożone na całej (wyższej) warstwie tła. */
 .aurora span:nth-child(1) {
   width: 46vw;
   height: 46vw;
@@ -414,24 +436,18 @@ section {
   transform: rotate(-45deg) scale(0.8);
 }
 
-/* Pojawianie się sekcji przy przewijaniu (bez JS = widoczne od razu). */
-.js .reveal {
+/* Pojawianie się sekcji przy przewijaniu. Skrypt (Base.astro) ukrywa klasą .pre tylko to, co jest poza ekranem
+   przy starcie, więc pierwszy ekran nigdy nie czeka na skrypt (LCP), a bez JS wszystko jest widoczne. */
+.reveal.pre {
   opacity: 0;
   transform: translateY(24px);
   transition:
     opacity 0.8s ease,
     transform 0.8s cubic-bezier(0.2, 0.7, 0.2, 1);
 }
-.js .reveal.in {
+.reveal.pre.in {
   opacity: 1;
   transform: none;
-}
-@media (prefers-reduced-motion: reduce) {
-  .js .reveal {
-    opacity: 1;
-    transform: none;
-    transition: none;
-  }
 }
 
 :focus-visible {

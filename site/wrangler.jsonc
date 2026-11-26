@@ -12,7 +12,7 @@
     "html_handling": "auto-trailing-slash",
     "not_found_handling": "404-page",
     // Przez Workera idą tylko strony (noindex na podglądzie, www → apex); statyka bez limitu wywołań.
-    "run_worker_first": ["/*", "!/_astro/*", "!/media/*", "!/favicon.svg", "!/robots.txt"]
+    "run_worker_first": ["/*", "!/_astro/*", "!/media/*", "!/fonts/*", "!/logos/*", "!/img/*", "!/favicon.svg", "!/robots.txt"]
   },
   "vars": {
     // Na tym hoście nie dokładamy noindex.

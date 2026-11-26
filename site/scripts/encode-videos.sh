@@ -13,5 +13,8 @@ for f in "$SRC"/*.mp4; do
   ffmpeg -v error -y -i "$f" -an -vf "scale=$scale:flags=lanczos,fps=30" \
     -c:v libx264 -preset slow -crf 28 -pix_fmt yuv420p -profile:v high -movflags +faststart "$OUT/$n.mp4"
   ffmpeg -v error -y -ss 0.5 -i "$f" -frames:v 1 -vf "scale=$scale" -c:v libwebp -quality 72 "$OUT/$n.webp"
+  # Mniejszy plakat dla małych ekranów (Showcase wybiera go skryptem, Lighthouse: responsive images).
+  if [[ "$n" == *-mobile ]]; then small="260:-2"; sn="$n-260"; else small="640:-2"; sn="$n-640"; fi
+  ffmpeg -v error -y -ss 0.5 -i "$f" -frames:v 1 -vf "scale=$small:flags=lanczos" -c:v libwebp -quality 78 "$OUT/$sn.webp"
 done
 ls -la "$OUT"

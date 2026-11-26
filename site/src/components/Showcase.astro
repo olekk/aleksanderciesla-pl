@@ -5,8 +5,11 @@ interface Props {
   label: string;
   url?: string;
   mobile?: boolean;
+  eager?: boolean;
 }
-const { video, label, url, mobile = true } = Astro.props;
+// eager: plakat od razu w HTML (realizacje na górze strony – plakat bywa elementem LCP); reszta plakatów
+// dochodzi skryptem blisko ekranu (Base.astro), w rozmiarze pod ekran.
+const { video, label, url, mobile = true, eager = false } = Astro.props;
 const host = url ? new URL(url).host : label;
 ---
 
@@ -24,7 +27,8 @@ const host = url ? new URL(url).host : label;
       preload="none"
       width="1280"
       height="800"
-      poster={`/media/${video}-desktop.webp`}
+      data-poster={`/media/${video}-desktop`}
+      poster={eager ? `/media/${video}-desktop.webp` : undefined}
       aria-label={`Nagranie strony ${label} na komputerze`}
     >
       <source src={`/media/${video}-desktop.mp4`} type="video/mp4" />
@@ -41,7 +45,8 @@ const host = url ? new URL(url).host : label;
           preload="none"
           width="520"
           height="886"
-          poster={`/media/${video}-mobile.webp`}
+          data-poster={`/media/${video}-mobile`}
+          poster={eager ? `/media/${video}-mobile-260.webp` : undefined}
           aria-label={`Nagranie strony ${label} na telefonie`}
         >
           <source src={`/media/${video}-mobile.mp4`} type="video/mp4" />

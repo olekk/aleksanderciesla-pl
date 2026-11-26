@@ -11,6 +11,8 @@ export type Project = {
   name: string;
   url?: string;
   video: string;
+  // Drugie nagranie tej samej firmy (jeden slajd, jeden podpis – na prośbę Olka 26.11.2026).
+  video2?: string;
   tagline: string;
   stats?: Stat[];
   page?: string;
@@ -72,13 +74,9 @@ export const agencySites: Project[] = [
     slug: 'foto7',
     name: 'Foto7',
     video: 'foto7',
-    tagline: 'Dystrybutor sprzętu fotograficznego. Strona z rozbudowanym menu marek i animacjami.',
-  },
-  {
-    slug: 'foto7-marki',
-    name: 'Foto7 - Nasze marki',
-    video: 'foto7-nasze-marki',
-    tagline: 'Podstrona z logotypami marek, które obracają się po najechaniu myszką.',
+    video2: 'foto7-nasze-marki',
+    tagline:
+      'Dystrybutor sprzętu fotograficznego. Strona z rozbudowanym menu marek i animacjami, a na podstronie „Nasze marki” logotypy obracają się po najechaniu myszką.',
   },
   {
     slug: 'prodvisor',

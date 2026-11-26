@@ -20,6 +20,7 @@ Ostatnia aktualizacja: 26.11.2026, runda 3 (elastyczne przewijanie, logotypy, ko
 
 ## Dziennik zmian
 
+- 26.11.2026 – Runda 4 na prośbę Olka: przewijanie bez drgań (sekcje doganiają po zahamowaniu), wykres z dwiema liniami, „małych i średnich przedsiębiorstw”, zdjęcie w nagłówku i hero, karuzela w pętli, Foto7 jako jeden slajd, przycisk „Zobacz więcej”, domena jako custom domain, Lighthouse 100 (sekcja 0d).
 - 26.11.2026 – Runda 3 na prośbę Olka: elastyczne przewijanie i wolniejsze tło, logotypy firm, bóle jako pytania, „Więcej niż marketing”, zaplecze współpracowników, maks. 3 firmy, strona 3 000 zł i hosting 0 zł, szkice referencji, Art Papier skrócony na głównej, karuzela stron z agencji, sklep z magazynami energii w HC INSTAL, „5 dni” (sekcja 0c).
 - 26.11.2026 – Na prośbę Olka: ciemny motyw w stylu Liquid Glass, treść przepisana pod sprzedaż, usunięta sekcja „Co nie wyszło”, HC INSTAL jako osobna firma (bez wzmianki o zarządzie), stopka bez zdania o ciasteczkach, marketing 2 500 zł, budżet reklam od ok. 300 zł, formularz kontaktowy (sekcja 0b).
 - 25.11.2026 – Pierwsza wersja strony wg planu (https://claude.ai/artifact/3zDWoqhtv7JazgwNF9h737), nagrania 9 stron, CLAUDE.md z Kartą projektu.
@@ -49,3 +50,13 @@ Ostatnia aktualizacja: 26.11.2026, runda 3 (elastyczne przewijanie, logotypy, ko
 - Referencje: dwa szkice z plakietką „przykład, do podmiany” (`draft: true`); drugi (anonimowy) jest wymyślony i musi zostać zastąpiony prawdziwym przed publikacją.
 - Ceny: strona 3 000 zł netto (bez „od”), hosting 0 zł; marketing 2 500 zł / mies. = „ok. 10 godzin mojej pracy w tygodniu” (do potwierdzenia, Olek mówił niejasno o 2 000 zł); maks. 3 firmy naraz (`maxClients`); „Konto, domena i strona należą do Ciebie” tylko w FAQ.
 - Decyzje Claude (do korekty): nazwy grup zaplecza (graficy, fotografowie, filmowcy i twórcy TikTok, osoby od telefonów, narzędzia AI); siła efektu przewijania (maks. 90 px).
+
+## 0d. Runda 4 – 26.11.2026
+
+- Źródło: wiadomości Olka z 26.11.2026, 02:42 (poprawki i wynik Lighthouse z workers.dev: 77 / 100 / 100 / 69).
+- Przewijanie: sekcje zostają lekko w tyle i dojeżdżają po zahamowaniu sprężyną bez przestrzelenia (`STIFF` 0.07, `DAMP` 0.6 w `Base.astro`).
+- Wykres w hero: poglądowy (linie nie są danymi dziennymi), czerwony koszt zapytania w dół, zielona liczba zapytań w górę; liczby obok z eksportu.
+- Lighthouse (lokalnie, Lighthouse 12, telefon i komputer): wszystkie strony 100 / 100 / 100 / 100, strona główna na telefonie 99 (LCP 2,2 s przez font przy symulowanym wolnym łączu). Poprawki: CLS 0,594 → 0 (poświaty tła zmieniały pozycję przy zmianie wysokości warstwy; logotypy bez wymiarów), Inter z `public/fonts/` z preloadem (polskie litery wydzielone, 5 KB zamiast 85 KB), logotypy WebP w 2× rozmiarze, plakaty nagrań ładowane blisko ekranu i mniejsze na telefonie, cache dla `/fonts/`, `/logos/`, `/img/`, płynne przewijanie do kotwic dopiero po załadowaniu (z nim Chrome nie mierzył LCP dla adresu z `#realizacje`), opis linku w nagłówku.
+- SEO 69 na workers.dev to celowy `noindex` podglądu; na domenie znika.
+- Domena: `routes` z `custom_domain` dla apex i www w `wrangler.jsonc` (Olek dodał domenę do Cloudflare 26.11.2026).
+- Decyzje Claude (do korekty): w tytule strony „MŚP” zamiast pełnej nazwy (długość tytułu w Google); zdjęcie też w nagłówku zamiast monogramu „AC”.
