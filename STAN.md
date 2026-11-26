@@ -69,7 +69,7 @@ Ostatnia aktualizacja: 26.11.2026, runda 3 (elastyczne przewijanie, logotypy, ko
 - Źródło: wiadomość Olka z 26.11.2026, 13:23 (przez czat projektu).
 - Telefon 695 553 690 w `site.ts` (przycisk w hero, kontakt, stopka, JSON-LD).
 - Karta wyników: „Koszt konwersji” 33,29 zł; „Zapytania z reklam” 20 / mies. „z 0” – według Olka (przed kampanią 0), nie z eksportu; „55× w 2 tygodnie”.
-- Testy A/B: przykład z miniaturkami YouTube narysowany w CSS (bez cudzych miniatur), liczby 4,1% / 9,2% opisane jako poglądowe. „Strona ewoluująca”: „cel: nawet 2× więcej zapytań” – to cel, nie wynik (brak danych na 253%). Technicznie: warianty budowane przez Astro, przydział w Workerze (CLAUDE.md, sekcja 10) – do wdrożenia przy pierwszym kliencie.
+- Testy A/B: zrzut dwóch wersji miniaturki i tytułu filmu Kurzgesagt od Olka (26.11.2026, zastąpił rysunek z czarną dziurą), z podanym źródłem (prawo cytatu); `public/img/test-ab-miniaturki-youtube-kurzgesagt.webp`. „Strona ewoluująca”: „cel: nawet 2× więcej zapytań” – to cel, nie wynik (brak danych na 253%). Technicznie: warianty budowane przez Astro, przydział w Workerze (CLAUDE.md, sekcja 10) – do wdrożenia przy pierwszym kliencie.
 - Wsparcie IT i własne narzędzia: 3 karty, przykład rozszerzenia do kosztorysów ze stron hurtowni; w cenniku marketingu dopisane testy A/B i wsparcie IT.
 - Opinia Flawiusza przepisana o zaufaniu, nadal szkic (`draft: true`) do jego akceptacji.
 - Decyzje Claude (do korekty): sekcja A/B i IT między usługami a „3 firmami”; nagłówek „Programista pod telefonem”.

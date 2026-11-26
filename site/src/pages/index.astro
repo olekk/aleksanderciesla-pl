@@ -353,20 +353,21 @@ const faqLd = {
           lepiej odpowiada na to, czego potrzebują Twoi klienci. Bez migania i bez spowalniania strony.
         </p>
       </div>
-      <div class="ab-visual reveal" aria-label="Przykład testu A/B: dwie miniaturki tego samego filmu">
-        <div class="thumbs">
-          <figure class="thumb glass">
-            <div class="thumb-img a" aria-hidden="true"><span>Jak działa<br />czarna dziura?</span></div>
-            <figcaption><b>A</b> 4,1% kliknięć</figcaption>
-            <span class="bar"><i style="width:45%"></i></span>
-          </figure>
-          <figure class="thumb glass win">
-            <div class="thumb-img b" aria-hidden="true"><span>Co jest<br />w środku?</span></div>
-            <figcaption><b>B</b> 9,2% kliknięć <em>wygrywa</em></figcaption>
-            <span class="bar"><i style="width:100%"></i></span>
-          </figure>
-        </div>
-        <p class="muted small">Przykład poglądowy: ten sam film, dwie miniaturki. Liczby ilustrują zasadę, to nie dane konkretnego kanału.</p>
+      <div class="ab-visual reveal">
+        <figure class="ab-shot glass">
+          <img
+            src="/img/test-ab-miniaturki-youtube-kurzgesagt.webp"
+            alt="Dwie wersje miniaturki i tytułu tego samego filmu kanału Kurzgesagt o wojnie jądrowej: 892 wyświetlenia po 2 minutach i 389 tys. po 3 godzinach"
+            width="610"
+            height="269"
+            loading="lazy"
+            decoding="async"
+          />
+          <figcaption class="muted small">
+            Kurzgesagt, jeden z największych kanałów naukowych na YouTube, testuje różne miniaturki i tytuły tego samego
+            filmu. Zostaje wersja, którą widzowie klikają chętniej. Źródło: kanał Kurzgesagt – In a Nutshell (YouTube).
+          </figcaption>
+        </figure>
         <div class="evo glass">
           <p class="tag">Nowość</p>
           <h3>Strona ewoluująca</h3>
@@ -994,85 +995,18 @@ const faqLd = {
       gap: 64px;
     }
   }
-  .thumbs {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 14px;
+  .ab-shot {
+    margin: 0 0 18px;
+    padding: 10px;
+    border-radius: 20px;
   }
-  .thumb {
-    margin: 0;
-    padding: 10px 10px 14px;
-    border-radius: 18px;
+  .ab-shot img {
+    width: 100%;
+    height: auto;
+    border-radius: 12px;
   }
-  .thumb-img {
-    aspect-ratio: 16 / 9;
-    border-radius: 10px;
-    display: flex;
-    align-items: flex-end;
-    padding: 10px 12px;
-    font-weight: 800;
-    font-size: clamp(0.8rem, 1.6vw, 1rem);
-    line-height: 1.1;
-    letter-spacing: -0.02em;
-  }
-  .thumb-img.a {
-    background:
-      radial-gradient(circle at 70% 40%, #0b0d14 18%, #334155 19%, #1e293b 30%, transparent 31%),
-      linear-gradient(135deg, #475569, #1e293b);
-    color: #e2e8f0;
-  }
-  .thumb-img.b {
-    background:
-      radial-gradient(circle at 68% 42%, #000 16%, #f59e0b 17%, #f43f5e 26%, transparent 38%),
-      linear-gradient(135deg, #1e1b4b, #4c1d95);
-    color: #fff;
-    text-shadow: 0 2px 10px rgb(0 0 0 / 60%);
-  }
-  .thumb figcaption {
-    margin: 10px 2px 8px;
-    font-size: 0.88rem;
-    color: var(--text-2);
-  }
-  .thumb figcaption b {
-    display: inline-grid;
-    place-items: center;
-    width: 22px;
-    height: 22px;
-    margin-right: 6px;
-    border-radius: 6px;
-    background: rgb(255 255 255 / 12%);
-    color: var(--text);
-    font-size: 0.8rem;
-  }
-  .thumb figcaption em {
-    font-style: normal;
-    font-size: 0.75rem;
-    font-weight: 700;
-    margin-left: 6px;
-    padding: 2px 8px;
-    border-radius: 999px;
-    background: rgb(74 222 128 / 16%);
-    color: #4ade80;
-  }
-  .bar {
-    display: block;
-    height: 6px;
-    margin: 0 2px;
-    border-radius: 999px;
-    background: rgb(255 255 255 / 8%);
-    overflow: hidden;
-  }
-  .bar i {
-    display: block;
-    height: 100%;
-    border-radius: inherit;
-    background: #64748b;
-  }
-  .win .bar i {
-    background: #4ade80;
-  }
-  .ab-visual > .muted {
-    margin: 10px 0 18px;
+  .ab-shot figcaption {
+    margin: 12px 6px 4px;
   }
   .evo {
     padding: 22px 24px;
