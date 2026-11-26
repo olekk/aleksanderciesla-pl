@@ -143,10 +143,6 @@ const faq = [
     q: 'Dlaczego tylko 3 firmy naraz?',
     a: 'Bo chcę być Twoim jednoosobowym działem marketingu i rozwoju, a nie wykonawcą, który zrobi stronę i zniknie. Przy trzech firmach znam każdą kampanię, każdy problem i każdą liczbę.',
   },
-  {
-    q: 'Co jeśli nie będzie wyników?',
-    a: 'Zobaczysz to w raporcie, czarno na białym. Wtedy mówię wprost, co zmieniam albo że dany kanał się u Ciebie nie opłaca. Wolę stracić klienta niż brać pieniądze za coś, co nie działa.',
-  },
 ];
 
 const faqLd = {
@@ -567,7 +563,7 @@ const faqLd = {
         <p class="eyebrow">Ceny</p>
         <h2>Ceny wprost. Bez „wyceny indywidualnej”.</h2>
       </div>
-      <div class="grid grid-3 prices">
+      <div class="grid prices">
         <article class="glass card price-card reveal">
           <h3>Strona internetowa</h3>
           <p class="price">{p.website}<small>{priceSuffix}, jednorazowo</small></p>
@@ -579,47 +575,36 @@ const faqLd = {
           </ul>
           <a class="btn btn-glass" href="#kontakt">Zapytaj o stronę</a>
         </article>
-        <article class="glass card price-card featured reveal">
+        <article class="glass card price-card featured big-card reveal">
           <span class="badge">Stała opieka</span>
           <h3>Marketing i rozwój firmy</h3>
-          <p class="price">{p.marketing}<small>{priceSuffix} · {p.marketingTime}</small></p>
-          <ul class="check">
-            <li>Analiza firmy, oferty i klientów</li>
-            <li>Google Ads prowadzone na bieżąco</li>
-            <li>Widoczność w ChatGPT, Google i mapach</li>
-            <li>Baza klientów i proces obsługi zapytań</li>
-            <li>Pomysły na pakiety i promocje</li>
-            <li>Automatyzacje: opinie, raporty, powiadomienia</li>
-            <li>Zmiany na stronie w cenie i testy A/B</li>
-            <li>Bieżące wsparcie IT: poczta, wysyłki, aplikacje</li>
-            <li>Raport co miesiąc</li>
-          </ul>
+          <p class="price">{p.marketing}<small>{priceSuffix} · {p.marketingTime} · wszystko poniżej w cenie</small></p>
+          <div class="cols">
+            <div>
+              <p class="col-h">Marketing</p>
+              <ul class="check">
+                <li>Analiza firmy, oferty i klientów</li>
+                <li>Google Ads prowadzone na bieżąco</li>
+                <li>Widoczność w ChatGPT, Google i mapach</li>
+                <li>Pomysły na pakiety i promocje</li>
+                <li>Zmiany na stronie i testy A/B</li>
+                <li>Raport co miesiąc</li>
+              </ul>
+            </div>
+            <div>
+              <p class="col-h">Baza klientów i sprzedaż</p>
+              <ul class="check">
+                <li>Baza klientów w Arkuszach Google albo Notion</li>
+                <li>Asystent, który przypomina o kontakcie</li>
+                <li>Proces obsługi zapytań krok po kroku</li>
+                <li>Skrypty i wsparcie przy telefonach do klientów</li>
+                <li>Automatyzacje: opinie, raporty, powiadomienia</li>
+                <li>Bieżące wsparcie IT: poczta, wysyłki, aplikacje</li>
+              </ul>
+            </div>
+          </div>
           <a class="btn btn-primary" href="#kontakt">Porozmawiajmy</a>
           <p class="muted small fine">Budżet reklam płacisz bezpośrednio Google: {p.adBudget}</p>
-        </article>
-        <article class="glass card price-card reveal">
-          <h3>Baza klientów i sprzedaż</h3>
-          <p class="price">
-            {
-              p.crm ? (
-                <>
-                  {p.crm}
-                  <small>{priceSuffix}</small>
-                </>
-              ) : (
-                <>
-                  po rozmowie<small>zależy od tego, jak dziś sprzedajesz</small>
-                </>
-              )
-            }
-          </p>
-          <ul class="check">
-            <li>Baza klientów w Arkuszach Google albo Notion</li>
-            <li>Asystent, który przypomina o kontakcie</li>
-            <li>Proces obsługi zapytań krok po kroku</li>
-            <li>Skrypty i wsparcie przy telefonach do klientów</li>
-          </ul>
-          <a class="btn btn-glass" href="#kontakt">Zapytaj</a>
         </article>
       </div>
     </div>
@@ -1326,6 +1311,32 @@ const faqLd = {
     margin-top: 44px;
     row-gap: 30px;
     align-items: stretch;
+  }
+  @media (min-width: 900px) {
+    .prices {
+      grid-template-columns: 1fr 2fr;
+    }
+  }
+  .cols {
+    display: grid;
+    gap: 4px 28px;
+    flex: 1;
+  }
+  @media (min-width: 640px) {
+    .cols {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+  .col-h {
+    font-size: 0.8rem;
+    font-weight: 650;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-2);
+    margin: 0 0 10px;
+  }
+  .big-card .check {
+    flex: 0;
   }
   .price-card {
     display: flex;

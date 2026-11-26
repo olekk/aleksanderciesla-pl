@@ -20,6 +20,7 @@ Ostatnia aktualizacja: 26.11.2026, runda 3 (elastyczne przewijanie, logotypy, ko
 
 ## Dziennik zmian
 
+- 26.11.2026 – Cennik na prośbę Olka: jeden duży kafel „Marketing i rozwój firmy” (2 500 zł / mies.) z marketingiem oraz bazą klientów i sprzedażą w cenie, zamiast osobnego kafla „po rozmowie”; usunięte pytanie FAQ „Co jeśli nie będzie wyników?”.
 - 26.11.2026 – Indeksowanie: mapa strony `/sitemap.xml`, `robots.txt` z mapą, tytuł i opisy pod „Aleksander Cieśla” i „jednoosobowy dział marketingu”, rozszerzony JSON-LD, 404 z noindex; zgłoszenie w Google Search Console po stronie Olka (TODO).
 - 26.11.2026 – Runda 5 na prośbę Olka: telefon, koszt konwersji i zapytania 0 → 20 / mies., sekcje „Strona, która ewoluuje” (testy A/B) i „Wsparcie IT i własne narzędzia”, nagłówek „Brzmi znajomo” pod kafelkami, Foto7 jako 2 kafelki, opinia Flawiusza o zaufaniu (szkic) (sekcja 0e).
 - 26.11.2026 – Runda 4 na prośbę Olka: przewijanie bez drgań (sekcje doganiają po zahamowaniu), wykres z dwiema liniami, „małych i średnich przedsiębiorstw”, zdjęcie w nagłówku i hero, karuzela w pętli, Foto7 jako jeden slajd, przycisk „Zobacz więcej”, domena jako custom domain, Lighthouse 100 (sekcja 0d).
