@@ -704,7 +704,7 @@ const faqLd = {
             <p class="eyebrow">{T('Referencje', 'References')}</p>
             <h2>{T('Co mówią klienci', 'What clients say')}</h2>
           </div>
-          <div class="grid grid-2 quotes">
+          <div class:list={["grid quotes", shownQuotes.length >= 3 ? "grid-3" : "grid-2"]}>
             {shownQuotes.map((q) => (
               <blockquote class="quote glass reveal">
                 {q.draft && <span class="draft">przykład, do podmiany</span>}
