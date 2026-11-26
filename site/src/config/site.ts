@@ -15,8 +15,8 @@ export const site = {
   // TODO(Olek): potwierdzić adres (skrzynka na własnej domenie)
   email: 'kontakt@aleksanderciesla.pl',
 
-  area: 'Trójmiasto i Śląsk (Gliwice i okolice)',
-  areaShort: 'Trójmiasto i Śląsk',
+  // Spotkania na miejscu – wspominamy raz, w kontakcie.
+  meetArea: 'z Trójmiasta albo ze Śląska',
 
   // TODO(Olek): na jaką firmę faktury (np. HC INSTAL sp. z o.o., NIP ...). Puste = brak w stopce.
   companyInfo: '',
@@ -27,15 +27,17 @@ export const site = {
   // Ceny pokazywane na stronie. `net: true` dopisuje "netto".
   prices: {
     net: true,
-    website: 'od 3 000 zł',
+    website: '3 000 zł',
     marketing: '2 500 zł / mies.',
+    // TODO(Olek): potwierdzić przelicznik czasu (wiadomość 26.11.2026: „2000 miesięcznie to 10 godzin tygodniowo”?)
+    marketingTime: 'ok. 10 godzin mojej pracy w tygodniu',
     adBudget: 'od ok. 300 zł / mies.',
     // TODO(Olek): kwota za porządek z zapytaniami (CRM). Puste = "wycena po rozmowie".
     crm: '',
   },
 
-  // TODO(Olek): potwierdzić, że tak chcesz działać (FAQ i sekcja cen).
-  noLongContract: true,
+  // Ilu firm naraz pilnuję (sekcja „Maksymalnie 3 firmy”).
+  maxClients: 3,
 
   // TODO(Olek): token Cloudflare Web Analytics (bez ciasteczek). Puste = brak skryptu.
   cfAnalyticsToken: '',

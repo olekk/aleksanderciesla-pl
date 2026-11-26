@@ -13,7 +13,7 @@ interface Props {
 
 const {
   title,
-  description = 'Strony internetowe, Google Ads i widoczność w AI dla małych firm. Zrobię to za Ciebie i co miesiąc pokażę, ile zapytań to dało. Jawne ceny. Trójmiasto i Śląsk.',
+  description = 'Strony internetowe, Google Ads i widoczność w AI dla małych firm. Zrobię to za Ciebie i co miesiąc pokażę, ile zapytań to dało. Jawne ceny.',
   jsonLd: extraLd = [],
 } = Astro.props;
 
@@ -40,7 +40,7 @@ const jsonLd = {
       name: site.brandName,
       url: site.url,
       founder: { '@id': `${site.url}/#person` },
-      areaServed: ['Trójmiasto', 'Gdańsk', 'Gdynia', 'Gliwice', 'Śląsk', 'Polska'],
+      areaServed: 'Polska',
     },
     ...extraLd,
   ],
@@ -69,7 +69,9 @@ const jsonLd = {
     <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
   </head>
   <body>
-    <div class="aurora" aria-hidden="true"><span></span><span></span><span></span></div>
+    <div class="aurora" aria-hidden="true">
+      <div class="aurora-layer"><span></span><span></span><span></span><span></span><span></span><span></span></div>
+    </div>
     <a class="skip" href="#tresc">Przejdź do treści</a>
     <Header />
     <main id="tresc">
@@ -111,6 +113,97 @@ const jsonLd = {
         { rootMargin: '0px 0px -8% 0px' },
       );
       document.querySelectorAll('.reveal').forEach((el) => rio.observe(el));
+
+      // "Elastyczne" przewijanie: przy szybkim przewijaniu odstępy między sekcjami lekko się rozciągają,
+      // po zatrzymaniu wracają ze sprężynowaniem; przewinięcie za górę / dół strony rozciąga całość.
+      // Przesunięcia rosną monotonicznie od góry do dołu, więc sekcje nigdy na siebie nie nachodzą.
+      // Tylko transformy (bez zmian układu), wyłączone przy prefers-reduced-motion.
+      const layer = document.querySelector<HTMLElement>('.aurora-layer');
+      const PARALLAX = 0.12; // tło jedzie w tę samą stronę co treść, ale ok. 8 razy wolniej
+      const items = Array.from(document.querySelectorAll<HTMLElement>('main > *, body > footer'));
+      if (!reduce && items.length) {
+        const K = 1.4; // siła rozciągania od prędkości
+        const MAX = 90; // maks. przesunięcie sekcji w px
+        const n = items.length;
+        let centers: number[] = [];
+        const x = new Float64Array(n);
+        const vel = new Float64Array(n);
+        let lastY = scrollY;
+        let speed = 0;
+        let pull = 0; // > 0 za górą strony, < 0 za dołem
+        let running = false;
+
+        const measure = () => {
+          centers = items.map((el) => el.offsetTop + el.offsetHeight / 2);
+          if (layer) layer.style.height = `${innerHeight + Math.max(0, document.documentElement.scrollHeight - innerHeight) * PARALLAX + 40}px`;
+        };
+        measure();
+        addEventListener('resize', measure, { passive: true });
+        new ResizeObserver(measure).observe(document.body);
+
+        const tick = () => {
+          const y = scrollY;
+          // Skok (np. wyszukiwanie na stronie) nie może wystrzelić sekcji: prędkość przycięta.
+          speed = speed * 0.75 + Math.max(-60, Math.min(60, y - lastY)) * 0.25;
+          lastY = y;
+          pull *= 0.86;
+          if (Math.abs(pull) < 0.2) pull = 0;
+          const vh = innerHeight;
+          const mid = y + vh / 2;
+          let moving = Math.abs(speed) > 0.05 || pull !== 0;
+          for (let i = 0; i < n; i++) {
+            const d = Math.max(-2, Math.min(2, (centers[i] - mid) / vh));
+            let target = Math.max(-MAX, Math.min(MAX, speed * K * d));
+            if (pull > 0) target += pull * (0.35 + 0.18 * i);
+            else if (pull < 0) target += pull * (0.35 + 0.18 * (n - 1 - i));
+            vel[i] = (vel[i] + (target - x[i]) * 0.085) * 0.8;
+            x[i] += vel[i];
+            if (Math.abs(x[i]) > 0.1 || Math.abs(vel[i]) > 0.05) moving = true;
+            items[i].style.transform = Math.abs(x[i]) < 0.1 ? '' : `translate3d(0,${x[i].toFixed(2)}px,0)`;
+          }
+          if (moving) requestAnimationFrame(tick);
+          else running = false;
+        };
+        const kick = () => {
+          if (!running) {
+            running = true;
+            requestAnimationFrame(tick);
+          }
+        };
+        addEventListener('scroll', kick, { passive: true });
+        // Kółko myszy / gładzik za krawędzią strony: przeglądarka nie przewija, więc rozciągamy sami.
+        addEventListener(
+          'wheel',
+          (e) => {
+            const max = document.documentElement.scrollHeight - innerHeight;
+            if (e.deltaY < 0 && scrollY <= 0) pull = Math.min(160, pull - e.deltaY * 0.25);
+            else if (e.deltaY > 0 && scrollY >= max - 1) pull = Math.max(-160, pull - e.deltaY * 0.25);
+            else return;
+            kick();
+          },
+          { passive: true },
+        );
+      }
+
+      // Tło (poświaty) przesuwa się razem z treścią, ale dużo wolniej.
+      if (layer && !reduce) {
+        let queued = false;
+        const move = () => {
+          layer.style.transform = `translate3d(0,${(-scrollY * PARALLAX).toFixed(1)}px,0)`;
+          queued = false;
+        };
+        move();
+        addEventListener(
+          'scroll',
+          () => {
+            if (!queued) {
+              queued = true;
+              requestAnimationFrame(move);
+            }
+          },
+          { passive: true },
+        );
+      }
 
       // Odblask na szkle podąża za kursorem (tylko mysz, nie dotyk).
       if (!reduce && matchMedia('(pointer: fine)').matches) {

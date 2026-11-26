@@ -10,81 +10,119 @@ const artPapier = featured[0];
 const hc = featured[1];
 const p = site.prices;
 
-const names = ['Art Papier', 'HC INSTAL', 'GiB Meble', 'Foto7', 'Prodvisor', 'Auto-Centrum Gliwice', 'Vibeon', 'Liberta Okna'];
+const logos = [
+  { file: 'art-papier', name: 'Art Papier', h: 46 },
+  { file: 'hc-instal', name: 'HC INSTAL', h: 22 },
+  { file: 'gib-meble', name: 'GiB Meble', h: 38 },
+  { file: 'foto7', name: 'Foto7', h: 30 },
+  { file: 'prodvisor', name: 'Prodvisor', h: 22 },
+  { file: 'auto-centrum', name: 'Auto-Centrum', h: 40 },
+  { file: 'vibeon', name: 'vibeOn', h: 44 },
+  { file: 'liberta', name: 'Liberta Okna', h: 32 },
+];
 
 const pains = [
-  'Płacisz za reklamy, ale nie wiesz, ile zapytań z nich masz.',
-  'Strona ma kilka lat, wolno działa na telefonie i nikt z niej nie dzwoni.',
-  'Zapytania przychodzą mailem, telefonem i z formularza, a część ginie.',
-  'Na marketing nie masz czasu, a agencje mówią językiem, którego nie rozumiesz.',
+  'Płacisz za reklamy, ale nie wiesz, ile zapytań z nich masz?',
+  'Strona ma kilka lat, wolno działa na telefonie i nikt z niej nie dzwoni?',
+  'Zapytania przychodzą mailem, telefonem i z formularza, a część z nich ginie?',
+  'Nie masz czasu na marketing, a agencje mówią językiem, którego nie rozumiesz?',
 ];
+
+const whole = [
+  {
+    icon: 'chart',
+    title: 'Analiza firmy',
+    text: 'Patrzę, co robisz, jak to robisz i co możesz robić lepiej. Kim są Twoi klienci i jak się z nimi kontaktujesz.',
+  },
+  {
+    icon: 'doc',
+    title: 'Oferta',
+    text: 'Pomagam ułożyć ofertę tak, żeby łatwiej się sprzedawała: pakiety, promocje sezonowe, jasny cennik.',
+  },
+  {
+    icon: 'chat',
+    title: 'Sprzedaż',
+    text: 'Przygotuję bazę klientów z asystentem, który przypomina o kontakcie, i prosty proces obsługi zapytań. Pomogę też wdrożyć skuteczne telefony do nowych klientów.',
+  },
+  {
+    icon: 'rocket',
+    title: 'Marketing',
+    text: 'Dopiero na tym budujemy stronę, reklamy i widoczność w Google i AI. Wtedy każda złotówka trafia tam, gdzie przynosi klientów.',
+  },
+] as const;
 
 const services = [
   {
     icon: 'site',
-    title: 'Strona, która sprzedaje',
-    text: 'Szybka na telefonie, z jasnym „zadzwoń” i formularzem na wierzchu. Teksty piszę ja, Ty tylko poprawiasz. Hosting za 0 zł.',
+    title: 'Szybka strona na darmowym hostingu',
+    text: 'Strona szybka na telefonie, z jasnym „zadzwoń” i formularzem. Teksty piszę ja. Płacisz raz za wykonanie i co rok tylko za domenę. <strong>Hosting 0 zł.</strong>',
   },
   {
     icon: 'ads',
     title: 'Google Ads pod zapytania',
-    text: 'Kampanie ustawione tak, żeby płacić za klientów, a nie za kliknięcia. Wycinam frazy, które przepalają budżet, i co tydzień sprawdzam wydatki.',
+    text: 'Kampanie ustawione tak, żeby płacić za klientów, a nie za kliknięcia. Wycinam frazy, które przepalają budżet, a wydatki sprawdzam co tydzień.',
   },
   {
     icon: 'ai',
-    title: 'Widoczność w AI',
-    text: 'Klienci coraz częściej pytają ChatGPT i Copilota, gdzie coś kupić. Przygotowuję stronę i dane o firmie tak, żeby AI polecało właśnie Ciebie.',
+    title: 'Widoczność w ChatGPT i AI',
+    text: 'Klienci coraz częściej pytają ChatGPT, gdzie coś kupić. Sprawiam, że AI poleca Twoją firmę, <strong>bez płacenia za reklamy w ChatGPT</strong>. Kampanie w ChatGPT też możemy uruchomić, ale dziś równie dobre wyniki osiągam bez nich.',
   },
   {
     icon: 'map',
     title: 'Google: wyszukiwarka i mapy',
-    text: 'Profil firmy w Google, opinie, dane strukturalne i treści, które odpowiadają na pytania klientów. Tak budujesz ruch, za który nie płacisz co klik.',
+    text: 'Profil firmy w Google, opinie i treści, które odpowiadają na pytania klientów. Ruch, za który nie płacisz za każde kliknięcie.',
   },
   {
     icon: 'inbox',
-    title: 'Żadne zapytanie nie ginie',
-    text: 'Prosty CRM w Arkuszach Google albo Notion: kto pytał, skąd przyszedł i komu trzeba oddzwonić. Powiadomienia na maila od razu.',
+    title: 'Baza klientów',
+    text: 'Jedno miejsce, w którym widzisz, kto pytał, skąd przyszedł i komu trzeba oddzwonić. Nowe zapytania trafiają tam same, a Ty dostajesz powiadomienie.',
   },
   {
     icon: 'bolt',
     title: 'Automatyzacje',
-    text: 'Powtarzalne rzeczy robią się same: raporty z reklam, prośby o opinię po realizacji, przepisywanie zapytań do arkusza.',
+    text: 'Załatwię to, że po realizacji klienci sami dostaną prośbę o opinię w Google, zapytania same zapiszą się w bazie klientów, a raport z reklam sam przyjdzie na maila.',
   },
 ] as const;
 
+const team = [
+  { t: 'Graficy', d: 'logo, materiały reklamowe, grafiki do kampanii' },
+  { t: 'Fotografowie', d: 'zdjęcia produktów, ludzi i realizacji' },
+  { t: 'Filmowcy i twórcy TikTok', d: 'krótkie filmy i reklamy do social mediów' },
+  { t: 'Osoby od telefonów', d: 'umawianie spotkań i dzwonienie do nowych klientów' },
+  { t: 'Narzędzia AI', d: 'analiza danych, raporty i teksty szybciej i taniej' },
+];
+
 const steps = [
-  { t: 'Rozmowa', d: '30 minut na miejscu albo przez telefon. Bezpłatnie.' },
-  { t: 'Bezpłatny przegląd', d: 'Sprawdzam Twoją stronę, reklamy i widoczność w Google i AI. Mówię, co bym zmienił.' },
-  { t: 'Propozycja na piśmie', d: 'Co robię, ile to kosztuje i czego potrzebuję od Ciebie. Bez drobnego druku.' },
-  { t: 'Start i raport co miesiąc', d: 'Najpierw porządkuję pomiar. Potem 3. dnia każdego miesiąca dostajesz krótki raport: wydatki, zapytania, co zmieniam.' },
+  { t: 'Rozmowa', d: '30 minut przez telefon albo na miejscu. Bezpłatnie.' },
+  { t: 'Bezpłatny przegląd', d: 'Sprawdzam Twoją stronę, reklamy, ofertę i to, jak obsługujesz zapytania. Mówię, co bym zmienił.' },
+  { t: 'Plan na piśmie', d: 'Co robię, w jakiej kolejności, ile to kosztuje i czego potrzebuję od Ciebie.' },
+  { t: 'Stała opieka', d: 'Pracuję, doglądam i doradzam co tydzień. 3. dnia miesiąca dostajesz krótki raport: wydatki, zapytania, co zmieniam.' },
 ];
 
 const faq = [
   {
-    q: 'Czy muszę podpisać umowę na rok?',
-    a: site.noLongContract
-      ? 'Nie. Pracujemy miesiąc do miesiąca, z miesięcznym wypowiedzeniem. Zostajesz, bo widzisz wyniki, a nie dlatego, że musisz.'
-      : 'Ustalamy to przy propozycji. Zawsze z jasnym okresem wypowiedzenia.',
-  },
-  {
     q: 'Ile muszę wydać na same reklamy?',
-    a: 'Budżet reklam płacisz bezpośrednio Google, osobno od mojego wynagrodzenia. Dla lokalnej firmy usługowej sensowny start to ok. 300-450 zł miesięcznie: kampania tylko w wyszukiwarce, na najbardziej konkretne frazy i w Twojej okolicy. Przy kliknięciu za 2-3 zł to ok. 100-200 wejść klientów, którzy szukają dokładnie tego, co robisz. Mniej zwykle nie ma sensu, bo za mało danych, żeby cokolwiek ocenić.',
+    a: 'Budżet reklam płacisz bezpośrednio Google, osobno od mojego wynagrodzenia. Dla lokalnej firmy usługowej sensowny start to ok. 300-450 zł miesięcznie: kampania tylko w wyszukiwarce, na najbardziej konkretne frazy i w Twojej okolicy. Przy kliknięciu za 2-3 zł to ok. 100-200 wejść osób, które szukają dokładnie tego, co robisz. Mniej zwykle nie ma sensu, bo za mało danych, żeby cokolwiek ocenić.',
   },
   {
     q: 'Czyje jest konto reklamowe, domena i strona?',
     a: 'Twoje. Konto Google Ads, domena i kod strony są na Twoją firmę. Jeśli kiedyś się rozstaniemy, wszystko zostaje u Ciebie.',
   },
   {
-    q: 'Co to jest widoczność w AI?',
-    a: 'Coraz więcej osób zamiast w Google pyta ChatGPT, Copilota albo Gemini: „gdzie w okolicy zrobić…”, „kto produkuje…”. Te narzędzia polecają firmy, o których mają wiarygodne informacje. Dbam o to, żeby je miały: dane strukturalne na stronie, wpisy w bazach takich jak Wikidata, Bing i Google, treści odpowiadające na konkretne pytania. Art Papier jest dziś wymieniany przez ChatGPT, a Copilot cytował stronę 55 razy.',
+    q: 'Jak to możliwe, że hosting jest za darmo?',
+    a: 'Strony robię w nowoczesnej technologii (Astro), która działa na globalnej sieci Cloudflare. Dla stron firmowych ich darmowy plan w zupełności wystarcza, a strona ładuje się błyskawicznie. Płacisz tylko za domenę, zwykle kilkadziesiąt złotych rocznie.',
+  },
+  {
+    q: 'Czym jest widoczność w ChatGPT?',
+    a: 'Coraz więcej osób zamiast w Google pyta ChatGPT, Copilota albo Gemini: „gdzie w okolicy zrobić…”, „kto produkuje…”. Te narzędzia polecają firmy, o których mają wiarygodne informacje. Dbam o to, żeby je miały: dane na stronie, wpisy w bazach, z których korzysta AI, i treści odpowiadające na konkretne pytania klientów.',
+  },
+  {
+    q: 'Dlaczego tylko 3 firmy naraz?',
+    a: 'Bo chcę być Twoim działem marketingu i rozwoju, a nie wykonawcą, który zrobi stronę i zniknie. Przy trzech firmach znam każdą kampanię, każdy problem i każdą liczbę.',
   },
   {
     q: 'Co jeśli nie będzie wyników?',
     a: 'Zobaczysz to w raporcie, czarno na białym. Wtedy mówię wprost, co zmieniam albo że dany kanał się u Ciebie nie opłaca. Wolę stracić klienta niż brać pieniądze za coś, co nie działa.',
-  },
-  {
-    q: 'Muszę się znać na marketingu?',
-    a: 'Nie. Potrzebuję od Ciebie wiedzy o firmie i klientach, resztę biorę na siebie. Raport piszę tak, żeby dało się go przeczytać przy kawie.',
   },
 ];
 
@@ -96,30 +134,56 @@ const faqLd = {
 
 <Base jsonLd={[faqLd]}>
   <!-- HERO -->
-  <section class="hero">
+  <section class="hero" data-flow>
     <div class="wrap hero-grid">
       <div class="hero-text">
-        <p class="eyebrow">{site.personName} · {site.areaShort}</p>
+        <p class="eyebrow">{site.personName} · marketing i rozwój małych firm</p>
         <h1>Więcej klientów z internetu. <span class="grad">Bez zajmowania się marketingiem.</span></h1>
         <p class="lead">
-          Strona, reklamy Google i widoczność w AI dla małych firm. Robię to za Ciebie, a co miesiąc pokazuję, ile to
-          kosztowało i ile zapytań przyniosło.
+          Strona, reklamy Google, widoczność w ChatGPT i porządek w sprzedaży. Biorę to na siebie i co miesiąc pokazuję, ile to
+          kosztowało i ile przyniosło.
         </p>
+        <div class="hosting glass">
+          <span class="hosting-ico" aria-hidden="true"><Icon name="bolt" /></span>
+          <p>
+            <strong>Szybka strona na darmowym hostingu.</strong> Płacisz raz {p.website}{priceSuffix} za wykonanie i co rok tylko
+            za domenę.
+          </p>
+        </div>
         <div class="btn-row">
           <a class="btn btn-primary" href="#kontakt">Umów bezpłatną rozmowę</a>
-          <a class="btn btn-glass" href="#realizacje">Zobacz realizacje</a>
+          {
+            site.phone ? (
+              <a class="btn btn-glass" href={`tel:${site.phoneHref || site.phone}`}>
+                {site.phone}
+              </a>
+            ) : (
+              <a class="btn btn-glass" href="#realizacje">
+                Zobacz realizacje
+              </a>
+            )
+          }
         </div>
-        <p class="muted small trust">Jawne ceny{site.noLongContract && ' · Bez umowy na rok'} · Konta i strona należą do Ciebie</p>
       </div>
 
-      <div class="hero-visual" aria-label="Przykładowe wyniki: Art Papier">
+      <div class="hero-visual" aria-label="Przykładowe wyniki: Art Papier, Google Ads">
         <div class="dash glass">
           <div class="dash-head">
             <span class="dot"></span>
             <span class="small muted">Art Papier · Google Ads</span>
           </div>
-          <p class="small muted label">Koszt jednego zapytania</p>
-          <p class="big"><span class="old">75,80 zł</span> <span class="grad">33,29 zł</span></p>
+          <div class="kpis">
+            <div>
+              <p class="small muted label">Koszt zapytania</p>
+              <p class="big"><span class="grad">33,29 zł</span></p>
+              <p class="delta down">↓ z 75,80 zł</p>
+            </div>
+            <div>
+              <p class="small muted label">Zapytania z reklam</p>
+              <p class="big"><span class="grad">20</span></p>
+              <p class="delta up">↑ z 14</p>
+            </div>
+          </div>
           <svg viewBox="0 0 300 90" class="spark" aria-hidden="true">
             <defs>
               <linearGradient id="sg" x1="0" x2="1">
@@ -133,23 +197,41 @@ const faqLd = {
             </defs>
             <path d="M0 14 C40 16 60 22 90 30 S150 58 180 64 S250 72 300 74 L300 90 L0 90Z" fill="url(#sf)"></path>
             <path d="M0 14 C40 16 60 22 90 30 S150 58 180 64 S250 72 300 74" fill="none" stroke="url(#sg)" stroke-width="3" stroke-linecap="round"></path>
+            <!-- Słupki: liczba zapytań z reklam rośnie (14 → 20). -->
+            <g font-size="11" font-weight="700" text-anchor="middle" font-family="inherit">
+              <rect x="214" y="58" width="24" height="32" rx="5" fill="#a78bfa" opacity=".75"></rect>
+              <text x="226" y="52" fill="#c4b5fd">14</text>
+              <rect x="252" y="44" width="24" height="46" rx="5" fill="#5eead4"></rect>
+              <text x="264" y="38" fill="#5eead4">20</text>
+            </g>
           </svg>
-          <p class="small muted caption">Październik 2026, dwa tygodnie po uporządkowaniu kampanii</p>
+          <p class="small muted caption">Linia: koszt zapytania. Słupki: liczba zapytań. Koszt: 6-19.10 → 20-31.10.2026. Zapytania: 6-31.10 → 20.10-18.11.2026.</p>
         </div>
-        <div class="chip-float glass c1"><strong>15 dni</strong><span>od decyzji do działającego sklepu</span></div>
-        <div class="chip-float glass c2"><strong>55×</strong><span>strona cytowana przez Copilota</span></div>
+        <div class="chip-float glass c1"><strong>5 dni</strong><span>tyle zajęło zbudowanie sklepu</span></div>
+        <div class="chip-float glass c2"><strong>55×</strong><span>tyle razy AI zacytowało stronę w odpowiedziach</span></div>
       </div>
     </div>
 
     <div class="marquee" aria-label="Firmy, dla których pracowałem">
       <div class="track">
-        {[...names, ...names].map((n) => <span>{n}</span>)}
+        {
+          [...logos, ...logos].map((l, i) => (
+            <img
+              src={`/logos/${l.file}.png`}
+              alt={i < logos.length ? l.name : ''}
+              aria-hidden={i >= logos.length ? 'true' : undefined}
+              style={`height:${l.h}px`}
+              loading="lazy"
+              decoding="async"
+            />
+          ))
+        }
       </div>
     </div>
   </section>
 
-  <!-- BRZMI ZNAJOMO -->
-  <section class="pains">
+  <!-- PYTANIA -->
+  <section class="pains" data-flow>
     <div class="wrap">
       <div class="reveal center narrow">
         <p class="eyebrow">Brzmi znajomo?</p>
@@ -159,25 +241,51 @@ const faqLd = {
         {
           pains.map((t) => (
             <div class="glass pain reveal">
-              <span class="x" aria-hidden="true" />
+              <span class="q" aria-hidden="true">?</span>
               <p>{t}</p>
             </div>
           ))
         }
       </div>
-      <p class="lead center narrow reveal answer">
-        Biorę to na siebie: od strony, przez reklamy, po to, żeby każde zapytanie trafiło do kogoś, kto oddzwoni.
-      </p>
+    </div>
+  </section>
+
+  <!-- CAŁA FIRMA -->
+  <section class="whole" data-flow>
+    <div class="wrap">
+      <div class="reveal narrow">
+        <p class="eyebrow">Więcej niż marketing</p>
+        <h2>Zajmuję się Twoją firmą <span class="grad">kompleksowo</span></h2>
+        <p class="lead">
+          Reklama nie pomoże, jeśli oferta jest niejasna, a zapytania czekają tydzień na odpowiedź. Dlatego zaczynam od całej
+          firmy, a dopiero potem włączam marketing.
+        </p>
+      </div>
+      <ol class="whole-grid">
+        {
+          whole.map((w, i) => (
+            <li class="glass card reveal">
+              <div class="whole-top">
+                <div class="icon">
+                  <Icon name={w.icon} />
+                </div>
+                <span class="n">{String(i + 1).padStart(2, '0')}</span>
+              </div>
+              <h3>{w.title}</h3>
+              <p>{w.text}</p>
+            </li>
+          ))
+        }
+      </ol>
     </div>
   </section>
 
   <!-- USŁUGI -->
-  <section id="uslugi">
+  <section id="uslugi" data-flow>
     <div class="wrap">
       <div class="reveal narrow">
-        <p class="eyebrow">Co robię</p>
-        <h2>Wszystko, czego potrzebujesz, żeby klient Cię znalazł i zadzwonił</h2>
-        <p class="lead">Możesz wziąć jedną rzecz albo całość. Najlepiej działa razem, bo wtedy wiem, co naprawdę przynosi klientów.</p>
+        <p class="eyebrow">Co dla Ciebie zrobię</p>
+        <h2>Wszystko, żeby klient Cię znalazł, zapytał i kupił</h2>
       </div>
       <div class="grid grid-3 services">
         {
@@ -187,7 +295,7 @@ const faqLd = {
                 <Icon name={s.icon} />
               </div>
               <h3>{s.title}</h3>
-              <p>{s.text}</p>
+              <p set:html={s.text} />
             </article>
           ))
         }
@@ -195,115 +303,128 @@ const faqLd = {
     </div>
   </section>
 
-  <!-- AI -->
-  <section class="ai">
-    <div class="wrap ai-grid">
-      <div class="reveal">
-        <p class="eyebrow">Nowość, której nie robi większość agencji</p>
-        <h2>Twoi klienci pytają już <span class="grad">ChatGPT</span>. Czy poleca Ciebie?</h2>
+  <!-- MAKS. 3 FIRMY + ZAPLECZE -->
+  <section class="focus" data-flow>
+    <div class="wrap focus-grid">
+      <div class="focus-main glass reveal">
+        <p class="three grad" aria-hidden="true">{site.maxClients}</p>
+        <h2>Pracuję maksymalnie z {site.maxClients} firmami naraz</h2>
         <p class="lead">
-          Zamiast przeglądać dziesięć stron w Google, ludzie pytają AI: „gdzie kupić…”, „kto w Gdańsku robi…”. AI poleca
-          firmy, o których ma pewne informacje. Moja robota to sprawić, żeby Twoja do nich należała.
+          Nie robię jednorazowej roboty, po której zostajesz sam. Jestem Twoim działem marketingu i rozwoju: cały czas
+          doglądam, pracuję, doradzam i obserwuję wyniki.
         </p>
         <ul class="check">
-          <li>Dane o firmie w miejscach, z których korzysta AI (Wikidata, Bing, Google)</li>
-          <li>Strona z danymi strukturalnymi i odpowiedziami na pytania klientów</li>
-          <li>Sprawdzanie co miesiąc, co AI mówi o Twojej firmie i o konkurencji</li>
+          <li>Znam Twoją firmę, klientów i każdą kampanię</li>
+          <li>Reaguję, zanim mały problem zje budżet</li>
+          <li>Proponuję kolejne kroki, zanim o nie zapytasz</li>
         </ul>
       </div>
-      <div class="ai-chat glass reveal" aria-label="Przykład: pytanie do ChatGPT">
-        <div class="bubble me">Gdzie w Polsce kupić papier z nasionami z nadrukiem dla firmy?</div>
-        <div class="bubble bot">
-          <span class="small muted">ChatGPT</span>
-          W odpowiedzi wymienia <strong>Seedpaper (ART-PAPIER)</strong> jako polskiego producenta papieru z nasionami.
-        </div>
-        <p class="small muted note">Sprawdzone 6.10.2026 (streszczenie odpowiedzi). Do tego 55 cytowań strony w Copilocie i wpis w Wikidata.</p>
+      <div class="team reveal">
+        <p class="eyebrow">Moje zaplecze</p>
+        <h3 class="team-h">Gdy projekt tego wymaga, angażuję sprawdzonych ludzi</h3>
+        <ul class="team-list">
+          {
+            team.map((m) => (
+              <li class="glass">
+                <strong>{m.t}</strong>
+                <span>{m.d}</span>
+              </li>
+            ))
+          }
+        </ul>
+        <p class="muted small">Ty masz jedną osobę kontaktową: mnie. Ja koordynuję resztę.</p>
       </div>
     </div>
   </section>
 
   <!-- REALIZACJE -->
-  <section id="realizacje">
+  <section id="realizacje" data-flow>
     <div class="wrap">
       <div class="reveal narrow">
         <p class="eyebrow">Realizacje</p>
         <h2>Co zrobiłem i co z tego wyszło</h2>
       </div>
 
-      <article class="case reveal">
-        <div class="case-media">
+      <div class="cases">
+        <article class="case-card glass reveal">
           <Showcase video={artPapier.video} label={artPapier.name} url={artPapier.url} />
-        </div>
-        <div class="case-text">
-          <p class="tag">Strona · Sklep · Google Ads · AI</p>
-          <h3>{artPapier.name}</h3>
-          <p class="muted">{artPapier.tagline}</p>
-          <div class="stats">
-            {
-              artPapier.stats?.map((s) => (
-                <div class="stat glass">
-                  <strong>{s.value}</strong>
-                  <span>{s.label}</span>
-                </div>
-              ))
-            }
+          <div class="case-body">
+            <p class="tag">Strona · Sklep · Google Ads · AI · Baza klientów</p>
+            <h3>Art Papier</h3>
+            <p class="muted">Czerpalnia papieru z nasionami. Koszt zapytania z reklam spadł ponad dwa razy, a firma jest polecana przez ChatGPT.</p>
+            <a class="btn btn-glass" href={artPapier.page}>Zobacz case study →</a>
           </div>
-          <a class="btn btn-glass" href={artPapier.page}>Cała historia z liczbami →</a>
-        </div>
-      </article>
-
-      <article class="case reverse reveal">
-        <div class="case-media">
+        </article>
+        <article class="case-card glass reveal">
           <Showcase video={hc.video} label={hc.name} url={hc.url} />
-        </div>
-        <div class="case-text">
-          <p class="tag">Strona · Marketing</p>
-          <h3>{hc.name}</h3>
-          <p class="muted">{hc.tagline}</p>
-          <a class="btn btn-glass" href={hc.page}>Zobacz projekt →</a>
-        </div>
-      </article>
+          <div class="case-body">
+            <p class="tag">Strona · Sklep · Marketing</p>
+            <h3>HC INSTAL</h3>
+            <p class="muted">Automatyka budynkowa i elektryka. Sklep z magazynami energii, dzięki któremu firma sprzedaje je na polskim rynku.</p>
+            <a class="btn btn-glass" href={hc.page}>Zobacz projekt →</a>
+          </div>
+        </article>
+      </div>
 
-      <article class="case reveal">
-        <div class="case-media">
-          <Showcase video={agencySites[0].video} label={agencySites[0].name} />
+      <div class="carousel-head reveal">
+        <div>
+          <h3>Strony, które wdrażałem</h3>
+          <p class="muted small">Projekt graficzny: agencja marketingowa, kod i animacje: ja.</p>
         </div>
-        <div class="case-text">
-          <p class="tag">Wdrożenia stron</p>
-          <h3>GiB Meble, Foto7, Prodvisor i inne</h3>
-          <p class="muted">
-            Strony, które wdrażałem w agencji marketingowej: animacje, rozbudowane menu, wersje na telefon. Projekt graficzny:
-            agencja, kod: ja.
-          </p>
-          <a class="btn btn-glass" href="/strony/">Zobacz {agencySites.length} stron →</a>
+        <div class="carousel-nav">
+          <button class="btn btn-glass nav-btn" data-dir="-1" aria-label="Poprzednia strona">←</button>
+          <button class="btn btn-glass nav-btn" data-dir="1" aria-label="Następna strona">→</button>
         </div>
-      </article>
+      </div>
+      <div class="carousel" id="karuzela" tabindex="0" aria-label="Strony wdrożone w agencji">
+        {
+          agencySites.map((s) => (
+            <figure class="slide">
+              <Showcase video={s.video} label={s.name} mobile={false} />
+              <figcaption>
+                <strong>{s.name}</strong>
+                <span class="muted small">{s.tagline}</span>
+              </figcaption>
+            </figure>
+          ))
+        }
+      </div>
+      <p class="reveal"><a href="/strony/">Wszystkie strony z wersjami na telefon →</a></p>
     </div>
   </section>
 
+  <!-- REFERENCJE -->
   {
     quotes.length > 0 && (
-      <section>
-        <div class="wrap narrow">
-          {quotes.map((q) => (
-            <blockquote class="quote glass reveal">
-              <p>„{q.text}”</p>
-              <footer>
-                <strong>{q.author}</strong>, {q.role}
-              </footer>
-            </blockquote>
-          ))}
+      <section data-flow>
+        <div class="wrap">
+          <div class="reveal narrow">
+            <p class="eyebrow">Referencje</p>
+            <h2>Co mówią klienci</h2>
+          </div>
+          <div class="grid grid-2 quotes">
+            {quotes.map((q) => (
+              <blockquote class="quote glass reveal">
+                {q.draft && <span class="draft">przykład, do podmiany</span>}
+                <p>„{q.text}”</p>
+                <footer>
+                  <strong>{q.author}</strong>
+                  <span>{q.role}</span>
+                </footer>
+              </blockquote>
+            ))}
+          </div>
         </div>
       </section>
     )
   }
 
   <!-- JAK PRACUJĘ -->
-  <section id="wspolpraca">
+  <section id="wspolpraca" data-flow>
     <div class="wrap">
       <div class="reveal narrow">
         <p class="eyebrow">Jak pracuję</p>
-        <h2>Od rozmowy do pierwszych zapytań</h2>
+        <h2>Od rozmowy do stałej opieki</h2>
       </div>
       <ol class="steps">
         {
@@ -320,40 +441,43 @@ const faqLd = {
   </section>
 
   <!-- CENY -->
-  <section id="ceny">
+  <section id="ceny" data-flow>
     <div class="wrap">
       <div class="reveal center narrow">
         <p class="eyebrow">Ceny</p>
         <h2>Ceny wprost. Bez „wyceny indywidualnej”.</h2>
-        <p class="lead">Wiesz od razu, na czym stoisz. Dokładny zakres ustalamy po rozmowie.</p>
       </div>
       <div class="grid grid-3 prices">
         <article class="glass card price-card reveal">
           <h3>Strona internetowa</h3>
           <p class="price">{p.website}<small>{priceSuffix}, jednorazowo</small></p>
           <ul class="check">
+            <li><strong>Hosting 0 zł</strong>, płacisz tylko za domenę</li>
             <li>Projekt, teksty i wdrożenie</li>
             <li>Szybka na telefonie, gotowa pod reklamy</li>
-            <li>Hosting za 0 zł, płacisz tylko za domenę</li>
-            <li>Strona i domena są Twoje</li>
+            <li>Formularz kontaktowy i podstawy SEO</li>
           </ul>
           <a class="btn btn-glass" href="#kontakt">Zapytaj o stronę</a>
         </article>
         <article class="glass card price-card featured reveal">
-          <span class="badge">Tu widać efekty</span>
-          <h3>Marketing co miesiąc</h3>
-          <p class="price">{p.marketing}<small>{priceSuffix}</small></p>
+          <span class="badge">Stała opieka</span>
+          <h3>Marketing i rozwój firmy</h3>
+          <p class="price">{p.marketing}<small>{priceSuffix} · {p.marketingTime}</small></p>
           <ul class="check">
+            <li>Analiza firmy, oferty i klientów</li>
             <li>Google Ads prowadzone na bieżąco</li>
-            <li>Profil firmy w Google i widoczność w AI</li>
-            <li>Raport co miesiąc: wydatki i zapytania</li>
+            <li>Widoczność w ChatGPT, Google i mapach</li>
+            <li>Baza klientów i proces obsługi zapytań</li>
+            <li>Pomysły na pakiety i promocje</li>
+            <li>Automatyzacje: opinie, raporty, powiadomienia</li>
             <li>Zmiany na stronie w cenie</li>
+            <li>Raport co miesiąc</li>
           </ul>
           <a class="btn btn-primary" href="#kontakt">Porozmawiajmy</a>
           <p class="muted small fine">Budżet reklam płacisz bezpośrednio Google: {p.adBudget}</p>
         </article>
         <article class="glass card price-card reveal">
-          <h3>Porządek z zapytaniami</h3>
+          <h3>Baza klientów i sprzedaż</h3>
           <p class="price">
             {
               p.crm ? (
@@ -363,29 +487,25 @@ const faqLd = {
                 </>
               ) : (
                 <>
-                  po rozmowie<small>zależy od liczby źródeł zapytań</small>
+                  po rozmowie<small>zależy od tego, jak dziś sprzedajesz</small>
                 </>
               )
             }
           </p>
           <ul class="check">
-            <li>CRM w Arkuszach Google albo Notion</li>
-            <li>Powiadomienia o nowych zapytaniach</li>
-            <li>Automatyczne raporty i przypomnienia</li>
-            <li>Szkolenie dla osoby w biurze</li>
+            <li>Baza klientów w Arkuszach Google albo Notion</li>
+            <li>Asystent, który przypomina o kontakcie</li>
+            <li>Proces obsługi zapytań krok po kroku</li>
+            <li>Skrypty i wsparcie przy telefonach do klientów</li>
           </ul>
           <a class="btn btn-glass" href="#kontakt">Zapytaj</a>
         </article>
       </div>
-      <p class="center muted small reveal guarantee">
-        {site.noLongContract && 'Bez umowy na rok, z miesięcznym wypowiedzeniem. '}Konto reklamowe, domena i strona zawsze
-        należą do Ciebie.
-      </p>
     </div>
   </section>
 
   <!-- O MNIE -->
-  <section id="o-mnie">
+  <section id="o-mnie" data-flow>
     <div class="wrap about">
       <div class="portrait reveal">
         {
@@ -406,16 +526,15 @@ const faqLd = {
           początku patrzę na dwie rzeczy naraz: czy strona działa i czy z reklamy dzwoni klient.
         </p>
         <p class="muted">
-          Pracuję z kilkoma firmami, nie z setką, więc znam Twoją kampanię, a nie tylko numer klienta. Powtarzalną robotę
-          automatyzuję, także z pomocą AI. Dzięki temu dostajesz efekt małego zespołu w cenie jednej osoby, a decyzje i
-          kontakt z Tobą zostają po mojej stronie.
+          Powtarzalną robotę automatyzuję, także z pomocą AI. Dzięki temu dostajesz efekt małego zespołu w cenie jednej osoby,
+          a decyzje i kontakt z Tobą zostają po mojej stronie.
         </p>
       </div>
     </div>
   </section>
 
   <!-- FAQ -->
-  <section id="faq">
+  <section id="faq" data-flow>
     <div class="wrap narrow">
       <div class="reveal">
         <p class="eyebrow">Pytania</p>
@@ -432,13 +551,25 @@ const faqLd = {
     </div>
   </section>
 
-  <Contact />
+  <div data-flow><Contact /></div>
 </Base>
+
+<script>
+  // Karuzela: strzałki przewijają o jeden slajd.
+  const car = document.querySelector<HTMLElement>('#karuzela');
+  document.querySelectorAll<HTMLButtonElement>('.nav-btn').forEach((b) =>
+    b.addEventListener('click', () => {
+      if (!car) return;
+      const slide = car.querySelector<HTMLElement>('.slide');
+      car.scrollBy({ left: Number(b.dataset.dir) * ((slide?.offsetWidth || 400) + 20), behavior: 'smooth' });
+    }),
+  );
+</script>
 
 <style>
   /* HERO */
   .hero {
-    padding-top: clamp(48px, 8vw, 110px);
+    padding-top: clamp(40px, 7vw, 96px);
     padding-bottom: 40px;
   }
   .hero-grid {
@@ -448,7 +579,7 @@ const faqLd = {
   }
   @media (min-width: 980px) {
     .hero-grid {
-      grid-template-columns: 1.25fr 1fr;
+      grid-template-columns: 1.2fr 1fr;
     }
   }
   .hero h1 {
@@ -456,18 +587,46 @@ const faqLd = {
   }
   .hero .lead {
     max-width: 600px;
-    margin-bottom: 1.6em;
+    margin-bottom: 1.3em;
   }
-  .trust {
-    margin-top: 20px;
+  .hosting {
+    display: flex;
+    gap: 14px;
+    align-items: center;
+    padding: 14px 18px;
+    border-radius: 18px;
+    max-width: 600px;
+    margin-bottom: 26px;
+  }
+  .hosting p {
+    margin: 0;
+    color: var(--text-2);
+    font-size: 0.98rem;
+  }
+  .hosting strong {
+    color: var(--text);
+  }
+  .hosting-ico {
+    flex: none;
+    width: 38px;
+    height: 38px;
+    border-radius: 12px;
+    display: grid;
+    place-items: center;
+    color: #06121a;
+    background: linear-gradient(140deg, #99f6e4, #93c5fd);
+  }
+  .hosting-ico :global(svg) {
+    width: 20px;
+    height: 20px;
   }
   .hero-visual {
     position: relative;
     padding: 30px 0 40px;
   }
   .dash {
-    padding: 26px 26px 22px;
-    max-width: 420px;
+    padding: 24px 24px 20px;
+    max-width: 430px;
     margin-left: auto;
     transform: perspective(1200px) rotateY(-6deg) rotateX(3deg);
   }
@@ -475,7 +634,7 @@ const faqLd = {
     display: flex;
     align-items: center;
     gap: 8px;
-    margin-bottom: 18px;
+    margin-bottom: 14px;
   }
   .dot {
     width: 8px;
@@ -484,40 +643,45 @@ const faqLd = {
     background: var(--teal);
     box-shadow: 0 0 10px var(--teal);
   }
+  .kpis {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
   .label {
     margin: 0;
   }
   .big {
-    font-size: clamp(2rem, 4vw, 2.8rem);
+    font-size: clamp(1.8rem, 3.4vw, 2.4rem);
     font-weight: 700;
     letter-spacing: -0.04em;
-    margin: 4px 0 8px;
+    margin: 2px 0 0;
     line-height: 1.1;
   }
-  .old {
-    font-size: 0.5em;
-    color: var(--text-3);
-    text-decoration: line-through;
-    font-weight: 500;
-    letter-spacing: -0.01em;
+  .delta {
+    font-size: 0.82rem;
+    font-weight: 600;
+    margin: 2px 0 0;
   }
-  .caption {
-    margin: 0;
-    max-width: 62%;
-    margin-left: auto;
-    text-align: right;
+  .delta.down,
+  .delta.up {
+    color: var(--teal);
   }
   .spark {
     width: 100%;
     height: auto;
-    margin: 6px 0 10px;
+    margin: 10px 0 8px;
+  }
+  .caption {
+    margin: 0;
+    font-size: 0.74rem;
   }
   .chip-float {
     position: absolute;
     padding: 14px 18px;
     border-radius: 20px;
     display: grid;
-    max-width: 210px;
+    max-width: 200px;
     animation: float 7s ease-in-out infinite;
   }
   .chip-float strong {
@@ -531,11 +695,11 @@ const faqLd = {
   }
   .c1 {
     left: -8px;
-    top: 46%;
+    top: 52%;
   }
   .c2 {
     right: -14px;
-    top: 0;
+    top: -6px;
     animation-delay: -3.5s;
   }
   @keyframes float {
@@ -580,16 +744,18 @@ const faqLd = {
   }
   .track {
     display: flex;
-    gap: 56px;
+    align-items: center;
+    gap: 64px;
     width: max-content;
-    animation: scroll 40s linear infinite;
+    animation: scroll 45s linear infinite;
   }
-  .track span {
-    font-size: 1.15rem;
-    font-weight: 600;
-    color: var(--text-3);
-    white-space: nowrap;
-    letter-spacing: -0.01em;
+  .track img {
+    width: auto;
+    opacity: 0.55;
+    transition: opacity 0.3s;
+  }
+  .track img:hover {
+    opacity: 1;
   }
   @keyframes scroll {
     to {
@@ -602,142 +768,251 @@ const faqLd = {
       flex-wrap: wrap;
       width: auto;
       justify-content: center;
+      row-gap: 24px;
     }
   }
 
-  /* PAINS */
+  /* PYTANIA */
   .pain-grid {
-    margin: 40px auto 28px;
-    max-width: 960px;
+    margin: 40px auto 0;
+    max-width: 980px;
   }
   .pain {
     display: flex;
     gap: 14px;
-    align-items: flex-start;
+    align-items: center;
     padding: 20px 22px;
     border-radius: 20px;
   }
   .pain p {
     margin: 0;
-    color: var(--text-2);
-  }
-  .x {
-    flex: none;
-    width: 22px;
-    height: 22px;
-    border-radius: 50%;
-    margin-top: 2px;
-    background: rgb(244 114 182 / 16%);
-    position: relative;
-  }
-  .x::before,
-  .x::after {
-    content: '';
-    position: absolute;
-    left: 6px;
-    right: 6px;
-    top: 10px;
-    height: 2px;
-    background: var(--pink);
-    transform: rotate(45deg);
-  }
-  .x::after {
-    transform: rotate(-45deg);
-  }
-  .answer {
     color: var(--text);
   }
+  .q {
+    flex: none;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    font-weight: 700;
+    color: #06121a;
+    background: linear-gradient(140deg, #f9a8d4, #c4b5fd);
+  }
 
-  /* SERVICES */
+  /* CAŁA FIRMA */
+  .whole-grid {
+    list-style: none;
+    padding: 0;
+    margin: 40px 0 0;
+    display: grid;
+    gap: 18px;
+  }
+  @media (min-width: 760px) {
+    .whole-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  @media (min-width: 1100px) {
+    .whole-grid {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+  .whole-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+  .n {
+    font-size: 2rem;
+    font-weight: 700;
+    letter-spacing: -0.04em;
+    background: var(--grad);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
   .services {
     margin-top: 40px;
   }
-
-  /* AI */
-  .ai-grid {
-    display: grid;
-    gap: 48px;
-    align-items: center;
-  }
-  @media (min-width: 960px) {
-    .ai-grid {
-      grid-template-columns: 1.1fr 1fr;
-    }
-  }
-  .ai-chat {
-    padding: 24px;
-    display: grid;
-    gap: 14px;
-  }
-  .bubble {
-    padding: 14px 18px;
-    border-radius: 20px;
-    max-width: 92%;
-    line-height: 1.5;
-  }
-  .bubble.me {
-    justify-self: end;
-    background: linear-gradient(120deg, rgb(94 234 212 / 25%), rgb(96 165 250 / 25%));
-    border-bottom-right-radius: 6px;
-  }
-  .bubble.bot {
-    background: rgb(255 255 255 / 7%);
-    border-bottom-left-radius: 6px;
-    color: var(--text-2);
-  }
-  .bubble.bot span {
-    display: block;
-    margin-bottom: 4px;
-  }
-  .bubble strong {
+  .services :global(strong) {
     color: var(--text);
   }
-  .note {
-    margin: 0;
-  }
 
-  /* CASES */
-  .case {
+  /* FOCUS */
+  .focus-grid {
     display: grid;
-    gap: 32px;
+    gap: 40px;
     align-items: center;
-    margin-top: 64px;
   }
-  @media (min-width: 960px) {
-    .case {
-      grid-template-columns: 1.35fr 1fr;
+  @media (min-width: 980px) {
+    .focus-grid {
+      grid-template-columns: 1.1fr 1fr;
       gap: 56px;
     }
-    .case.reverse .case-media {
-      order: 2;
+  }
+  .focus-main {
+    padding: clamp(28px, 4vw, 48px);
+    overflow: hidden;
+  }
+  .three {
+    position: absolute;
+    right: -10px;
+    top: -60px;
+    font-size: 16rem;
+    font-weight: 800;
+    letter-spacing: -0.08em;
+    line-height: 1;
+    opacity: 0.22;
+    margin: 0;
+    pointer-events: none;
+  }
+  .focus-main h2 {
+    font-size: clamp(1.8rem, 3.6vw, 2.6rem);
+    position: relative;
+  }
+  .team-h {
+    font-size: clamp(1.3rem, 2.4vw, 1.7rem);
+    margin-bottom: 18px;
+  }
+  .team-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 14px;
+    display: grid;
+    gap: 10px;
+  }
+  .team-list li {
+    padding: 14px 18px;
+    border-radius: 16px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px 12px;
+    align-items: baseline;
+  }
+  .team-list span {
+    color: var(--text-2);
+    font-size: 0.92rem;
+  }
+
+  /* REALIZACJE */
+  .cases {
+    display: grid;
+    gap: 20px;
+    margin-top: 40px;
+  }
+  @media (min-width: 900px) {
+    .cases {
+      grid-template-columns: 1fr 1fr;
     }
-    .case.reverse {
-      grid-template-columns: 1fr 1.35fr;
-    }
+  }
+  .case-card {
+    padding: 22px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+  .case-body {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+  }
+  .case-body .btn {
+    align-self: flex-start;
+    margin-top: auto;
   }
   .tag {
     font-size: 0.8rem;
     color: var(--teal);
     font-weight: 600;
-    letter-spacing: 0.04em;
-    margin-bottom: 0.6em;
+    letter-spacing: 0.03em;
+    margin-bottom: 0.5em;
   }
-  .case h3 {
-    font-size: clamp(1.5rem, 2.6vw, 2rem);
+  .case-body h3 {
+    font-size: clamp(1.5rem, 2.4vw, 1.9rem);
+    margin-bottom: 0.35em;
   }
 
+  .carousel-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 16px;
+    margin: 64px 0 18px;
+  }
+  .carousel-head h3 {
+    font-size: clamp(1.4rem, 2.6vw, 1.9rem);
+    margin-bottom: 0.2em;
+  }
+  .carousel-head p {
+    margin: 0;
+  }
+  .carousel-nav {
+    display: flex;
+    gap: 8px;
+  }
+  .nav-btn {
+    width: 46px;
+    height: 46px;
+    padding: 0;
+    font-size: 1.1rem;
+  }
+  .carousel {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: min(82%, 520px);
+    gap: 20px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    padding: 6px 2px 18px;
+    scrollbar-width: none;
+    overscroll-behavior-x: contain;
+  }
+  .carousel::-webkit-scrollbar {
+    display: none;
+  }
+  .slide {
+    margin: 0;
+    scroll-snap-align: start;
+  }
+  .slide figcaption {
+    display: grid;
+    gap: 2px;
+    margin-top: 12px;
+  }
+
+  /* REFERENCJE */
+  .quotes {
+    margin-top: 36px;
+  }
   .quote {
     margin: 0;
-    padding: clamp(24px, 4vw, 44px);
-    font-size: clamp(1.25rem, 2.4vw, 1.6rem);
-    line-height: 1.45;
-    letter-spacing: -0.015em;
+    padding: clamp(24px, 3vw, 36px);
+    font-size: clamp(1.1rem, 1.8vw, 1.3rem);
+    line-height: 1.5;
+    letter-spacing: -0.01em;
   }
   .quote footer {
-    font-size: 1rem;
-    color: var(--text-2);
-    margin-top: 14px;
+    display: grid;
+    font-size: 0.95rem;
     letter-spacing: 0;
+    margin-top: 16px;
+  }
+  .quote footer span {
+    color: var(--text-3);
+  }
+  .draft {
+    display: inline-block;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--amber);
+    border: 1px dashed var(--amber);
+    border-radius: 999px;
+    padding: 2px 10px;
+    margin-bottom: 12px;
   }
 
   /* STEPS */
@@ -765,19 +1040,12 @@ const faqLd = {
     color: var(--text-2);
     margin: 0;
   }
-  .n {
+  .steps .n {
     display: block;
-    font-size: 2.2rem;
-    font-weight: 700;
-    letter-spacing: -0.04em;
-    margin-bottom: 18px;
-    background: var(--grad);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
+    margin-bottom: 14px;
   }
 
-  /* PRICES */
+  /* CENY */
   .prices {
     margin-top: 44px;
     row-gap: 30px;
@@ -790,6 +1058,9 @@ const faqLd = {
   .price-card .check {
     flex: 1;
     margin-bottom: 22px;
+  }
+  .price-card .check :global(strong) {
+    color: var(--text);
   }
   .price-card .btn {
     align-self: flex-start;
@@ -827,11 +1098,8 @@ const faqLd = {
   .fine {
     margin: 14px 0 0;
   }
-  .guarantee {
-    margin-top: 28px;
-  }
 
-  /* ABOUT */
+  /* O MNIE */
   .about {
     display: grid;
     gap: 40px;

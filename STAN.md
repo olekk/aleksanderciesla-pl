@@ -1,6 +1,6 @@
 # STAN – aleksanderciesla.pl
 
-Ostatnia aktualizacja: 26.11.2026 (przebudowa: ciemny motyw Liquid Glass, nowe treści, formularz; czeka na dane od Olka i podpięcie Cloudflare).
+Ostatnia aktualizacja: 26.11.2026, runda 3 (elastyczne przewijanie, logotypy, kompleksowa oferta, karuzela, ceny; sekcja 0c). Czeka na telefon, decyzję o domenie i mailu, prawdziwe referencje.
 
 | #   | Do zrobienia                                                         | Kto  | Stan |
 | --- | -------------------------------------------------------------------- | ---- | ---- |
@@ -14,9 +14,13 @@ Ostatnia aktualizacja: 26.11.2026 (przebudowa: ciemny motyw Liquid Glass, nowe t
 | 8   | Kupno domeny, DNS na Cloudflare, custom domain                       | Olek | później |
 | 9   | Formularz kontaktowy (Worker + D1 + Email Routing) – kod gotowy      | Claude | ✅ |
 | 10  | Baza D1 i Email Routing dla formularza (TODO.md)                     | Olek | ⏳ |
+| 11  | Prawdziwe referencje w miejsce szkiców (`quotes` w `projects.ts`)     | Olek | ⏳ |
+| 12  | Decyzja: domena + kontakt@ czy adres Proton                          | Olek | ⏳ |
+| 13  | Potwierdzenie „ok. 10 godzin w tygodniu” za 2 500 zł                 | Olek | ⏳ |
 
 ## Dziennik zmian
 
+- 26.11.2026 – Runda 3 na prośbę Olka: elastyczne przewijanie i wolniejsze tło, logotypy firm, bóle jako pytania, „Więcej niż marketing”, zaplecze współpracowników, maks. 3 firmy, strona 3 000 zł i hosting 0 zł, szkice referencji, Art Papier skrócony na głównej, karuzela stron z agencji, sklep z magazynami energii w HC INSTAL, „5 dni” (sekcja 0c).
 - 26.11.2026 – Na prośbę Olka: ciemny motyw w stylu Liquid Glass, treść przepisana pod sprzedaż, usunięta sekcja „Co nie wyszło”, HC INSTAL jako osobna firma (bez wzmianki o zarządzie), stopka bez zdania o ciasteczkach, marketing 2 500 zł, budżet reklam od ok. 300 zł, formularz kontaktowy (sekcja 0b).
 - 25.11.2026 – Pierwsza wersja strony wg planu (https://claude.ai/artifact/3zDWoqhtv7JazgwNF9h737), nagrania 9 stron, CLAUDE.md z Kartą projektu.
 
@@ -24,7 +28,7 @@ Ostatnia aktualizacja: 26.11.2026 (przebudowa: ciemny motyw Liquid Glass, nowe t
 
 - Zwracamy się na „Ty” (plan zostawiał „Ty” / „Państwo” do decyzji).
 - Zamówienie Gminy Chełmiec opisane bez nazwy gminy („zamówienie od samorządu … ok. 3 000 zł”), bo zgoda i netto/brutto niepotwierdzone.
-- „Bez umowy na rok” włączone flagą `noLongContract` w `site.ts` – do potwierdzenia.
+- ~~„Bez umowy na rok”~~ usunięte na prośbę Olka (26.11.2026).
 - Fonty systemowe (szeryfowe nagłówki, bezszeryfowy tekst) – zero plików fontów, szybciej.
 - Sekcja „Co mówią klienci” ukryta, dopóki `quotes` w `projects.ts` jest puste.
 
@@ -34,3 +38,14 @@ Ostatnia aktualizacja: 26.11.2026 (przebudowa: ciemny motyw Liquid Glass, nowe t
 - Nowe sekcje: hero z kartą wyników, pasek firm, „Brzmi znajomo?”, 6 usług, sekcja o widoczności w AI, realizacje, jak pracuję (4 kroki), ceny, o mnie, FAQ (z FAQPage JSON-LD), kontakt z formularzem.
 - Formularz: `POST /api/kontakt` w Workerze (`site/worker/form.ts`), honeypot + limit czasu + limit linków, zapis w D1 (`migrations/0001_zgloszenia.sql`), mail przez Cloudflare Email Routing (`send_email`). Bez skonfigurowanej bazy i maila zwraca 503, a strona pokazuje adres e-mail.
 - Decyzje Claude (do korekty): plakietka „Tu widać efekty” przy marketingu; obietnica „odezwę się najpóźniej następnego dnia roboczego” po wysłaniu formularza; font Inter (lokalnie, @fontsource); odpowiedź ChatGPT pokazana jako streszczenie, nie cytat.
+
+## 0c. Runda 3 – 26.11.2026
+
+- Źródło: wiadomość Olka z 26.11.2026, 02:16.
+- Przewijanie: skrypt w `Base.astro` przesuwa sekcje (`main > *`, stopka) sprężyną zależną od prędkości przewijania; przewinięcie kółkiem za górę lub dół rozciąga całość. Przesunięcia rosną monotonicznie, więc sekcje nie nachodzą na siebie (sprawdzone Playwrightem). Tło (`.aurora-layer`) jedzie z prędkością 0,12 treści. Wyłączone przy `prefers-reduced-motion`. Na telefonie rozciąganie za krawędzią daje sam system (iOS).
+- Lokalizacja: jedno zdanie w kontakcie („Jeśli jesteś z Trójmiasta albo ze Śląska, chętnie spotkam się osobiście”), pole `meetArea` w `site.ts`; usunięte z opisu meta i JSON-LD (`areaServed: Polska`).
+- Hero: koszt zapytania 33,29 zł (z 75,80) i liczba zapytań 20 (z 14, okresy 6-31.10 i 20.10-18.11.2026 – w eksporcie brak równych okresów, decyzja Claude), „5 dni – tyle zajęło zbudowanie sklepu” (wg Olka; eksport podaje 14.10 decyzja → 29.10 start), „55× AI zacytowało stronę”.
+- Logotypy: wycięte z pierwszych klatek nagrań (strony klientów niedostępne z kontenera), białe PNG w `site/public/logos/`.
+- Referencje: dwa szkice z plakietką „przykład, do podmiany” (`draft: true`); drugi (anonimowy) jest wymyślony i musi zostać zastąpiony prawdziwym przed publikacją.
+- Ceny: strona 3 000 zł netto (bez „od”), hosting 0 zł; marketing 2 500 zł / mies. = „ok. 10 godzin mojej pracy w tygodniu” (do potwierdzenia, Olek mówił niejasno o 2 000 zł); maks. 3 firmy naraz (`maxClients`); „Konto, domena i strona należą do Ciebie” tylko w FAQ.
+- Decyzje Claude (do korekty): nazwy grup zaplecza (graficy, fotografowie, filmowcy i twórcy TikTok, osoby od telefonów, narzędzia AI); siła efektu przewijania (maks. 90 px).

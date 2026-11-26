@@ -3,7 +3,8 @@
 
 export type Stat = { value: string; label: string };
 
-export type Quote = { text: string; author: string; role: string };
+// draft: true = tekst przykładowy, na stronie widać plakietkę „przykład”. Usunąć po podmianie na prawdziwy.
+export type Quote = { text: string; author: string; role: string; draft?: boolean };
 
 export type Project = {
   slug: string;
@@ -16,12 +17,20 @@ export type Project = {
 };
 
 // TODO(Olek): cytat od Flawiusza po jego akceptacji. Puste = sekcja "Co mówią klienci" ukryta.
+// SZKICE do podmiany na prawdziwe słowa klientów przed publikacją (na prośbę Olka 26.11.2026).
 export const quotes: Quote[] = [
-  // {
-  //   text: '...',
-  //   author: 'Flawiusz Pietrzyk',
-  //   role: 'właściciel, ART-PAPIER Czerpalnia Papieru',
-  // },
+  {
+    text: 'Olek zajął się naszą stroną, sklepem i reklamami. Pierwszy raz wiem, ile kosztuje nas zapytanie i skąd przychodzą klienci. Nie muszę o niczym pamiętać, a co miesiąc dostaję jasny raport.',
+    author: 'Flawiusz Pietrzyk',
+    role: 'właściciel, ART-PAPIER Czerpalnia Papieru',
+    draft: true,
+  },
+  {
+    text: 'Szukałem kogoś, kto nie tylko ustawi reklamy, ale powie, co poprawić w samej ofercie. Dostałem konkretne wskazówki i stronę, z której wreszcie dzwonią klienci.',
+    author: 'Właściciel firmy usługowej',
+    role: 'klient (anonimowo)',
+    draft: true,
+  },
 ];
 
 export const featured: Project[] = [
@@ -33,7 +42,7 @@ export const featured: Project[] = [
     tagline: 'Czerpalnia papieru z nasionami spod Gliwic. Nowa strona, sklep B2B, Google Ads, widoczność w AI i system, w którym żadne zapytanie nie ginie.',
     stats: [
       { value: '75,80 → 33,29 zł', label: 'koszt zapytania z Google Ads w 2 tygodnie' },
-      { value: '15 dni', label: 'od decyzji do działającego sklepu' },
+      { value: '5 dni', label: 'tyle zajęło zbudowanie sklepu' },
       { value: 'ok. 650 zł', label: 'miesięczny budżet reklam' },
     ],
     page: '/art-papier/',
@@ -43,7 +52,7 @@ export const featured: Project[] = [
     name: 'HC INSTAL (hcinstal.pl)',
     url: 'https://hcinstal.pl',
     video: 'hcinstal',
-    tagline: 'Firma elektryczna ze Śląska: automatyka budynkowa Loxone, instalacje i pomiary. Strona z ofertą inteligentnego domu i szybkim kontaktem.',
+    tagline: 'Firma elektryczna: automatyka budynkowa Loxone, instalacje i pomiary. Strona i sklep z magazynami energii, dzięki któremu firma sprzedaje je na polskim rynku.',
     page: '/hc-instal/',
   },
 ];

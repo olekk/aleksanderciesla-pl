@@ -1,6 +1,6 @@
 ---
 import { site } from '../config/site';
-const services = ['Strona internetowa', 'Google Ads', 'Widoczność w AI', 'Profil firmy w Google', 'Porządek z zapytaniami', 'Jeszcze nie wiem'];
+const services = ['Strona internetowa', 'Google Ads', 'Widoczność w ChatGPT', 'Baza klientów i sprzedaż', 'Oferta i promocje', 'Całość, porozmawiajmy'];
 ---
 
 <section id="kontakt" class="contact">
@@ -14,13 +14,13 @@ const services = ['Strona internetowa', 'Google Ads', 'Widoczność w AI', 'Prof
       </p>
       <ul class="check">
         <li>Pierwsza rozmowa i przegląd Twojej strony są bezpłatne.</li>
-        <li>Spotkam się na miejscu ({site.areaShort}) albo zadzwonię.</li>
+        <li>Jeśli jesteś {site.meetArea}, chętnie spotkam się osobiście. Z resztą Polski rozmawiamy online.</li>
         <li>Rozmawiasz ze mną, nie z handlowcem. To ja potem robię robotę.</li>
       </ul>
       <div class="direct">
         {
           site.phone && (
-            <a class="btn btn-glass" href={`tel:${site.phoneHref || site.phone}`}>
+            <a class="btn btn-primary" href={`tel:${site.phoneHref || site.phone}`}>
               Zadzwoń: {site.phone}
             </a>
           )

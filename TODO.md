@@ -12,3 +12,6 @@
       w `wrangler.jsonc` (odkomentować `d1_databases`), `npx wrangler d1 migrations apply aleksanderciesla-pl --remote`;
       Cloudflare → domena → Email → Email Routing: włączyć, dodać i zweryfikować adres docelowy, wpisać go w `MAIL_TO`,
       odkomentować `send_email`
+- [ ] Olek: numer telefonu do `site/src/config/site.ts` (`phone`, `phoneHref`) – pokaże się przy każdym „porozmawiajmy”
+- [ ] Olek: prawdziwe słowa Flawiusza i drugiego klienta w miejsce szkiców (`site/src/data/projects.ts`, `quotes`)
+- [ ] Olek: decyzja domena + `kontakt@aleksanderciesla.pl` (przekierowanie na skrzynkę Proton przez Email Routing) czy sam adres Proton

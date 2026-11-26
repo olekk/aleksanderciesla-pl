@@ -62,13 +62,20 @@ body {
     radial-gradient(1200px 600px at 50% -10%, rgb(96 165 250 / 10%), transparent 70%),
     var(--bg);
 }
+.aurora-layer {
+  position: absolute;
+  inset: 0 0 auto;
+  height: 100%;
+  will-change: transform;
+}
 .aurora span {
   position: absolute;
   border-radius: 50%;
   filter: blur(80px);
-  opacity: 0.75;
+  opacity: 0.7;
   animation: drift 26s ease-in-out infinite alternate;
 }
+/* Poświaty rozłożone na całej (wyższej) warstwie tła; skrypt ustawia jej wysokość pod paralaksę. */
 .aurora span:nth-child(1) {
   width: 46vw;
   height: 46vw;
@@ -80,18 +87,45 @@ body {
   width: 40vw;
   height: 40vw;
   right: -10vw;
-  top: 18vh;
+  top: 12%;
   background: #6d28d9;
   animation-duration: 32s;
 }
 .aurora span:nth-child(3) {
   width: 34vw;
   height: 34vw;
-  left: 30vw;
-  bottom: -14vw;
+  left: 28vw;
+  top: 30%;
   background: #2563eb;
   opacity: 0.5;
   animation-duration: 38s;
+}
+.aurora span:nth-child(4) {
+  width: 38vw;
+  height: 38vw;
+  left: -10vw;
+  top: 50%;
+  background: #6d28d9;
+  opacity: 0.55;
+  animation-duration: 34s;
+}
+.aurora span:nth-child(5) {
+  width: 42vw;
+  height: 42vw;
+  right: -14vw;
+  top: 68%;
+  background: #0d9488;
+  opacity: 0.6;
+  animation-duration: 30s;
+}
+.aurora span:nth-child(6) {
+  width: 36vw;
+  height: 36vw;
+  left: 24vw;
+  bottom: -10vw;
+  background: #2563eb;
+  opacity: 0.5;
+  animation-duration: 40s;
 }
 @keyframes drift {
   to {
