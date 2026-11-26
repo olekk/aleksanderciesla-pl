@@ -1,16 +1,23 @@
 ---
 import { site } from '../config/site';
+import { type Lang, tr, href } from '../i18n';
+interface Props {
+  lang?: Lang;
+}
+const { lang = 'pl' } = Astro.props;
+const T = tr(lang);
+const home = href(lang, '/');
 const links = [
-  { href: '/#uslugi', label: 'Usługi' },
-  { href: '/#realizacje', label: 'Realizacje' },
-  { href: '/#ceny', label: 'Ceny' },
-  { href: '/#faq', label: 'Pytania' },
+  { href: `${home}#uslugi`, label: T('Usługi', 'Services') },
+  { href: `${home}#realizacje`, label: T('Realizacje', 'Work') },
+  { href: `${home}#ceny`, label: T('Ceny', 'Pricing') },
+  { href: `${home}#faq`, label: T('Pytania', 'FAQ') },
 ];
 ---
 
 <header class="site-header">
   <div class="pill glass">
-    <a href="/" class="brand" aria-label={`${site.brandName} – strona główna`}>
+    <a href={home} class="brand" aria-label={`${site.brandName} – ${T('strona główna', 'home page')}`}>
       {
         site.avatar ? (
           <img class="mono" src={site.avatar} alt="" width="64" height="64" decoding="async" />
@@ -20,10 +27,10 @@ const links = [
       }
       <span class="name">{site.brandName}</span>
     </a>
-    <nav aria-label="Główna">
+    <nav aria-label={T('Główna', 'Main')}>
       {links.map((l) => <a href={l.href}>{l.label}</a>)}
     </nav>
-    <a class="btn btn-primary cta" href="/#kontakt">Bezpłatna rozmowa</a>
+    <a class="btn btn-primary cta" href={`${home}#kontakt`}>{T('Bezpłatna rozmowa', 'Free call')}</a>
   </div>
   <!-- Filtr soczewki dla menu (wypełnia go skrypt niżej). -->
   <svg class="lens-defs" width="0" height="0" aria-hidden="true" focusable="false">

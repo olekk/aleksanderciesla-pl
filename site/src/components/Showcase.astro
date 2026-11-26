@@ -11,6 +11,8 @@ interface Props {
 // dochodzi skryptem blisko ekranu (Base.astro), w rozmiarze pod ekran.
 const { video, label, url, mobile = true, eager = false } = Astro.props;
 const host = url ? new URL(url).host : label;
+// Język z adresu strony (/en/... = angielski), żeby nie przekazywać go przez każdy komponent.
+const en = Astro.url.pathname.startsWith('/en/');
 ---
 
 <figure class="showcase" class:list={[{ 'no-phone': !mobile }]}>
@@ -29,7 +31,7 @@ const host = url ? new URL(url).host : label;
       height="800"
       data-poster={`/media/${video}-desktop`}
       poster={eager ? `/media/${video}-desktop.webp` : undefined}
-      aria-label={`Nagranie strony ${label} na komputerze`}
+      aria-label={en ? `Recording of the ${label} website on a computer` : `Nagranie strony ${label} na komputerze`}
     >
       <source src={`/media/${video}-desktop.mp4`} type="video/mp4" />
     </video>
@@ -47,7 +49,7 @@ const host = url ? new URL(url).host : label;
           height="886"
           data-poster={`/media/${video}-mobile`}
           poster={eager ? `/media/${video}-mobile-260.webp` : undefined}
-          aria-label={`Nagranie strony ${label} na telefonie`}
+          aria-label={en ? `Recording of the ${label} website on a phone` : `Nagranie strony ${label} na telefonie`}
         >
           <source src={`/media/${video}-mobile.mp4`} type="video/mp4" />
         </video>

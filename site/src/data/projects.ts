@@ -4,7 +4,7 @@
 export type Stat = { value: string; label: string };
 
 // draft: true = tekst przykładowy, na stronie widać plakietkę „przykład”. Usunąć po podmianie na prawdziwy.
-export type Quote = { text: string; author: string; role: string; draft?: boolean };
+export type Quote = { text: string; author: string; role: string; textEn?: string; roleEn?: string; draft?: boolean };
 
 export type Project = {
   slug: string;
@@ -14,6 +14,7 @@ export type Project = {
   // Drugie nagranie tej samej firmy (jeden slajd, jeden podpis – na prośbę Olka 26.11.2026).
   video2?: string;
   tagline: string;
+  taglineEn?: string;
   stats?: Stat[];
   page?: string;
 };
@@ -42,6 +43,7 @@ export const featured: Project[] = [
     url: 'https://seedpaper.pl',
     video: 'seedpaper',
     tagline: 'Czerpalnia papieru z nasionami spod Gliwic. Nowa strona, sklep B2B, Google Ads, widoczność w AI i system, w którym żadne zapytanie nie ginie.',
+    taglineEn: 'Seed paper mill near Gliwice. New website, B2B shop, Google Ads, AI visibility and a system where no enquiry gets lost.',
     stats: [
       { value: '75,80 → 33,29 zł', label: 'koszt zapytania z Google Ads w 2 tygodnie' },
       { value: '5 dni', label: 'tyle zajęło zbudowanie sklepu' },
@@ -55,6 +57,7 @@ export const featured: Project[] = [
     url: 'https://hcinstal.pl',
     video: 'hcinstal',
     tagline: 'Firma elektryczna: automatyka budynkowa Loxone, instalacje i pomiary. Strona i sklep z magazynami energii, dzięki któremu firma sprzedaje je na polskim rynku.',
+    taglineEn: 'Electrical company: Loxone building automation, installations and testing. Website and an online shop for energy storage systems that lets the company sell them on the Polish market.',
     page: '/hc-instal/',
   },
 ];
@@ -69,6 +72,7 @@ export const agencySites: Project[] = [
     name: 'GiB Meble',
     video: 'gibmeble',
     tagline: 'Producent mebli. Wielopoziomowe menu kolekcji i duże zdjęcia aranżacji.',
+    taglineEn: 'Furniture manufacturer. Multi-level collection menu and large interior photos.',
   },
   {
     slug: 'foto7',
@@ -77,29 +81,35 @@ export const agencySites: Project[] = [
     video2: 'foto7-nasze-marki',
     tagline:
       'Dystrybutor sprzętu fotograficznego. Strona z rozbudowanym menu marek i animacjami, a na podstronie „Nasze marki” logotypy obracają się po najechaniu myszką.',
+    taglineEn:
+      'Photography equipment distributor. A site with an extensive brand menu and animations; on the “Our brands” page the logos rotate on hover.',
   },
   {
     slug: 'prodvisor',
     name: 'Prodvisor',
     video: 'prodvisor',
     tagline: 'Doradca produkcji dla branży automotive. Wideo w tle i karty usług.',
+    taglineEn: 'Production consultancy for the automotive industry. Background video and service cards.',
   },
   {
     slug: 'auto-centrum',
     name: 'Auto-Centrum Gliwice',
     video: 'auto-centrum-gliwice',
     tagline: 'Warsztat samochodowy. Prosta strona z telefonem i umawianiem wizyty na wierzchu.',
+    taglineEn: 'Car repair shop. A simple site with the phone number and booking up front.',
   },
   {
     slug: 'vibeon',
     name: 'Vibeon',
     video: 'vibeon',
     tagline: 'Sklep z kosmetykami CBD. Strona produktowa w dwóch językach.',
+    taglineEn: 'CBD cosmetics shop. A bilingual product site.',
   },
   {
     slug: 'liberta',
     name: 'Liberta Okna',
     video: 'libertaokna',
     tagline: 'Producent okien. Kampania "Hybrid X" przeniesiona na stronę.',
+    taglineEn: 'Window manufacturer. The “Hybrid X” campaign brought to the website.',
   },
 ];

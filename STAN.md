@@ -20,6 +20,7 @@ Ostatnia aktualizacja: 26.11.2026, runda 3 (elastyczne przewijanie, logotypy, ko
 
 ## Dziennik zmian
 
+- 26.11.2026 – Wersja angielska na prośbę Olka: /en/, /en/art-papier/, /en/hc-instal/, /en/strony/. Strony przeniesione do `site/src/templates/` (jeden szablon na oba języki, teksty obok siebie jako `T(pl, en)`), przełącznik PL / EN w hero obok przedstawienia się i w stopce, hreflang w `<head>` i w mapie strony, formularz po angielsku (temat maila z `[EN]`). Lighthouse /en/ na telefonie 99/100/100/100. Obrazek podglądu linku (og.jpg) na razie po polsku.
 - 26.11.2026 – Na prośbę Olka: „ART PAPIER” wielkimi literami w realizacjach, „Specjaliści od sprzedaży przez telefon” i „Agenci AI” w zapleczu, nagłówek „Prowadzisz firmę. Czy masz czas na drugi etat jako marketingowiec?”.
 - 26.11.2026 – Cennik na prośbę Olka: jeden duży kafel „Marketing i rozwój firmy” (2 500 zł / mies.) z marketingiem oraz bazą klientów i sprzedażą w cenie, zamiast osobnego kafla „po rozmowie”; usunięte pytanie FAQ „Co jeśli nie będzie wyników?”.
 - 26.11.2026 – Indeksowanie: mapa strony `/sitemap.xml`, `robots.txt` z mapą, tytuł i opisy pod „Aleksander Cieśla” i „jednoosobowy dział marketingu”, rozszerzony JSON-LD, 404 z noindex; zgłoszenie w Google Search Console po stronie Olka (TODO).

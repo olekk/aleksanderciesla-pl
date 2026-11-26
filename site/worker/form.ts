@@ -47,7 +47,8 @@ export async function handleForm(request: Request, env: FormEnv): Promise<Respon
 
   if (env.MAILER && env.MAIL_FROM && env.MAIL_TO) {
     try {
-      const subject = `Nowe zapytanie ze strony: ${imie}${firma ? ` (${firma})` : ''}`;
+      const lang = /\/en\//.test(strona) ? '[EN] ' : '';
+      const subject = `${lang}Nowe zapytanie ze strony: ${imie}${firma ? ` (${firma})` : ''}`;
       const text = [
         `Imię: ${imie}`,
         `Firma / strona: ${firma || '-'}`,

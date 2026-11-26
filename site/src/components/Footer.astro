@@ -1,20 +1,34 @@
 ---
 import { site } from '../config/site';
+import LangSwitch from './LangSwitch.astro';
+import { type Lang, tr, href } from '../i18n';
+interface Props {
+  lang?: Lang;
+  translated?: boolean;
+}
+const { lang = 'pl', translated = true } = Astro.props;
+const T = tr(lang);
 const year = new Date().getFullYear();
 ---
 
 <footer class="site-footer">
   <div class="wrap cols">
     <div>
-      <a href="/" class="brand"><span class="mono" aria-hidden="true">AC</span>{site.brandName}</a>
-      <p class="muted small">Marketing i rozwój małych i średnich przedsiębiorstw: strony, Google Ads, widoczność w AI i sprzedaż.</p>
+      <a href={href(lang, '/')} class="brand"><span class="mono" aria-hidden="true">AC</span>{site.brandName}</a>
+      <p class="muted small">
+        {T(
+          'Marketing i rozwój małych i średnich przedsiębiorstw: strony, Google Ads, widoczność w AI i sprzedaż.',
+          'Marketing and growth for small and medium-sized businesses: websites, Google Ads, AI visibility and sales.',
+        )}
+      </p>
+      {translated && <LangSwitch lang={lang} />}
       {site.companyInfo && <p class="muted small">{site.companyInfo}</p>}
     </div>
-    <nav class="small" aria-label="Stopka">
-      <a href="/art-papier/">Art Papier</a>
-      <a href="/hc-instal/">HC INSTAL</a>
-      <a href="/strony/">Strony</a>
-      <a href="/#kontakt">Kontakt</a>
+    <nav class="small" aria-label={T('Stopka', 'Footer')}>
+      <a href={href(lang, '/art-papier/')}>Art Papier</a>
+      <a href={href(lang, '/hc-instal/')}>HC INSTAL</a>
+      <a href={href(lang, '/strony/')}>{T('Strony', 'Websites')}</a>
+      <a href={`${href(lang, '/')}#kontakt`}>{T('Kontakt', 'Contact')}</a>
     </nav>
     <div class="small">
       {site.phone && <p><a href={`tel:${site.phoneHref || site.phone}`}>{site.phone}</a></p>}

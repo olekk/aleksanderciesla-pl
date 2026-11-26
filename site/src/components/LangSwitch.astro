@@ -1,0 +1,58 @@
+---
+// Przełącznik języka PL / EN (na prośbę Olka 26.11.2026: w treści, u góry strony, a nie w menu).
+// Prowadzi do tej samej strony w drugim języku; aktywny język jest podświetlony.
+import { type Lang, otherPath } from '../i18n';
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const other = otherPath(lang, Astro.url.pathname);
+const items = [
+  { code: 'pl' as const, label: 'PL', name: 'Polski', href: lang === 'pl' ? Astro.url.pathname : other },
+  { code: 'en' as const, label: 'EN', name: 'English', href: lang === 'en' ? Astro.url.pathname : other },
+];
+---
+
+<nav class="lang glass" aria-label={lang === 'en' ? 'Language' : 'Język'}>
+  {
+    items.map((i) => (
+      <a
+        href={i.href}
+        hreflang={i.code}
+        lang={i.code}
+        aria-current={i.code === lang ? 'true' : undefined}
+        title={i.name}
+      >
+        {i.label}
+      </a>
+    ))
+  }
+</nav>
+
+<style>
+  .lang {
+    display: inline-flex;
+    gap: 2px;
+    padding: 3px;
+    border-radius: 999px;
+    font-size: 0.78rem;
+    font-weight: 650;
+    letter-spacing: 0.04em;
+  }
+  a {
+    padding: 5px 11px;
+    border-radius: 999px;
+    color: var(--text-2);
+    text-decoration: none;
+    transition:
+      background 0.2s,
+      color 0.2s;
+  }
+  a:hover {
+    color: var(--text);
+  }
+  a[aria-current] {
+    background: var(--grad);
+    color: #06121a;
+  }
+</style>

@@ -1,27 +1,68 @@
 ---
 import { site } from '../config/site';
-const services = ['Strona internetowa', 'Google Ads', 'Widoczność w ChatGPT', 'Baza klientów i sprzedaż', 'Oferta i promocje', 'Całość, porozmawiajmy'];
+import { type Lang, tr } from '../i18n';
+interface Props {
+  lang?: Lang;
+}
+const { lang = 'pl' } = Astro.props;
+const T = tr(lang);
+const services =
+  lang === 'en'
+    ? ['Website', 'Google Ads', 'Visibility in ChatGPT', 'Customer database and sales', 'Offer and promotions', 'Everything, let’s talk']
+    : ['Strona internetowa', 'Google Ads', 'Widoczność w ChatGPT', 'Baza klientów i sprzedaż', 'Oferta i promocje', 'Całość, porozmawiajmy'];
+// Komunikaty formularza dla skryptu (w języku strony).
+const msg = {
+  name: T('Wpisz, proszę, swoje imię.', 'Please enter your name.'),
+  contact: T('Zostaw telefon albo e-mail, żebym mógł odpowiedzieć.', 'Leave a phone number or email so I can reply.'),
+  email: T('Sprawdź adres e-mail.', 'Please check the email address.'),
+  sending: T('Wysyłam…', 'Sending…'),
+  ok: T(
+    'Dziękuję! Wiadomość doszła. Odezwę się najpóźniej następnego dnia roboczego.',
+    'Thank you! Your message has arrived. I will get back to you by the next working day at the latest.',
+  ),
+  fail: T('Nie udało się wysłać formularza.', 'The form could not be sent.'),
+  failMail: T('Napisz proszę bezpośrednio na', 'Please write directly to'),
+  retry: T('Spróbuj za chwilę.', 'Please try again in a moment.'),
+  submit: T('Wyślij, odezwę się', 'Send, I’ll get back to you'),
+};
 ---
 
 <section id="kontakt" class="contact">
   <div class="wrap grid-contact">
     <div class="reveal">
-      <p class="eyebrow">Kontakt</p>
-      <h2>Porozmawiajmy <span class="grad">30 minut.</span> Bez zobowiązań.</h2>
+      <p class="eyebrow">{T('Kontakt', 'Contact')}</p>
+      {
+        lang === 'en' ? (
+          <h2>
+            Let’s talk for <span class="grad">30 minutes.</span> No strings attached.
+          </h2>
+        ) : (
+          <h2>
+            Porozmawiajmy <span class="grad">30 minut.</span> Bez zobowiązań.
+          </h2>
+        )
+      }
       <p class="lead">
-        Opowiesz, czym się zajmujesz i skąd dziś przychodzą klienci. Ja powiem, co zrobiłbym na Twoim miejscu i ile by to
-        kosztowało.
+        {T(
+          'Opowiesz, czym się zajmujesz i skąd dziś przychodzą klienci. Ja powiem, co zrobiłbym na Twoim miejscu i ile by to kosztowało.',
+          'You tell me what you do and where your customers come from today. I tell you what I would do in your place and what it would cost.',
+        )}
       </p>
       <ul class="check">
-        <li>Pierwsza rozmowa i przegląd Twojej strony są bezpłatne.</li>
-        <li>Jeśli jesteś {site.meetArea}, chętnie spotkam się osobiście. Z resztą Polski rozmawiamy online.</li>
-        <li>Rozmawiasz ze mną, nie z handlowcem. To ja potem robię robotę.</li>
+        <li>{T('Pierwsza rozmowa i przegląd Twojej strony są bezpłatne.', 'The first call and a review of your website are free.')}</li>
+        <li>
+          {T(
+            `Jeśli jesteś ${site.meetArea}, chętnie spotkam się osobiście. Z resztą Polski rozmawiamy online.`,
+            `If you are ${site.meetAreaEn}, I am happy to meet in person. Everywhere else we talk online.`,
+          )}
+        </li>
+        <li>{T('Rozmawiasz ze mną, nie z handlowcem. To ja potem robię robotę.', 'You talk to me, not to a salesperson. I am the one who then does the work.')}</li>
       </ul>
       <div class="direct">
         {
           site.phone && (
             <a class="btn btn-primary" href={`tel:${site.phoneHref || site.phone}`}>
-              Zadzwoń: {site.phone}
+              {T('Zadzwoń', 'Call')}: {lang === 'en' ? `+48 ${site.phone}` : site.phone}
             </a>
           )
         }
@@ -35,9 +76,9 @@ const services = ['Strona internetowa', 'Google Ads', 'Widoczność w ChatGPT', 
       </div>
     </div>
 
-    <form class="form glass reveal" id="formularz" action="/api/kontakt" method="post" data-email={site.email} novalidate>
+    <form class="form glass reveal" id="formularz" action="/api/kontakt" method="post" data-email={site.email} data-msg={JSON.stringify(msg)} novalidate>
       <fieldset class="chips">
-        <legend>Co Cię interesuje?</legend>
+        <legend>{T('Co Cię interesuje?', 'What are you interested in?')}</legend>
         {
           services.map((s) => (
             <label class="chip">
@@ -50,17 +91,17 @@ const services = ['Strona internetowa', 'Google Ads', 'Widoczność w ChatGPT', 
 
       <div class="row">
         <label>
-          <span>Imię *</span>
+          <span>{T('Imię', 'Name')} *</span>
           <input name="imie" autocomplete="given-name" required maxlength="80" />
         </label>
         <label>
-          <span>Firma lub strona www</span>
+          <span>{T('Firma lub strona www', 'Company or website')}</span>
           <input name="firma" autocomplete="organization" maxlength="120" />
         </label>
       </div>
       <div class="row">
         <label>
-          <span>Telefon</span>
+          <span>{T('Telefon', 'Phone')}</span>
           <input name="telefon" type="tel" autocomplete="tel" maxlength="30" />
         </label>
         <label>
@@ -69,20 +110,23 @@ const services = ['Strona internetowa', 'Google Ads', 'Widoczność w ChatGPT', 
         </label>
       </div>
       <label>
-        <span>Kilka słów o firmie i o tym, czego potrzebujesz</span>
+        <span>{T('Kilka słów o firmie i o tym, czego potrzebujesz', 'A few words about your business and what you need')}</span>
         <textarea name="wiadomosc" rows="4" maxlength="3000"></textarea>
       </label>
 
       <!-- Pułapka na boty: pole niewidoczne dla ludzi. -->
       <label class="hp" aria-hidden="true">
-        Nie wypełniaj <input name="strona_www" tabindex="-1" autocomplete="off" />
+        {T('Nie wypełniaj', 'Leave empty')} <input name="strona_www" tabindex="-1" autocomplete="off" />
       </label>
       <input type="hidden" name="t" value="" />
 
-      <button class="btn btn-primary submit" type="submit">Wyślij, odezwę się</button>
+      <button class="btn btn-primary submit" type="submit">{msg.submit}</button>
       <p class="status small" role="status" aria-live="polite"></p>
       <p class="muted small fine">
-        Podaj telefon albo e-mail. Twoje dane wykorzystam tylko do odpowiedzi na tę wiadomość.
+        {T(
+          'Podaj telefon albo e-mail. Twoje dane wykorzystam tylko do odpowiedzi na tę wiadomość.',
+          'Give a phone number or email. I will use your details only to reply to this message.',
+        )}
       </p>
     </form>
   </div>
@@ -96,6 +140,7 @@ const services = ['Strona internetowa', 'Google Ads', 'Widoczność w ChatGPT', 
     const status = form.querySelector<HTMLElement>('.status')!;
     const btn = form.querySelector<HTMLButtonElement>('.submit')!;
     const email = form.dataset.email || '';
+    const m = JSON.parse(form.dataset.msg || '{}') as Record<string, string>;
 
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
@@ -104,12 +149,12 @@ const services = ['Strona internetowa', 'Google Ads', 'Widoczność w ChatGPT', 
       const tel = String(fd.get('telefon') || '').trim();
       const mail = String(fd.get('email') || '').trim();
       status.className = 'status small';
-      if (!imie) return show('Wpisz, proszę, swoje imię.', 'err');
-      if (!tel && !mail) return show('Zostaw telefon albo e-mail, żebym mógł odpowiedzieć.', 'err');
-      if (mail && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(mail)) return show('Sprawdź adres e-mail.', 'err');
+      if (!imie) return show(m.name, 'err');
+      if (!tel && !mail) return show(m.contact, 'err');
+      if (mail && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(mail)) return show(m.email, 'err');
 
       btn.disabled = true;
-      btn.textContent = 'Wysyłam…';
+      btn.textContent = m.sending;
       try {
         const res = await fetch(form.action, {
           method: 'POST',
@@ -119,15 +164,15 @@ const services = ['Strona internetowa', 'Google Ads', 'Widoczność w ChatGPT', 
         if (!res.ok) throw new Error(String(res.status));
         form.reset();
         t.value = String(Date.now());
-        show('Dziękuję! Wiadomość doszła. Odezwę się najpóźniej następnego dnia roboczego.', 'ok');
+        show(m.ok, 'ok');
       } catch {
         show(
-          `Nie udało się wysłać formularza.${email ? ` Napisz proszę bezpośrednio na ${email}.` : ' Spróbuj za chwilę.'}`,
+          `${m.fail} ${email ? `${m.failMail} ${email}.` : m.retry}`,
           'err',
         );
       } finally {
         btn.disabled = false;
-        btn.textContent = 'Wyślij, odezwę się';
+        btn.textContent = m.submit;
       }
     });
 

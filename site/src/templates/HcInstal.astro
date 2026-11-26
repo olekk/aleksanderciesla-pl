@@ -1,0 +1,110 @@
+---
+// Realizacja HC INSTAL (PL: /hc-instal/, EN: /en/hc-instal/). Teksty: T('polski', 'English').
+import Base from '../layouts/Base.astro';
+import Showcase from '../components/Showcase.astro';
+import Contact from '../components/Contact.astro';
+import LangSwitch from '../components/LangSwitch.astro';
+import { featured } from '../data/projects';
+import { type Lang, tr, href } from '../i18n';
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const T = tr(lang);
+const en = lang === 'en';
+const hc = featured[1];
+---
+
+<Base
+  lang={lang}
+  title={T('HC INSTAL – strona, sklep i marketing', 'HC INSTAL – website, shop and marketing')}
+  description={T(
+    'Strona hcinstal.pl i sklep z magazynami energii dla firmy elektrycznej: automatyka budynkowa Loxone, instalacje i pomiary elektryczne.',
+    'The hcinstal.pl website and an energy storage shop for an electrical company: Loxone building automation, installations and electrical testing.',
+  )}
+>
+  <section class="hero">
+    <div class="wrap">
+      <div class="top">
+        <p class="eyebrow"><a href={`${href(lang, '/')}#realizacje`}>{T('Realizacje', 'Work')}</a> · HC INSTAL</p>
+        <LangSwitch lang={lang} />
+      </div>
+      {
+        en ? (
+          <h1>
+            HC INSTAL: <span class="grad">the smart home</span> made simple
+          </h1>
+        ) : (
+          <h1>
+            HC INSTAL: <span class="grad">inteligentny dom</span> pokazany prosto
+          </h1>
+        )
+      }
+      <p class="lead narrow">
+        {T(
+          'HC INSTAL to firma elektryczna ze Śląska: automatyka budynkowa Loxone, instalacje i pomiary elektryczne. Zrobiłem stronę, sklep internetowy z magazynami energii, dzięki któremu firma sprzedaje je na polskim rynku, i prowadzę marketing.',
+          'HC INSTAL is an electrical company from Silesia: Loxone building automation, installations and electrical testing. I built the website and an online shop for energy storage systems that lets the company sell them on the Polish market, and I run their marketing.',
+        )}
+      </p>
+      <div class="media"><Showcase video={hc.video} label={hc.name} url={hc.url} eager /></div>
+      <p class="muted small">{T('Strona na żywo', 'Live website')}: <a href={hc.url} rel="noopener" target="_blank">hcinstal.pl</a></p>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap grid grid-2">
+      <div class="glass card reveal">
+        <h2 class="h3">{T('Zadanie', 'The task')}</h2>
+        <p>
+          {T(
+            'Automatyka budynkowa to temat, który łatwo przegadać technicznym językiem. Strona miała pokazać inwestorowi w kilka sekund, co zyskuje: wygodę, prywatność i niższe rachunki za energię. Do tego firma chciała sprzedawać w Polsce magazyny energii, więc potrzebowała sklepu.',
+            'Building automation is a topic that is easy to drown in technical jargon. The website had to show a homeowner in a few seconds what they gain: comfort, privacy and lower energy bills. On top of that, the company wanted to sell energy storage systems in Poland, so it needed a shop.',
+          )}
+        </p>
+      </div>
+      <div class="glass card reveal">
+        <h2 class="h3">{T('Co zrobiłem', 'What I did')}</h2>
+        <ul class="check">
+          <li>{T('Stronę z korzyściami na pierwszym ekranie i wyraźnym kontaktem', 'A website with the benefits on the first screen and a clear way to get in touch')}</li>
+          <li>
+            {T(
+              'Sklep internetowy z magazynami energii, który otworzył firmie sprzedaż na polskim rynku',
+              'An online shop for energy storage systems that opened up sales on the Polish market',
+            )}
+          </li>
+          <li>{T('Dopracowaną wersję na telefon', 'A polished mobile version')}</li>
+          <li>{T('Kilka wersji językowych', 'Several language versions')}</li>
+          <li>{T('Kampanie i widoczność w Google', 'Campaigns and visibility in Google')}</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <Contact lang={lang} />
+</Base>
+
+<style>
+  .hero {
+    padding-top: clamp(48px, 7vw, 96px);
+  }
+  .top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin-bottom: 8px;
+  }
+  .top .eyebrow {
+    margin: 0;
+  }
+  .media {
+    margin: 40px 0 12px;
+  }
+  .eyebrow a {
+    color: inherit;
+  }
+  .h3 {
+    font-size: 1.5rem;
+  }
+</style>

@@ -1,0 +1,74 @@
+---
+// Strony wdrożone w agencji (PL: /strony/, EN: /en/strony/). Teksty: T('polski', 'English').
+import Base from '../layouts/Base.astro';
+import Showcase from '../components/Showcase.astro';
+import Contact from '../components/Contact.astro';
+import LangSwitch from '../components/LangSwitch.astro';
+import { agencySites, agencyName } from '../data/projects';
+import { type Lang, tr, href } from '../i18n';
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const T = tr(lang);
+const en = lang === 'en';
+const agency = en
+  ? agencyName
+    ? `the ${agencyName} agency`
+    : 'the marketing agency I worked at'
+  : agencyName
+    ? `agencji ${agencyName}`
+    : 'agencji marketingowej, w której pracowałem';
+---
+
+<Base
+  lang={lang}
+  title={T('Strony wdrożone w agencji', 'Websites built at the agency')}
+  description={T(
+    'Strony, które wdrażałem w kodzie, pracując w agencji marketingowej: GiB Meble, Foto7, Prodvisor i inne.',
+    'Websites I built in code while working at a marketing agency: GiB Meble, Foto7, Prodvisor and more.',
+  )}
+>
+  <section class="hero">
+    <div class="wrap">
+      <div class="top">
+        <p class="eyebrow"><a href={`${href(lang, '/')}#realizacje`}>{T('Realizacje', 'Work')}</a> · {T('Strony', 'Websites')}</p>
+        <LangSwitch lang={lang} />
+      </div>
+      <h1>{T('Strony z czasów pracy w agencji', 'Websites from my agency days')}</h1>
+      <p class="lead narrow">
+        {T(
+          `Projekt graficzny: designerka ${agency}. Wdrożenie, czyli kod, animacje i wersja na telefon: ja. Nagrania pokazują strony tak, jak wyglądały po wdrożeniu.`,
+          `Design: a designer at ${agency}. The build, meaning code, animations and the mobile version: me. The recordings show the websites as they looked at launch.`,
+        )}
+      </p>
+    </div>
+  </section>
+
+  {
+    agencySites.map((s, i) => (
+      <section class="reveal">
+        <div class="wrap site">
+          <div class="text">
+            <h2>{s.name}</h2>
+            <p class="muted">{en ? s.taglineEn || s.tagline : s.tagline}</p>
+          </div>
+          <Showcase video={s.video} label={s.name} eager={i === 0} />
+          {s.video2 && <Showcase video={s.video2} label={`${s.name}, ${T('podstrona', 'subpage')}`} />}
+        </div>
+      </section>
+    ))
+  }
+
+  <Contact lang={lang} />
+</Base>
+
+<style>
+  .hero { padding-top: clamp(40px, 7vw, 80px); padding-bottom: 32px; }
+  .top { display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; margin-bottom: 8px; }
+  .top .eyebrow { margin: 0; }
+  .eyebrow a { color: inherit; }
+  .site { display: grid; gap: 24px; align-items: center; }
+  @media (min-width: 900px) { .site { grid-template-columns: 1fr 2fr; gap: 48px; } }
+  .site h2 { font-size: clamp(1.5rem, 3vw, 2rem); }
+</style>

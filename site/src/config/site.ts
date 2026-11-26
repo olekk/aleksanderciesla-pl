@@ -17,6 +17,7 @@ export const site = {
 
   // Spotkania na miejscu – wspominamy raz, w kontakcie.
   meetArea: 'z Trójmiasta albo ze Śląska',
+  meetAreaEn: 'in the Tricity area (Gdańsk, Gdynia, Sopot) or in Silesia',
 
   // TODO(Olek): na jaką firmę faktury (np. HC INSTAL sp. z o.o., NIP ...). Puste = brak w stopce.
   companyInfo: '',
@@ -46,3 +47,16 @@ export const site = {
 } as const;
 
 export const priceSuffix = site.prices.net ? ' netto' : '';
+
+// Ceny w wersji angielskiej (te same kwoty, w złotówkach). Przy zmianie ceny wyżej zmień też tutaj.
+export const pricesEn = {
+  website: 'PLN 3,000',
+  marketing: 'PLN 2,500 / month',
+  marketingTime: 'approx. 10 hours of my work per week',
+  adBudget: 'from approx. PLN 300 / month',
+} as const;
+
+export const prices = (lang: 'pl' | 'en') =>
+  lang === 'en'
+    ? { ...pricesEn, suffix: site.prices.net ? ' net' : '' }
+    : { ...site.prices, suffix: priceSuffix };

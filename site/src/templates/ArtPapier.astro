@@ -1,0 +1,192 @@
+---
+// Case study Art Papier (PL: /art-papier/, EN: /en/art-papier/). Teksty: T('polski', 'English').
+import Base from '../layouts/Base.astro';
+import Showcase from '../components/Showcase.astro';
+import Contact from '../components/Contact.astro';
+import LangSwitch from '../components/LangSwitch.astro';
+import { featured } from '../data/projects';
+import { type Lang, tr, href } from '../i18n';
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const T = tr(lang);
+const en = lang === 'en';
+const ap = featured[0];
+---
+
+<Base
+  lang={lang}
+  title="Art Papier - case study"
+  description={T(
+    'Jak czerpalnia papieru z nasionami spod Gliwic dostała tańsze zapytania z Google Ads, sklep internetowy w 5 dni i system, w którym żaden lead już nie ginie.',
+    'How a seed paper mill near Gliwice got cheaper enquiries from Google Ads, an online shop in 5 days and a system where no lead gets lost any more.',
+  )}
+>
+  <section class="hero">
+    <div class="wrap">
+      <div class="top">
+        <p class="eyebrow"><a href={`${href(lang, '/')}#realizacje`}>{T('Realizacje', 'Work')}</a> · Case study</p>
+        <LangSwitch lang={lang} />
+      </div>
+      {
+        en ? (
+          <h1>
+            A paper mill from Rachowice: <span class="grad">2× cheaper enquiries</span>, a shop in 5 days and no lost leads
+          </h1>
+        ) : (
+          <h1>
+            Czerpalnia z Rachowic: <span class="grad">2× tańsze zapytania</span>, sklep w 5 dni i żaden lead nie ginie
+          </h1>
+        )
+      }
+      <p class="lead narrow">
+        {T(
+          'ART-PAPIER to czerpalnia papieru z nasionami polnych kwiatów spod Gliwic. Robią ręcznie czerpany papier, który po użyciu można zasadzić, i drukują na nim materiały dla firm. Pracuję dla nich od sierpnia 2026.',
+          'ART-PAPIER is a paper mill near Gliwice that makes paper with wildflower seeds. They produce handmade paper that can be planted after use, and print materials for businesses on it. I have been working for them since August 2026.',
+        )}
+      </p>
+      <div class="media"><Showcase video={ap.video} label={ap.name} url={ap.url} eager /></div>
+      <p class="muted small">{T('Strona na żywo', 'Live website')}: <a href={ap.url} rel="noopener" target="_blank">seedpaper.pl</a></p>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap narrow">
+      <h2>{T('Punkt wyjścia', 'Starting point')}</h2>
+      <ul class="check">
+        <li>{T('Strona na WordPressie z płatnymi wtyczkami, wolna na telefonie.', 'A WordPress site with paid plugins, slow on phones.')}</li>
+        <li>
+          {T(
+            'W Google Ads 7 zdublowanych "konwersji". Nie było wiadomo, które reklamy dają zapytania.',
+            '7 duplicated "conversions" in Google Ads. Nobody knew which ads brought enquiries.',
+          )}
+        </li>
+        <li>
+          {T(
+            'Zapytania z formularza w reklamie Google nie trafiały do nikogo. Od grudnia 2025 ok. 45 takich leadów, a Google trzyma je krótko, więc odzyskaliśmy tylko kilka.',
+            'Enquiries from the Google ad lead form reached nobody. About 45 such leads since December 2025, and Google keeps them only briefly, so we recovered just a few.',
+          )}
+        </li>
+        <li>
+          {T(
+            'Budżet szedł też na frazy hobbystyczne ("papier czerpany ozdobny"), a firmie zależy na dużych zamówieniach od firm.',
+            'Budget also went to hobby keywords ("decorative handmade paper"), while the company wants large orders from businesses.',
+          )}
+        </li>
+      </ul>
+      <p>{T('Zacząłem od audytu w 8 obszarach i planu na 12 miesięcy. Potem po kolei.', 'I started with an audit of 8 areas and a 12-month plan. Then step by step.')}</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <h2>{T('Co zrobiłem', 'What I did')}</h2>
+      <div class="grid grid-2">
+        <article class="glass card reveal">
+          <h3>{T('1. Najpierw pomiar', '1. Measurement first')}</h3>
+          <p>
+            {T(
+              'Uporządkowałem konwersje w Google Ads i dodałem pole "Skąd o nas wiesz?" do formularzy. Wyciąłem frazy hobbystyczne, które zjadły 356 zł bez ani jednego zapytania.',
+              'I cleaned up the conversions in Google Ads and added a "How did you hear about us?" field to the forms. I cut hobby keywords that had eaten PLN 356 without a single enquiry.',
+            )}
+          </p>
+          <div class="stats">
+            <div class="stat glass">
+              <strong>{T('75,80 → 33,29 zł', 'PLN 75.80 → 33.29')}</strong><span>{T('koszt zapytania, w 2 tygodnie (październik 2026)', 'cost per enquiry, within 2 weeks (October 2026)')}</span>
+            </div>
+          </div>
+        </article>
+        <article class="glass card reveal">
+          <h3>{T('2. Nowa strona i sklep', '2. New website and shop')}</h3>
+          <p>
+            {T(
+              'Przeniosłem seedpaper.pl z WordPressa na Astro i darmowy hosting Cloudflare. Potem sklep B2B: 10 produktów z drukiem z pliku klienta, płatność BLIK, kartą lub przelewem, wysyłka InPost.',
+              'I moved seedpaper.pl from WordPress to Astro and free Cloudflare hosting. Then a B2B shop: 10 products printed from the customer’s file, payment by BLIK, card or bank transfer, InPost shipping.',
+            )}
+          </p>
+          <div class="stats">
+            <div class="stat glass">
+              <strong>{T('5 dni', '5 days')}</strong><span>{T('tyle zajęło zbudowanie sklepu (start 29.10.2026)', 'to build the shop (launched 29 Oct 2026)')}</span>
+            </div>
+          </div>
+        </article>
+        <article class="glass card reveal">
+          <h3>{T('3. Żaden lead nie ginie', '3. No lead gets lost')}</h3>
+          <p>
+            {T(
+              'Każde zapytanie, z formularza na stronie i z reklamy, trafia automatycznie do biura na maila i do arkusza CRM. W arkuszu widać, skąd przyszło: reklama, wyszukiwarka czy AI.',
+              'Every enquiry, from the website form and from ads, automatically goes to the office by email and into a CRM spreadsheet. The sheet shows where it came from: ads, search or AI.',
+            )}
+          </p>
+          <div class="stats">
+            <div class="stat glass"><strong>18</strong><span>{T('zapytań w CRM od połowy października', 'enquiries in the CRM since mid-October')}</span></div>
+          </div>
+        </article>
+        <article class="glass card reveal">
+          <h3>{T('4. Widoczność w Google i w AI', '4. Visibility in Google and AI')}</h3>
+          <p>
+            {T(
+              'Feed produktów do Google Merchant Center, Bing Webmaster Tools, wpis w Wikidata, artykuły z odpowiedziami na pytania klientów.',
+              'A product feed for Google Merchant Center, Bing Webmaster Tools, a Wikidata entry, articles answering customers’ questions.',
+            )}
+          </p>
+          <div class="stats">
+            <div class="stat glass"><strong>55</strong><span>{T('cytowań strony w odpowiedziach Copilota (Bing)', 'citations of the website in Copilot (Bing) answers')}</span></div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap narrow">
+      <h2>{T('Liczby z ostatnich 30 dni', 'Numbers from the last 30 days')}</h2>
+      <p>{T('Nie tylko najlepszy okres. Tak wygląda zwykły miesiąc (25.10-23.11.2026):', 'Not just the best period. This is what an ordinary month looks like (25 Oct - 23 Nov 2026):')}</p>
+      <div class="stats">
+        <div class="stat glass"><strong>{T('685 zł', 'PLN 685')}</strong><span>{T('wydane na Google Ads', 'spent on Google Ads')}</span></div>
+        <div class="stat glass"><strong>389</strong><span>{T('kliknięć w reklamy', 'ad clicks')}</span></div>
+        <div class="stat glass"><strong>14</strong><span>{T('zapytań z reklam', 'enquiries from ads')}</span></div>
+        <div class="stat glass"><strong>{T('48,94 zł', 'PLN 48.94')}</strong><span>{T('za jedno zapytanie', 'per enquiry')}</span></div>
+      </div>
+      <p>
+        {T(
+          'Budżet reklam to ok. 650 zł miesięcznie. Z jednego z takich zapytań przyszło zamówienie od samorządu: 2 000 sztuk druków na papierze z nasionami, na ok. 3 000 zł.',
+          'The ad budget is about PLN 650 a month. One of those enquiries turned into an order from a local government: 2,000 prints on seed paper, worth about PLN 3,000.',
+        )}
+      </p>
+      <p class="glass note">
+        {T(
+          'Czego jeszcze nie wiemy: ile dokładnie zarabia firma na każdej złotówce z reklam. Sklep działa od niedawna, a większe zamówienia idą przez rozmowę z biurem. To jest następny krok, który mierzymy.',
+          'What we don’t know yet: exactly how much the company earns on every złoty spent on ads. The shop is new, and larger orders go through a conversation with the office. That is the next thing we are measuring.',
+        )}
+      </p>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap narrow">
+      <h2>{T('Jak to wygląda na co dzień', 'What it looks like day to day')}</h2>
+      <ul class="check">
+        <li>{T('W poniedziałek 15 minut przeglądu reklam: koszty, nowe zapytania, wykluczenia.', 'On Monday, a 15-minute review of the ads: costs, new enquiries, exclusions.')}</li>
+        <li>{T('3. dnia miesiąca raport dla właściciela: ile wydane, ile zapytań, co zmieniam.', 'On the 3rd of each month, a report for the owner: how much was spent, how many enquiries, what I am changing.')}</li>
+        <li>{T('Codziennie rano automat zbiera dane z reklam i zapytania do arkusza.', 'Every morning an automation collects ad data and enquiries into the spreadsheet.')}</li>
+        <li>{T('Właściciel ma stały dostęp do CRM i widzi to samo co ja.', 'The owner has constant access to the CRM and sees the same as I do.')}</li>
+      </ul>
+      <p>{T('Ok. 10 godzin tygodniowo, za stałą miesięczną kwotę.', 'About 10 hours a week, for a fixed monthly fee.')}</p>
+    </div>
+  </section>
+
+  <Contact lang={lang} />
+</Base>
+
+<style>
+  .hero { padding-top: clamp(48px, 7vw, 96px); }
+  .hero h1 { max-width: 980px; }
+  .top { display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; margin-bottom: 8px; }
+  .top .eyebrow { margin: 0; }
+  .media { margin: 40px 0 12px; }
+  .eyebrow a { color: inherit; }
+  section .wrap.narrow > h2, section .wrap > h2 { font-size: clamp(1.7rem, 3.4vw, 2.5rem); }
+  .note { padding: 18px 22px; border-radius: 18px; color: var(--text-2); }
+</style>
