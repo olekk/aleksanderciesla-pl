@@ -510,7 +510,7 @@ const faqLd = {
       <div class="portrait reveal">
         {
           site.photo ? (
-            <img src={site.photo} alt={site.personName} width="560" height="560" loading="lazy" />
+            <img src={site.photo} alt={`${site.personName}, uśmiechnięty, na tle jeziora o zachodzie słońca`} width="720" height="720" loading="lazy" decoding="async" />
           ) : (
             <div class="portrait-ph" aria-hidden="true">
               AC
@@ -1114,6 +1114,7 @@ const faqLd = {
   .portrait img,
   .portrait-ph {
     width: min(100%, 360px);
+    height: auto;
     aspect-ratio: 1;
     border-radius: 36px;
     object-fit: cover;

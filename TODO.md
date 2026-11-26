@@ -1,6 +1,6 @@
 # TODO (zadania ręczne)
 
-- [ ] Olek: telefon, e-mail, zdjęcie (kwadrat, `site/public/img/`), dane do faktur → `site/src/config/site.ts`
+- [ ] Olek: telefon, e-mail, dane do faktur (zdjęcie jest od 26.11.2026) → `site/src/config/site.ts`
 - [ ] Olek: kwota za CRM (czy pokazywać), potwierdzić „bez umowy na rok”
 - [ ] Olek: zgoda Flawiusza + cytat; netto/brutto zamówienia Chełmiec
 - [ ] Olek: zgoda byłego szefa agencji, nazwa agencji (`agencyName` w `projects.ts`)

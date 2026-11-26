@@ -22,7 +22,7 @@ export const site = {
   companyInfo: '',
 
   // TODO(Olek): zdjęcie twarzy, np. '/img/aleksander.webp' (kwadrat min. 800x800). Puste = monogram.
-  photo: '',
+  photo: '/img/aleksander-ciesla-portret.webp',
 
   // Ceny pokazywane na stronie. `net: true` dopisuje "netto".
   prices: {

@@ -7,7 +7,7 @@ Ostatnia aktualizacja: 26.11.2026, runda 3 (elastyczne przewijanie, logotypy, ko
 | 1   | Szkielet Astro + Worker (noindex poza domeną, www → apex)            | Claude | ✅ |
 | 2   | Strona główna (sekcje 1-10 z planu), /art-papier/, /hc-instal/, /strony/ | Claude | ✅ |
 | 3   | Nagrania stron skompresowane do `site/public/media/` (26 MB)         | Claude | ✅ |
-| 4   | Telefon, mail, zdjęcie, dane do faktur w `site/src/config/site.ts`   | Olek | ⏳ |
+| 4   | Telefon, mail, dane do faktur w `site/src/config/site.ts` (zdjęcie ✅ 26.11) | Olek | ⏳ |
 | 5   | Zgoda Flawiusza na case study + cytat (`site/src/data/projects.ts`)  | Olek | ⏳ |
 | 6   | Zgoda byłego szefa agencji (+ nazwa agencji)                         | Olek | ⏳ |
 | 7   | Pierwszy deploy na Cloudflare (podgląd workers.dev)                  | Olek | ⏳ |

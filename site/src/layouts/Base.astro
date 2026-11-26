@@ -33,6 +33,7 @@ const jsonLd = {
       jobTitle: 'Strony internetowe i marketing dla małych firm',
       ...(site.email ? { email: `mailto:${site.email}` } : {}),
       ...(site.phone ? { telephone: site.phone } : {}),
+      ...(site.photo ? { image: new URL(site.photo, site.url).href } : {}),
     },
     {
       '@type': 'ProfessionalService',
