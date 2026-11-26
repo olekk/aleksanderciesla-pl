@@ -84,6 +84,25 @@ const services = [
   },
 ] as const;
 
+// Wsparcie IT i własne narzędzia (na prośbę Olka 26.11.2026).
+const itCards = [
+  {
+    icon: 'chat',
+    title: 'Bieżące wsparcie IT',
+    text: 'Nie działa poczta, wysyłka paczek albo aplikacja, z której korzysta Twoja firma? Dzwonisz do mnie. Jestem doświadczonym programistą i zawsze znajdę rozwiązanie.',
+  },
+  {
+    icon: 'bolt',
+    title: 'Narzędzia szyte na miarę',
+    text: 'Masz dużo powtarzalnej roboty? Dogadamy się, a ja zrobię narzędzie albo automatyzację dopasowaną do Twojej firmy, które zrobi to za Ciebie.',
+  },
+  {
+    icon: 'doc',
+    title: 'Przykład: kosztorysy z hurtowni',
+    text: 'Stworzyłem rozszerzenie do przeglądarki, które tworzy kosztorys prosto ze stron hurtowni. Zamiast przepisywać produkty i ceny ręcznie, kosztorys składa się kilkoma kliknięciami.',
+  },
+] as const;
+
 const team = [
   { t: 'Graficy', d: 'logo, materiały reklamowe, grafiki do kampanii' },
   { t: 'Fotografowie', d: 'zdjęcia produktów, ludzi i realizacji' },
@@ -184,14 +203,14 @@ const faqLd = {
           </div>
           <div class="kpis">
             <div>
-              <p class="small muted label"><i class="key red"></i>Koszt zapytania</p>
+              <p class="small muted label"><i class="key red"></i>Koszt konwersji</p>
               <p class="big red">33,29 zł</p>
               <p class="delta down">↓ z 75,80 zł</p>
             </div>
             <div>
               <p class="small muted label"><i class="key green"></i>Zapytania z reklam</p>
-              <p class="big green">20</p>
-              <p class="delta up">↑ z 14</p>
+              <p class="big green">20<small> / mies.</small></p>
+              <p class="delta up">↑ z 0</p>
             </div>
           </div>
           <!-- Wykres poglądowy (na prośbę Olka 26.11.2026): koszt zapytania (czerwony) spada, liczba zapytań (zielony)
@@ -219,10 +238,10 @@ const faqLd = {
             <circle cx="300" cy="84" r="4" fill="#fb7185"></circle>
             <circle cx="300" cy="28" r="4" fill="#4ade80"></circle>
           </svg>
-          <p class="small muted caption">Koszt: 6-19.10 → 20-31.10.2026. Zapytania: 6-31.10 → 20.10-18.11.2026.</p>
+          <p class="small muted caption">Koszt konwersji (zapytania lub zamówienia): 6-19.10 → 20-31.10.2026. Zapytania z reklam: przed kampanią 0, teraz ok. 20 miesięcznie.</p>
         </div>
         <div class="chip-float glass c1"><strong>5 dni</strong><span>tyle zajęło zbudowanie sklepu</span></div>
-        <div class="chip-float glass c2"><strong>55×</strong><span>tyle razy AI zacytowało stronę w odpowiedziach</span></div>
+        <div class="chip-float glass c2"><strong>55×</strong><span>tyle razy AI zacytowało stronę w 2 tygodnie</span></div>
       </div>
     </div>
 
@@ -250,7 +269,6 @@ const faqLd = {
     <div class="wrap">
       <div class="reveal center narrow">
         <p class="eyebrow">Brzmi znajomo?</p>
-        <h2>Masz firmę do prowadzenia. Marketing nie powinien być drugim etatem.</h2>
       </div>
       <div class="grid grid-2 pain-grid">
         {
@@ -262,6 +280,7 @@ const faqLd = {
           ))
         }
       </div>
+      <h2 class="pains-answer center narrow reveal">Masz firmę do prowadzenia. Marketing nie powinien być drugim etatem.</h2>
     </div>
   </section>
 
@@ -311,6 +330,75 @@ const faqLd = {
               </div>
               <h3>{s.title}</h3>
               <p set:html={s.text} />
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTY A/B: STRONA EWOLUUJĄCA -->
+  <section class="ab" data-flow>
+    <div class="wrap ab-grid">
+      <div class="reveal">
+        <p class="eyebrow">Testy A/B</p>
+        <h2>Strona, która <span class="grad">ewoluuje</span></h2>
+        <p class="lead">
+          Duże kanały na YouTube nie zgadują, która miniaturka i który tytuł zadziałają. Wrzucają kilka wersji tego samego
+          filmu i sprawdzają, która szybciej zbiera wyświetlenia. Słabsza znika, lepsza zostaje.
+        </p>
+        <p class="muted">
+          Tak samo testuję Twoją stronę. Część odwiedzających widzi wersję A nagłówka, oferty albo przycisku, część wersję B.
+          Zostaje ta, po której więcej osób dzwoni i pisze, a ja testuję kolejną zmianę. Z miesiąca na miesiąc strona coraz
+          lepiej odpowiada na to, czego potrzebują Twoi klienci. Bez migania i bez spowalniania strony.
+        </p>
+      </div>
+      <div class="ab-visual reveal" aria-label="Przykład testu A/B: dwie miniaturki tego samego filmu">
+        <div class="thumbs">
+          <figure class="thumb glass">
+            <div class="thumb-img a" aria-hidden="true"><span>Jak działa<br />czarna dziura?</span></div>
+            <figcaption><b>A</b> 4,1% kliknięć</figcaption>
+            <span class="bar"><i style="width:45%"></i></span>
+          </figure>
+          <figure class="thumb glass win">
+            <div class="thumb-img b" aria-hidden="true"><span>Co jest<br />w środku?</span></div>
+            <figcaption><b>B</b> 9,2% kliknięć <em>wygrywa</em></figcaption>
+            <span class="bar"><i style="width:100%"></i></span>
+          </figure>
+        </div>
+        <p class="muted small">Przykład poglądowy: ten sam film, dwie miniaturki. Liczby ilustrują zasadę, to nie dane konkretnego kanału.</p>
+        <div class="evo glass">
+          <p class="tag">Nowość</p>
+          <h3>Strona ewoluująca</h3>
+          <p>
+            Strona, która co miesiąc testuje nowe wersje i sama zostawia te, które przynoszą więcej klientów.{' '}
+            <strong>Cel: nawet 2× więcej zapytań z tego samego ruchu</strong> niż ze zwykłej, niezmienianej strony.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WSPARCIE IT I NARZĘDZIA -->
+  <section class="it" data-flow>
+    <div class="wrap">
+      <div class="reveal narrow">
+        <p class="eyebrow">Wsparcie IT i własne narzędzia</p>
+        <h2>Programista pod telefonem</h2>
+        <p class="lead">
+          Poza marketingiem dostajesz kogoś, kto ogarnia technikę w Twojej firmie. Problemy rozwiązuję na bieżąco, a
+          powtarzalną pracę zamieniam w automat.
+        </p>
+      </div>
+      <div class="grid grid-3 it-grid">
+        {
+          itCards.map((c) => (
+            <article class="glass card reveal">
+              <div class="icon">
+                <Icon name={c.icon} />
+              </div>
+              <h3>{c.title}</h3>
+              <p>{c.text}</p>
             </article>
           ))
         }
@@ -376,7 +464,7 @@ const faqLd = {
             <p class="tag">Strona · Sklep · Marketing</p>
             <h3>HC INSTAL</h3>
             <p class="muted">Automatyka budynkowa i elektryka. Sklep z magazynami energii, dzięki któremu firma sprzedaje je na polskim rynku.</p>
-            <a class="btn btn-glass" href={hc.page}>Zobacz projekt →</a>
+            <a class="btn btn-glass" href={hc.page}>Zobacz case study →</a>
           </div>
         </article>
       </div>
@@ -393,18 +481,23 @@ const faqLd = {
       </div>
       <div class="carousel" id="karuzela" tabindex="0" aria-label="Strony wdrożone w agencji">
         {
-          agencySites.map((s) => (
-            <figure class:list={['slide', { pair: s.video2 }]}>
-              <div class="slide-media">
-                <Showcase video={s.video} label={s.name} mobile={false} />
-                {s.video2 && <Showcase video={s.video2} label={`${s.name}, podstrona`} mobile={false} />}
-              </div>
+          agencySites.flatMap((s) => [
+            <figure class="slide">
+              <Showcase video={s.video} label={s.name} mobile={false} />
               <figcaption>
                 <strong>{s.name}</strong>
                 <span class="muted small">{s.tagline}</span>
               </figcaption>
-            </figure>
-          ))
+            </figure>,
+            // Druga strona tej samej firmy: osobny kafelek bez podpisu (na prośbę Olka 26.11.2026).
+            ...(s.video2
+              ? [
+                  <figure class="slide">
+                    <Showcase video={s.video2} label={`${s.name}, podstrona`} mobile={false} />
+                  </figure>,
+                ]
+              : []),
+          ])
         }
       </div>
       <div class="more reveal">
@@ -490,7 +583,8 @@ const faqLd = {
             <li>Baza klientów i proces obsługi zapytań</li>
             <li>Pomysły na pakiety i promocje</li>
             <li>Automatyzacje: opinie, raporty, powiadomienia</li>
-            <li>Zmiany na stronie w cenie</li>
+            <li>Zmiany na stronie w cenie i testy A/B</li>
+            <li>Bieżące wsparcie IT: poczta, wysyłki, aplikacje</li>
             <li>Raport co miesiąc</li>
           </ul>
           <a class="btn btn-primary" href="#kontakt">Porozmawiajmy</a>
@@ -877,6 +971,129 @@ const faqLd = {
     }
   }
 
+  .big small {
+    font-size: 0.45em;
+    font-weight: 600;
+    letter-spacing: 0;
+    opacity: 0.8;
+  }
+  .pains-answer {
+    margin-top: 48px;
+    max-width: 820px;
+  }
+
+  /* TESTY A/B */
+  .ab-grid {
+    display: grid;
+    gap: 40px;
+    align-items: center;
+  }
+  @media (min-width: 960px) {
+    .ab-grid {
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+    }
+  }
+  .thumbs {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+  }
+  .thumb {
+    margin: 0;
+    padding: 10px 10px 14px;
+    border-radius: 18px;
+  }
+  .thumb-img {
+    aspect-ratio: 16 / 9;
+    border-radius: 10px;
+    display: flex;
+    align-items: flex-end;
+    padding: 10px 12px;
+    font-weight: 800;
+    font-size: clamp(0.8rem, 1.6vw, 1rem);
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+  }
+  .thumb-img.a {
+    background:
+      radial-gradient(circle at 70% 40%, #0b0d14 18%, #334155 19%, #1e293b 30%, transparent 31%),
+      linear-gradient(135deg, #475569, #1e293b);
+    color: #e2e8f0;
+  }
+  .thumb-img.b {
+    background:
+      radial-gradient(circle at 68% 42%, #000 16%, #f59e0b 17%, #f43f5e 26%, transparent 38%),
+      linear-gradient(135deg, #1e1b4b, #4c1d95);
+    color: #fff;
+    text-shadow: 0 2px 10px rgb(0 0 0 / 60%);
+  }
+  .thumb figcaption {
+    margin: 10px 2px 8px;
+    font-size: 0.88rem;
+    color: var(--text-2);
+  }
+  .thumb figcaption b {
+    display: inline-grid;
+    place-items: center;
+    width: 22px;
+    height: 22px;
+    margin-right: 6px;
+    border-radius: 6px;
+    background: rgb(255 255 255 / 12%);
+    color: var(--text);
+    font-size: 0.8rem;
+  }
+  .thumb figcaption em {
+    font-style: normal;
+    font-size: 0.75rem;
+    font-weight: 700;
+    margin-left: 6px;
+    padding: 2px 8px;
+    border-radius: 999px;
+    background: rgb(74 222 128 / 16%);
+    color: #4ade80;
+  }
+  .bar {
+    display: block;
+    height: 6px;
+    margin: 0 2px;
+    border-radius: 999px;
+    background: rgb(255 255 255 / 8%);
+    overflow: hidden;
+  }
+  .bar i {
+    display: block;
+    height: 100%;
+    border-radius: inherit;
+    background: #64748b;
+  }
+  .win .bar i {
+    background: #4ade80;
+  }
+  .ab-visual > .muted {
+    margin: 10px 0 18px;
+  }
+  .evo {
+    padding: 22px 24px;
+    border-radius: 20px;
+  }
+  .evo h3 {
+    margin-bottom: 0.35em;
+  }
+  .evo p:last-child {
+    margin: 0;
+    color: var(--text-2);
+  }
+  .evo strong {
+    color: var(--text);
+  }
+
+  /* WSPARCIE IT */
+  .it-grid {
+    margin-top: 36px;
+  }
+
   /* PYTANIA */
   .pain-grid {
     margin: 40px auto 0;
@@ -1080,16 +1297,6 @@ const faqLd = {
   .slide {
     margin: 0;
     scroll-snap-align: start;
-  }
-  .slide.pair {
-    grid-column: span 2;
-  }
-  .slide-media {
-    display: grid;
-    gap: 20px;
-  }
-  .pair .slide-media {
-    grid-template-columns: 1fr 1fr;
   }
   .more {
     display: flex;

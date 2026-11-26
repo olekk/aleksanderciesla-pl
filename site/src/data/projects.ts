@@ -22,7 +22,7 @@ export type Project = {
 // SZKICE do podmiany na prawdziwe słowa klientów przed publikacją (na prośbę Olka 26.11.2026).
 export const quotes: Quote[] = [
   {
-    text: 'Olek zajął się naszą stroną, sklepem i reklamami. Pierwszy raz wiem, ile kosztuje nas zapytanie i skąd przychodzą klienci. Nie muszę o niczym pamiętać, a co miesiąc dostaję jasny raport.',
+    text: 'Olek to człowiek godny zaufania. Powierzam mu bardzo dużo spraw w firmie: stronę, sklep, reklamy, a nawet codzienne problemy z pocztą i komputerami. Jeszcze się na nim nie zawiodłem i z czystym sumieniem mogę go polecić.',
     author: 'Flawiusz Pietrzyk',
     role: 'właściciel, ART-PAPIER Czerpalnia Papieru',
     draft: true,

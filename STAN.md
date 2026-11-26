@@ -7,7 +7,7 @@ Ostatnia aktualizacja: 26.11.2026, runda 3 (elastyczne przewijanie, logotypy, ko
 | 1   | Szkielet Astro + Worker (noindex poza domeną, www → apex)            | Claude | ✅ |
 | 2   | Strona główna (sekcje 1-10 z planu), /art-papier/, /hc-instal/, /strony/ | Claude | ✅ |
 | 3   | Nagrania stron skompresowane do `site/public/media/` (26 MB)         | Claude | ✅ |
-| 4   | Telefon, mail, dane do faktur w `site/src/config/site.ts` (zdjęcie ✅ 26.11) | Olek | ⏳ |
+| 4   | Mail, dane do faktur w `site/src/config/site.ts` (zdjęcie i telefon ✅ 26.11) | Olek | ⏳ |
 | 5   | Zgoda Flawiusza na case study + cytat (`site/src/data/projects.ts`)  | Olek | ⏳ |
 | 6   | Zgoda byłego szefa agencji (+ nazwa agencji)                         | Olek | ⏳ |
 | 7   | Pierwszy deploy na Cloudflare (podgląd workers.dev)                  | Olek | ⏳ |
@@ -20,6 +20,7 @@ Ostatnia aktualizacja: 26.11.2026, runda 3 (elastyczne przewijanie, logotypy, ko
 
 ## Dziennik zmian
 
+- 26.11.2026 – Runda 5 na prośbę Olka: telefon, koszt konwersji i zapytania 0 → 20 / mies., sekcje „Strona, która ewoluuje” (testy A/B) i „Wsparcie IT i własne narzędzia”, nagłówek „Brzmi znajomo” pod kafelkami, Foto7 jako 2 kafelki, opinia Flawiusza o zaufaniu (szkic) (sekcja 0e).
 - 26.11.2026 – Runda 4 na prośbę Olka: przewijanie bez drgań (sekcje doganiają po zahamowaniu), wykres z dwiema liniami, „małych i średnich przedsiębiorstw”, zdjęcie w nagłówku i hero, karuzela w pętli, Foto7 jako jeden slajd, przycisk „Zobacz więcej”, domena jako custom domain, Lighthouse 100 (sekcja 0d).
 - 26.11.2026 – Runda 3 na prośbę Olka: elastyczne przewijanie i wolniejsze tło, logotypy firm, bóle jako pytania, „Więcej niż marketing”, zaplecze współpracowników, maks. 3 firmy, strona 3 000 zł i hosting 0 zł, szkice referencji, Art Papier skrócony na głównej, karuzela stron z agencji, sklep z magazynami energii w HC INSTAL, „5 dni” (sekcja 0c).
 - 26.11.2026 – Na prośbę Olka: ciemny motyw w stylu Liquid Glass, treść przepisana pod sprzedaż, usunięta sekcja „Co nie wyszło”, HC INSTAL jako osobna firma (bez wzmianki o zarządzie), stopka bez zdania o ciasteczkach, marketing 2 500 zł, budżet reklam od ok. 300 zł, formularz kontaktowy (sekcja 0b).
@@ -62,3 +63,13 @@ Ostatnia aktualizacja: 26.11.2026, runda 3 (elastyczne przewijanie, logotypy, ko
 - Menu u góry: efekt soczewki (filtr SVG `feDisplacementMap` w `backdrop-filter`, mapa rysowana w `Header.astro`), na prośbę Olka 26.11.2026. Tylko przeglądarki na Chromium; Safari i Firefox nie wspierają filtrów SVG w `backdrop-filter`, tam zostaje rozmycie.
 - Obrazek podglądu linku `public/og.jpg` (1200×630, zdjęcie + hasło), szablon `site/scripts/og.html`; wcześniej podgląd brał zrzut GiB Meble. Przycisk w menu w jednej linii na telefonie, większe logo Art Papier (na prośbę Olka 26.11.2026).
 - Decyzje Claude (do korekty): w tytule strony „MŚP” zamiast pełnej nazwy (długość tytułu w Google); zdjęcie też w nagłówku zamiast monogramu „AC”.
+
+## 0e. Runda 5 – 26.11.2026
+
+- Źródło: wiadomość Olka z 26.11.2026, 13:23 (przez czat projektu).
+- Telefon 695 553 690 w `site.ts` (przycisk w hero, kontakt, stopka, JSON-LD).
+- Karta wyników: „Koszt konwersji” 33,29 zł; „Zapytania z reklam” 20 / mies. „z 0” – według Olka (przed kampanią 0), nie z eksportu; „55× w 2 tygodnie”.
+- Testy A/B: przykład z miniaturkami YouTube narysowany w CSS (bez cudzych miniatur), liczby 4,1% / 9,2% opisane jako poglądowe. „Strona ewoluująca”: „cel: nawet 2× więcej zapytań” – to cel, nie wynik (brak danych na 253%). Technicznie: warianty budowane przez Astro, przydział w Workerze (CLAUDE.md, sekcja 10) – do wdrożenia przy pierwszym kliencie.
+- Wsparcie IT i własne narzędzia: 3 karty, przykład rozszerzenia do kosztorysów ze stron hurtowni; w cenniku marketingu dopisane testy A/B i wsparcie IT.
+- Opinia Flawiusza przepisana o zaufaniu, nadal szkic (`draft: true`) do jego akceptacji.
+- Decyzje Claude (do korekty): sekcja A/B i IT między usługami a „3 firmami”; nagłówek „Programista pod telefonem”.

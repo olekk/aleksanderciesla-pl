@@ -9,9 +9,9 @@ export const site = {
   domain: 'aleksanderciesla.pl',
   url: 'https://aleksanderciesla.pl',
 
-  // TODO(Olek): telefon w formacie do wyświetlenia i do linku tel:
-  phone: '',
-  phoneHref: '',
+  // Telefon od Olka (26.11.2026): format do wyświetlenia i do linku tel:
+  phone: '695 553 690',
+  phoneHref: '+48695553690',
   // TODO(Olek): potwierdzić adres (skrzynka na własnej domenie)
   email: 'kontakt@aleksanderciesla.pl',
 
