@@ -41,6 +41,9 @@ void main() {
     for (float y = -4.0; y <= 4.0; y++)
       c += texture2D(iChannel0, lens + vec2(x, y) * 0.5 / iResolution.xy);
   c /= 81.0;
+  // Mocniej nasycone kolory w soczewce (na prośbę Olka 27.11.2026).
+  float l = dot(c.rgb, vec3(0.299, 0.587, 0.114));
+  c.rgb = clamp(mix(vec3(l), c.rgb, 1.6), 0.0, 1.0);
   float g = clamp((clamp(m2.y, 0.0, 0.2) + 0.1) / 2.0, 0.0, 1.0) + clamp((clamp(-m2.y, -1000.0, 0.2) * rb3 + 0.1) / 2.0, 0.0, 1.0);
   vec4 lit = clamp(c + vec4(rb1) * g + vec4(rb2) * 0.3, 0.0, 1.0);
   gl_FragColor = mix(base, lit, t);
@@ -75,10 +78,10 @@ void main() {
 
     let ready = false;
     let visible = false;
-    let pointer: [number, number] | null = null; // pozycja kursora / palca w pikselach canvasu
-    let lastPointer = 0;
-    const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const t0 = performance.now();
+    // Pozycja kursora / palca w pikselach canvasu; null = soczewki nie ma (na prośbę Olka 27.11.2026: nie rusza
+    // się sama, pojawia się tylko pod kursorem i wyjeżdża razem z nim poza zdjęcie).
+    let pointer: [number, number] | null = null;
+    let near = false;
 
     const size = () => {
       // Maks. 2× gęstości pikseli: ostre na Retinie, a shader liczy mniej punktów.
@@ -87,30 +90,21 @@ void main() {
       canvas.height = Math.round(box.clientHeight * dpr);
     };
 
-    const draw = (now: number) => {
-      let mx: number;
-      let my: number;
-      if (pointer && now - lastPointer < 2500) [mx, my] = pointer;
-      else {
-        // Bez kursora soczewka powoli krąży po zdjęciu (przy reduced motion stoi na środku).
-        const t = reduce ? 0 : (now - t0) / 1000;
-        mx = canvas.width * (0.5 + 0.22 * Math.sin(t * 0.5));
-        my = canvas.height * (0.5 + 0.18 * Math.sin(t * 0.37 + 1));
-      }
+    const draw = () => {
+      const [mx, my] = pointer || [-1e5, -1e5];
       gl.viewport(0, 0, canvas.width, canvas.height);
       gl.uniform2f(uRes, canvas.width, canvas.height);
       gl.uniform2f(uMouse, mx, my);
       gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
     };
 
+    // Rysujemy tylko po ruchu kursora (raz na klatkę), bez stałej pętli.
     let raf = 0;
-    const loop = (now: number) => {
-      raf = 0;
-      if (!ready || !visible) return;
-      draw(now);
-      if (!reduce || (pointer && now - lastPointer < 2500)) raf = requestAnimationFrame(loop);
-    };
-    const kick = () => (raf ||= requestAnimationFrame(loop));
+    const kick = () =>
+      (raf ||= requestAnimationFrame(() => {
+        raf = 0;
+        if (ready && visible) draw();
+      }));
 
     const start = () => {
       const tex = gl.createTexture();
@@ -126,14 +120,31 @@ void main() {
       kick();
     };
 
-    const onPointer = (e: PointerEvent) => {
+    // Kursor śledzimy w całym oknie, gdy jest blisko zdjęcia: soczewka nie staje na krawędzi, tylko
+    // wyjeżdża za kursorem całkiem poza zdjęcie (shader rysuje ją przycięta do zdjęcia).
+    const onMove = (e: PointerEvent) => {
+      if (!visible || !ready) return;
       const r = canvas.getBoundingClientRect();
+      const m = r.width * 0.5; // margines, w którym soczewka jeszcze częściowo wystaje
+      const inside = e.clientX > r.left - m && e.clientX < r.right + m && e.clientY > r.top - m && e.clientY < r.bottom + m;
+      if (!inside && !near) return;
+      near = inside;
       pointer = [((e.clientX - r.left) / r.width) * canvas.width, ((r.bottom - e.clientY) / r.height) * canvas.height];
-      lastPointer = performance.now();
+      if (!inside) pointer = null;
       kick();
     };
-    box.addEventListener('pointermove', onPointer);
-    box.addEventListener('pointerdown', onPointer);
+    addEventListener('pointermove', onMove, { passive: true });
+    box.addEventListener('pointerdown', onMove);
+    // Palec: soczewka znika po puszczeniu. Kursor poza oknem: też znika.
+    const hide = (e: PointerEvent) => {
+      if (e.pointerType === 'mouse' && e.type !== 'pointerleave') return;
+      pointer = null;
+      near = false;
+      kick();
+    };
+    addEventListener('pointerup', hide);
+    addEventListener('pointercancel', hide);
+    document.documentElement.addEventListener('pointerleave', hide);
 
     new ResizeObserver(() => ready && (size(), kick())).observe(box);
     // Ładujemy i rysujemy dopiero blisko ekranu; poza ekranem pętla stoi (zero pracy GPU).

@@ -20,6 +20,7 @@ Ostatnia aktualizacja: 26.11.2026, runda 3 (elastyczne przewijanie, logotypy, ko
 
 ## Dziennik zmian
 
+- 27.11.2026 – Soczewka na zdjęciu: mocniej nasycone kolory, bez samodzielnego ruchu; pojawia się pod kursorem i wyjeżdża razem z nim poza zdjęcie (na prośbę Olka).
 - 27.11.2026 – TEST na prośbę Olka: szklana soczewka WebGL (shader od Olka) nad zdjęciem w „O mnie”, `site/src/components/LensPhoto.astro`; wyłączenie: `experiments.lensPhoto: false` w `site.ts`. Rysuje tylko, gdy zdjęcie jest widoczne.
 - 27.11.2026 – Menu w Safari, Firefoksie i na iPhonie: wersja „prawie Liquid Glass” na prośbę Olka (mocniejsze rozmycie z podbitym kolorem, jasne krawędzie, tęczowa obwódka i refleks przesuwające się przy przewijaniu; czysty CSS + zmienne ustawiane przy przewijaniu). Chromium dalej z prawdziwą soczewką.
 - 26.11.2026 – Referencje wróciły na stronę (PL i EN): Flawiusz Pietrzyk (Art Papier), Henryk C. (HC INSTAL), Monika M. (sklep second hand), w 3 kolumnach; treść na podstawie opisu Olka, zgoda osób potwierdzona przez Olka.
