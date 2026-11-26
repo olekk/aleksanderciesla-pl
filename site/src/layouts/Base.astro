@@ -8,17 +8,20 @@ interface Props {
   title?: string;
   description?: string;
   jsonLd?: Record<string, unknown>[];
+  noindex?: boolean;
 }
 
 const {
   title,
-  description = 'Strony internetowe, Google Ads i widoczność w AI dla małych i średnich przedsiębiorstw. Zrobię to za Ciebie i co miesiąc pokażę, ile zapytań to dało. Jawne ceny.',
+  // SEO (na prośbę Olka 26.11.2026): fraza „Aleksander Cieśla” + „jednoosobowy dział marketingu”.
+  description = 'Aleksander Cieśla – jednoosobowy dział marketingu dla małych i średnich firm: strony, Google Ads, widoczność w ChatGPT, sprzedaż i wsparcie IT. Co miesiąc pokazuję, ile zapytań to dało. Jawne ceny.',
   jsonLd: extraLd = [],
+  noindex = false,
 } = Astro.props;
 
 const fullTitle = title
   ? `${title} | ${site.brandName}`
-  : `${site.brandName} – strony, Google Ads i widoczność w AI dla MŚP`;
+  : `${site.personName} – jednoosobowy dział marketingu dla MŚP`;
 const canonical = new URL(Astro.url.pathname, site.url).href;
 
 const jsonLd = {
@@ -28,8 +31,11 @@ const jsonLd = {
       '@type': 'Person',
       '@id': `${site.url}/#person`,
       name: site.personName,
+      alternateName: 'Olek Cieśla',
       url: site.url,
-      jobTitle: 'Strony internetowe i marketing dla małych i średnich przedsiębiorstw',
+      jobTitle: 'Jednoosobowy dział marketingu dla małych i średnich przedsiębiorstw',
+      description: 'Marketing, strony internetowe, Google Ads, widoczność w AI, sprzedaż i wsparcie IT dla małych i średnich firm.',
+      knowsAbout: ['marketing internetowy', 'Google Ads', 'strony internetowe', 'widoczność w ChatGPT', 'testy A/B', 'automatyzacje', 'wsparcie IT'],
       ...(site.email ? { email: `mailto:${site.email}` } : {}),
       ...(site.phone ? { telephone: site.phone } : {}),
       ...(site.photo ? { image: new URL(site.photo, site.url).href } : {}),
@@ -37,8 +43,11 @@ const jsonLd = {
     {
       '@type': 'ProfessionalService',
       '@id': `${site.url}/#service`,
-      name: site.brandName,
+      name: `${site.personName} – jednoosobowy dział marketingu`,
       url: site.url,
+      ...(site.phone ? { telephone: site.phone } : {}),
+      ...(site.photo ? { image: new URL(site.photo, site.url).href } : {}),
+      priceRange: 'od 2 500 zł / mies.',
       founder: { '@id': `${site.url}/#person` },
       areaServed: 'Polska',
     },
@@ -55,6 +64,7 @@ const jsonLd = {
     <title>{fullTitle}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
+    {noindex && <meta name="robots" content="noindex" />}
     <meta name="theme-color" content="#06070b" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <!-- Font od razu, żeby nagłówek (LCP) nie czekał na podmianę fontu. -->

@@ -15,3 +15,5 @@
 - [ ] Olek: numer telefonu do `site/src/config/site.ts` (`phone`, `phoneHref`) – pokaże się przy każdym „porozmawiajmy”
 - [ ] Olek: prawdziwe słowa Flawiusza i drugiego klienta w miejsce szkiców (`site/src/data/projects.ts`, `quotes`)
 - [ ] Olek: decyzja domena + `kontakt@aleksanderciesla.pl` (przekierowanie na skrzynkę Proton przez Email Routing) czy sam adres Proton
+- [ ] Olek (indeksowanie, 26.11.2026): Google Search Console → Dodaj usługę → „Domena” → aleksanderciesla.pl → weryfikacja rekordem TXT (Cloudflare potrafi dodać go jednym kliknięciem) → Mapy witryn → wpisać `sitemap.xml` → Prześlij. Potem Sprawdzanie adresu URL → `https://aleksanderciesla.pl/` → „Poproś o zindeksowanie”.
+- [ ] Olek: Bing Webmaster Tools → „Importuj z Google Search Console” (Bing zasila też ChatGPT i Copilota).
