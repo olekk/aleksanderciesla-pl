@@ -20,6 +20,7 @@ Ostatnia aktualizacja: 26.11.2026, runda 3 (elastyczne przewijanie, logotypy, ko
 
 ## Dziennik zmian
 
+- 27.11.2026 – Menu w Safari, Firefoksie i na iPhonie: wersja „prawie Liquid Glass” na prośbę Olka (mocniejsze rozmycie z podbitym kolorem, jasne krawędzie, tęczowa obwódka i refleks przesuwające się przy przewijaniu; czysty CSS + zmienne ustawiane przy przewijaniu). Chromium dalej z prawdziwą soczewką.
 - 26.11.2026 – Referencje wróciły na stronę (PL i EN): Flawiusz Pietrzyk (Art Papier), Henryk C. (HC INSTAL), Monika M. (sklep second hand), w 3 kolumnach; treść na podstawie opisu Olka, zgoda osób potwierdzona przez Olka.
 - 26.11.2026 – Wersja angielska na prośbę Olka: /en/, /en/art-papier/, /en/hc-instal/, /en/strony/. Strony przeniesione do `site/src/templates/` (jeden szablon na oba języki, teksty obok siebie jako `T(pl, en)`), przełącznik PL / EN w hero obok przedstawienia się i w stopce, hreflang w `<head>` i w mapie strony, formularz po angielsku (temat maila z `[EN]`). Lighthouse /en/ na telefonie 99/100/100/100. Obrazek podglądu linku (og.jpg) na razie po polsku.
 - 26.11.2026 – Na prośbę Olka: „ART PAPIER” wielkimi literami w realizacjach, „Specjaliści od sprzedaży przez telefon” i „Agenci AI” w zapleczu, nagłówek „Prowadzisz firmę. Czy masz czas na drugi etat jako marketingowiec?”.

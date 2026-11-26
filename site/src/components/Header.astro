@@ -96,6 +96,21 @@ const links = [
     };
     draw();
     new ResizeObserver(draw).observe(pill);
+  } else if (pill) {
+    // Safari, Firefox, iPhone: wersja „prawie” (na prośbę Olka 27.11.2026). Bez wyginania tła, ale refleks
+    // światła i tęczowa krawędź przesuwają się przy przewijaniu, jak w szkle obracanym w dłoni. Tylko zmienne CSS.
+    pill.classList.add('glass-alt');
+    if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      let raf = 0;
+      const move = () => {
+        raf = 0;
+        const t = scrollY / 900;
+        pill.style.setProperty('--gx', `${50 + Math.sin(t) * 40}%`);
+        pill.style.setProperty('--ga', `${(scrollY / 6) % 360}deg`);
+      };
+      addEventListener('scroll', () => (raf ||= requestAnimationFrame(move)), { passive: true });
+      move();
+    }
   }
 </script>
 
@@ -145,6 +160,40 @@ const links = [
   .pill.lens {
     -webkit-backdrop-filter: url(#lens) blur(3px) saturate(180%);
     backdrop-filter: url(#lens) blur(3px) saturate(180%);
+  }
+  /* Wersja „prawie Liquid Glass” dla przeglądarek bez filtrów SVG w backdrop-filter (Safari, Firefox):
+     mocniejsze rozmycie z podbitym kolorem, grube jasne krawędzie od środka, tęczowa obwódka i refleks. */
+  .pill.glass-alt {
+    --gx: 50%;
+    --ga: 0deg;
+    background: linear-gradient(180deg, rgb(255 255 255 / 12%), rgb(255 255 255 / 4%) 55%, rgb(255 255 255 / 8%));
+    -webkit-backdrop-filter: blur(20px) saturate(220%) brightness(1.1);
+    backdrop-filter: blur(20px) saturate(220%) brightness(1.1);
+    box-shadow:
+      inset 0 1.5px 0 rgb(255 255 255 / 55%),
+      inset 0 -1px 0 rgb(255 255 255 / 18%),
+      inset 0 0 14px rgb(255 255 255 / 10%),
+      inset 0 -8px 16px -10px rgb(160 200 255 / 25%),
+      0 18px 40px rgb(0 0 0 / 45%);
+  }
+  .pill.glass-alt::before {
+    padding: 1.2px;
+    background: conic-gradient(
+      from var(--ga),
+      rgb(255 255 255 / 70%),
+      rgb(120 220 255 / 45%),
+      rgb(255 255 255 / 12%),
+      rgb(190 140 255 / 45%),
+      rgb(255 255 255 / 60%),
+      rgb(255 160 220 / 35%),
+      rgb(255 255 255 / 12%),
+      rgb(255 255 255 / 70%)
+    );
+  }
+  .pill.glass-alt::after {
+    background:
+      radial-gradient(120px 40px at var(--gx) 0%, rgb(255 255 255 / 30%), transparent 70%),
+      radial-gradient(160px 30px at calc(100% - var(--gx)) 100%, rgb(255 255 255 / 10%), transparent 70%);
   }
   img.mono {
     object-fit: cover;
