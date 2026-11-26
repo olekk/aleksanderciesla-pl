@@ -46,6 +46,8 @@ export const site = {
   experiments: {
     // Szklana soczewka WebGL nad zdjęciem w „O mnie” (test na prośbę Olka 27.11.2026).
     lensPhoto: true,
+    // Odbicie strony w krawędziach menu na iPhonie, w Safari i w Firefoksie (test na prośbę Olka 27.11.2026).
+    reflection: true,
   },
 
   // TODO(Olek): token Cloudflare Web Analytics (bez ciasteczek). Puste = brak skryptu.

@@ -20,6 +20,7 @@ Ostatnia aktualizacja: 26.11.2026, runda 3 (elastyczne przewijanie, logotypy, ko
 
 ## Dziennik zmian
 
+- 27.11.2026 – TEST na prośbę Olka: w menu na iPhonie, w Safari i Firefoksie przy górnej i dolnej krawędzi przewija się odbity w pionie zrzut strony (`public/img/odbicie-*.webp`, ok. 100 kB, ładowany po wczytaniu strony, tylko strona główna); wyłączenie `experiments.reflection: false`.
 - 27.11.2026 – Menu: rozmycie soczewki 3 → 2 px, w wersji dla Safari i Firefoksa 20 → 10 px (na prośbę Olka).
 - 27.11.2026 – Soczewka na zdjęciu: mocniej nasycone kolory, bez samodzielnego ruchu; pojawia się pod kursorem i wyjeżdża razem z nim poza zdjęcie (na prośbę Olka).
 - 27.11.2026 – TEST na prośbę Olka: szklana soczewka WebGL (shader od Olka) nad zdjęciem w „O mnie”, `site/src/components/LensPhoto.astro`; wyłączenie: `experiments.lensPhoto: false` w `site.ts`. Rysuje tylko, gdy zdjęcie jest widoczne.

@@ -16,7 +16,8 @@ const links = [
 ---
 
 <header class="site-header">
-  <div class="pill glass">
+  <div class="pill glass" data-refl={site.experiments.reflection ? '1' : undefined}>
+    <span class="refl" aria-hidden="true"></span>
     <a href={home} class="brand" aria-label={`${site.brandName} – ${T('strona główna', 'home page')}`}>
       {
         site.avatar ? (
@@ -100,6 +101,35 @@ const links = [
     // Safari, Firefox, iPhone: wersja „prawie” (na prośbę Olka 27.11.2026). Bez wyginania tła, ale refleks
     // światła i tęczowa krawędź przesuwają się przy przewijaniu, jak w szkle obracanym w dłoni. Tylko zmienne CSS.
     pill.classList.add('glass-alt');
+
+    // TEST (na prośbę Olka 27.11.2026): w krawędziach menu przewija się odbity w pionie zrzut strony, jak odbicie
+    // w szkle. Zrzut robi scripts/reflection.cjs. Ładujemy go dopiero po wczytaniu strony i tylko na stronie głównej.
+    const refl = pill.querySelector<HTMLElement>('.refl');
+    const home = /^\/(en\/)?$/.test(location.pathname);
+    if (refl && pill.dataset.refl && home) {
+      addEventListener('load', () =>
+        setTimeout(() => {
+          const phone = innerWidth < 760;
+          const img = new Image();
+          img.src = phone ? '/img/odbicie-telefon.webp' : '/img/odbicie-komputer.webp';
+          img.onload = () => {
+            refl.style.backgroundImage = `url(${img.src})`;
+            let raf = 0;
+            const place = () => {
+              raf = 0;
+              const r = pill.getBoundingClientRect();
+              const H = document.documentElement.scrollHeight;
+              refl.style.backgroundSize = `${innerWidth}px ${H}px`;
+              refl.style.backgroundPosition = `${-r.left}px ${-(scrollY + r.top)}px`;
+            };
+            place();
+            addEventListener('scroll', () => (raf ||= requestAnimationFrame(place)), { passive: true });
+            addEventListener('resize', () => (raf ||= requestAnimationFrame(place)));
+            pill.classList.add('has-refl');
+          };
+        }, 800),
+      );
+    }
     if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
       let raf = 0;
       const move = () => {
@@ -194,6 +224,24 @@ const links = [
     background:
       radial-gradient(120px 40px at var(--gx) 0%, rgb(255 255 255 / 30%), transparent 70%),
       radial-gradient(160px 30px at calc(100% - var(--gx)) 100%, rgb(255 255 255 / 10%), transparent 70%);
+  }
+  /* Odbicie strony w krawędziach menu (test): odwrócone w pionie, widoczne tylko przy górnej i dolnej krawędzi. */
+  .refl {
+    display: none;
+  }
+  .pill.has-refl .refl {
+    display: block;
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    border-radius: inherit;
+    background-repeat: no-repeat;
+    transform: scaleY(-1);
+    opacity: 0.6;
+    filter: blur(1px) saturate(1.5) brightness(1.15);
+    -webkit-mask-image: linear-gradient(to bottom, #000, transparent 38%, transparent 62%, #000);
+    mask-image: linear-gradient(to bottom, #000, transparent 38%, transparent 62%, #000);
+    pointer-events: none;
   }
   img.mono {
     object-fit: cover;

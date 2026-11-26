@@ -454,3 +454,4 @@ Skrypty przenosić i dostosowywać (domena, prefiks ciasteczka, ID tagów, nazwy
 - Maks. 3 firmy naraz, cena marketingu tłumaczona czasem pracy (`marketingTime` w `site.ts`); strona „3 000 zł” bez „od”, hosting 0 zł wyraźnie (na prośbę Olka 26.11.2026).
 - Referencje: 3 opinie (Flawiusz Pietrzyk, Henryk C., Monika M.) napisane na podstawie opisu współpracy od Olka, zgoda osób potwierdzona przez Olka 26.11.2026. Nowa opinia tylko za zgodą osoby; `draft: true` ukrywa wpis.
 - Elastyczne przewijanie i paralaksa tła w `Base.astro` (tylko transformy, monotoniczne przesunięcia, wyłączone przy reduced motion).
+- Eksperymenty w `site.ts` → `experiments` (wyłączenie = `false`): soczewka WebGL na zdjęciu w „O mnie” i odbicie strony w menu dla Safari/Firefoksa (27.11.2026). Po zmianach na stronie głównej odświeżyć zrzut odbicia: `node scripts/reflection.cjs` przy działającym `astro preview`.
