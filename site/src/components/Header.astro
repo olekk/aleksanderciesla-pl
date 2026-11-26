@@ -25,7 +25,72 @@ const links = [
     </nav>
     <a class="btn btn-primary cta" href="/#kontakt">Bezpłatna rozmowa</a>
   </div>
+  <!-- Filtr soczewki dla menu (wypełnia go skrypt niżej). -->
+  <svg class="lens-defs" width="0" height="0" aria-hidden="true" focusable="false">
+    <filter id="lens" x="0" y="0" width="100%" height="100%" color-interpolation-filters="sRGB">
+      <feImage id="lens-map" x="0" y="0" result="map" preserveAspectRatio="none"></feImage>
+      <feDisplacementMap in="SourceGraphic" in2="map" scale="0" xChannelSelector="R" yChannelSelector="G"
+      ></feDisplacementMap>
+    </filter>
+  </svg>
 </header>
+
+<script>
+  // Prawdziwe „szkło” w menu (na prośbę Olka 26.11.2026): przy krawędziach tło pod menu jest wyginane jak
+  // w soczewce (feDisplacementMap w backdrop-filter), w środku zostaje prawie nietknięte. Działa tylko
+  // w przeglądarkach na Chromium (Chrome, Edge, Opera, Android); Safari i Firefox nie obsługują filtrów SVG
+  // w backdrop-filter, więc tam zostaje zwykłe rozmycie z .glass.
+  const pill = document.querySelector<HTMLElement>('.site-header .pill');
+  const brands = (navigator as Navigator & { userAgentData?: { brands: { brand: string }[] } }).userAgentData?.brands;
+  if (pill && brands?.some((b) => /Chromium/.test(b.brand))) {
+    const img = document.getElementById('lens-map')!;
+    const disp = document.querySelector('#lens feDisplacementMap')!;
+    const BAND = 18; // szerokość pasa przy krawędzi, w którym obraz się wygina (px)
+    const draw = () => {
+      const w = Math.round(pill.offsetWidth);
+      const h = Math.round(pill.offsetHeight);
+      if (!w || !h) return;
+      const c = document.createElement('canvas');
+      c.width = w;
+      c.height = h;
+      const ctx = c.getContext('2d')!;
+      const data = ctx.createImageData(w, h);
+      const r = h / 2; // menu to „pigułka”: promień = pół wysokości
+      for (let y = 0; y < h; y++)
+        for (let x = 0; x < w; x++) {
+          // Odległość od krawędzi zaokrąglonego prostokąta i kierunek do krawędzi (normalna).
+          const qx = Math.abs(x + 0.5 - w / 2) - (w / 2 - r);
+          const qy = Math.abs(y + 0.5 - h / 2) - (h / 2 - r);
+          const ox = Math.max(qx, 0);
+          const oy = Math.max(qy, 0);
+          const len = Math.hypot(ox, oy);
+          const dist = len > 0 ? r - len : r - Math.max(qx, qy) - 0; // odległość od krawędzi do środka
+          let nx = 0;
+          let ny = 0;
+          if (len > 0) {
+            nx = (ox / len) * Math.sign(x + 0.5 - w / 2);
+            ny = (oy / len) * Math.sign(y + 0.5 - h / 2);
+          } else if (qx > qy) nx = Math.sign(x + 0.5 - w / 2);
+          else ny = Math.sign(y + 0.5 - h / 2);
+          const k = dist < BAND ? Math.pow(1 - Math.max(dist, 0) / BAND, 2) : 0;
+          const i = (y * w + x) * 4;
+          // Próbkujemy tło bliżej środka: obraz przy krawędzi jest rozciągnięty i „zawinięty” jak w szkle.
+          data.data[i] = 128 - nx * k * 127;
+          data.data[i + 1] = 128 - ny * k * 127;
+          data.data[i + 2] = 128;
+          data.data[i + 3] = 255;
+        }
+      ctx.putImageData(data, 0, 0);
+      img.setAttribute('href', c.toDataURL());
+      img.setAttribute('width', String(w));
+      img.setAttribute('height', String(h));
+      disp.setAttribute('scale', String(Math.min(60, h)));
+      pill.classList.add('lens');
+    };
+    draw();
+    new ResizeObserver(draw).observe(pill);
+  }
+</script>
 
 <style>
   .site-header {
@@ -64,6 +129,15 @@ const links = [
     font-size: 0.75rem;
     font-weight: 750;
     letter-spacing: 0.02em;
+  }
+  .lens-defs {
+    position: absolute;
+    width: 0;
+    height: 0;
+  }
+  .pill.lens {
+    -webkit-backdrop-filter: url(#lens) blur(3px) saturate(180%);
+    backdrop-filter: url(#lens) blur(3px) saturate(180%);
   }
   img.mono {
     object-fit: cover;
