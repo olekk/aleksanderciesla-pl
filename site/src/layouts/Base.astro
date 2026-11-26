@@ -158,8 +158,8 @@ const jsonLd = {
           rio.observe(el);
         });
 
-      // "Bezwładne" przewijanie (na prośbę Olka 26.11.2026): przy przewijaniu sekcje lekko nie nadążają za stroną,
-      // a po zahamowaniu dojeżdżają na miejsce jednym płynnym ruchem (sprężyna prawie krytycznie tłumiona, bez
+      // "Bezwładne" przewijanie (na prośbę Olka 26.11.2026): przy przewijaniu sekcje lekko wyprzedzają stronę,
+      // a po zahamowaniu wracają na miejsce jednym płynnym ruchem (sprężyna prawie krytycznie tłumiona, bez
       // drgań). Sekcje dalej w kierunku ruchu zostają odrobinę bardziej, więc odstępy tylko się rozciągają:
       // przesunięcia rosną monotonicznie od góry do dołu i sekcje nigdy na siebie nie nachodzą.
       // Przewinięcie kółkiem za górę / dół strony rozciąga całość.
@@ -210,7 +210,8 @@ const jsonLd = {
           let moving = Math.abs(speed) > 0.05 || pull !== 0;
           for (let i = 0; i < n; i++) {
             const d = Math.max(-2, Math.min(2, (centers[i] - mid) / vh));
-            let target = Math.max(-MAX, Math.min(MAX, speed * K + Math.abs(speed) * K * SPREAD * d));
+            // Minus: sekcje wyprzedzają ruch (bezwładność), a po zahamowaniu cofają się na miejsce (na prośbę Olka 26.11.2026).
+            let target = Math.max(-MAX, Math.min(MAX, -speed * K + Math.abs(speed) * K * SPREAD * d));
             if (pull > 0) target += pull * (0.35 + 0.18 * i);
             else if (pull < 0) target += pull * (0.35 + 0.18 * (n - 1 - i));
             vel[i] = (vel[i] + (target - x[i]) * STIFF) * DAMP;
