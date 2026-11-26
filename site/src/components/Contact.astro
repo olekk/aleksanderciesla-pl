@@ -1,32 +1,274 @@
 ---
 import { site } from '../config/site';
+const services = ['Strona internetowa', 'Google Ads', 'Widoczność w AI', 'Profil firmy w Google', 'Porządek z zapytaniami', 'Jeszcze nie wiem'];
 ---
+
 <section id="kontakt" class="contact">
-  <div class="wrap narrow">
-    <p class="eyebrow">Kontakt</p>
-    <h2>Porozmawiajmy 30 minut. Bez zobowiązań.</h2>
-    <p class="lead">
-      Opowiesz, czym się zajmujesz i skąd dziś przychodzą klienci. Ja powiem, co bym zrobił na Twoim miejscu
-      i ile by to kosztowało. Jeśli to nie dla Ciebie, też to usłyszysz.
-    </p>
-    <ul class="check">
-      <li>Pierwsza rozmowa jest bezpłatna. Przyjadę albo zadzwonię.</li>
-      <li>Na miejscu: {site.area}. Zdalnie w całej Polsce.</li>
-      <li>Rozmawiasz ze mną, nie z handlowcem. To ja potem robię robotę.</li>
-    </ul>
-    <div class="btn-row">
-      {site.phone && (
-        <a class="btn btn-primary" href={`tel:${site.phoneHref || site.phone}`}>Zadzwoń: {site.phone}</a>
-      )}
-      {site.email && (
-        <a class:list={['btn', site.phone ? 'btn-ghost' : 'btn-primary']} href={`mailto:${site.email}?subject=Rozmowa%20o%20stronie%20i%20reklamach`}>
-          Napisz: {site.email}
-        </a>
-      )}
+  <div class="wrap grid-contact">
+    <div class="reveal">
+      <p class="eyebrow">Kontakt</p>
+      <h2>Porozmawiajmy <span class="grad">30 minut.</span> Bez zobowiązań.</h2>
+      <p class="lead">
+        Opowiesz, czym się zajmujesz i skąd dziś przychodzą klienci. Ja powiem, co zrobiłbym na Twoim miejscu i ile by to
+        kosztowało.
+      </p>
+      <ul class="check">
+        <li>Pierwsza rozmowa i przegląd Twojej strony są bezpłatne.</li>
+        <li>Spotkam się na miejscu ({site.areaShort}) albo zadzwonię.</li>
+        <li>Rozmawiasz ze mną, nie z handlowcem. To ja potem robię robotę.</li>
+      </ul>
+      <div class="direct">
+        {
+          site.phone && (
+            <a class="btn btn-glass" href={`tel:${site.phoneHref || site.phone}`}>
+              Zadzwoń: {site.phone}
+            </a>
+          )
+        }
+        {
+          site.email && (
+            <a class="btn btn-glass" href={`mailto:${site.email}`}>
+              {site.email}
+            </a>
+          )
+        }
+      </div>
     </div>
+
+    <form class="form glass reveal" id="formularz" action="/api/kontakt" method="post" data-email={site.email} novalidate>
+      <fieldset class="chips">
+        <legend>Co Cię interesuje?</legend>
+        {
+          services.map((s) => (
+            <label class="chip">
+              <input type="checkbox" name="uslugi" value={s} />
+              <span>{s}</span>
+            </label>
+          ))
+        }
+      </fieldset>
+
+      <div class="row">
+        <label>
+          <span>Imię *</span>
+          <input name="imie" autocomplete="given-name" required maxlength="80" />
+        </label>
+        <label>
+          <span>Firma lub strona www</span>
+          <input name="firma" autocomplete="organization" maxlength="120" />
+        </label>
+      </div>
+      <div class="row">
+        <label>
+          <span>Telefon</span>
+          <input name="telefon" type="tel" autocomplete="tel" maxlength="30" />
+        </label>
+        <label>
+          <span>E-mail</span>
+          <input name="email" type="email" autocomplete="email" maxlength="120" />
+        </label>
+      </div>
+      <label>
+        <span>Kilka słów o firmie i o tym, czego potrzebujesz</span>
+        <textarea name="wiadomosc" rows="4" maxlength="3000"></textarea>
+      </label>
+
+      <!-- Pułapka na boty: pole niewidoczne dla ludzi. -->
+      <label class="hp" aria-hidden="true">
+        Nie wypełniaj <input name="strona_www" tabindex="-1" autocomplete="off" />
+      </label>
+      <input type="hidden" name="t" value="" />
+
+      <button class="btn btn-primary submit" type="submit">Wyślij, odezwę się</button>
+      <p class="status small" role="status" aria-live="polite"></p>
+      <p class="muted small fine">
+        Podaj telefon albo e-mail. Twoje dane wykorzystam tylko do odpowiedzi na tę wiadomość.
+      </p>
+    </form>
   </div>
 </section>
 
+<script>
+  const form = document.querySelector<HTMLFormElement>('#formularz');
+  if (form) {
+    const t = form.elements.namedItem('t') as HTMLInputElement;
+    t.value = String(Date.now());
+    const status = form.querySelector<HTMLElement>('.status')!;
+    const btn = form.querySelector<HTMLButtonElement>('.submit')!;
+    const email = form.dataset.email || '';
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const fd = new FormData(form);
+      const imie = String(fd.get('imie') || '').trim();
+      const tel = String(fd.get('telefon') || '').trim();
+      const mail = String(fd.get('email') || '').trim();
+      status.className = 'status small';
+      if (!imie) return show('Wpisz, proszę, swoje imię.', 'err');
+      if (!tel && !mail) return show('Zostaw telefon albo e-mail, żebym mógł odpowiedzieć.', 'err');
+      if (mail && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(mail)) return show('Sprawdź adres e-mail.', 'err');
+
+      btn.disabled = true;
+      btn.textContent = 'Wysyłam…';
+      try {
+        const res = await fetch(form.action, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ ...Object.fromEntries(fd), uslugi: fd.getAll('uslugi') }),
+        });
+        if (!res.ok) throw new Error(String(res.status));
+        form.reset();
+        t.value = String(Date.now());
+        show('Dziękuję! Wiadomość doszła. Odezwę się najpóźniej następnego dnia roboczego.', 'ok');
+      } catch {
+        show(
+          `Nie udało się wysłać formularza.${email ? ` Napisz proszę bezpośrednio na ${email}.` : ' Spróbuj za chwilę.'}`,
+          'err',
+        );
+      } finally {
+        btn.disabled = false;
+        btn.textContent = 'Wyślij, odezwę się';
+      }
+    });
+
+    function show(msg: string, kind: 'ok' | 'err') {
+      status.textContent = msg;
+      status.classList.add(kind);
+    }
+  }
+</script>
+
 <style>
-  .contact { background: var(--accent-soft); }
+  .grid-contact {
+    display: grid;
+    gap: 40px;
+    align-items: start;
+  }
+  @media (min-width: 960px) {
+    .grid-contact {
+      grid-template-columns: 1fr 1.1fr;
+      gap: 64px;
+    }
+  }
+  .direct {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 24px;
+  }
+  .form {
+    padding: clamp(20px, 3vw, 32px);
+    display: grid;
+    gap: 16px;
+  }
+  .row {
+    display: grid;
+    gap: 16px;
+  }
+  @media (min-width: 560px) {
+    .row {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+  label > span,
+  legend {
+    display: block;
+    font-size: 0.85rem;
+    color: var(--text-2);
+    margin-bottom: 6px;
+  }
+  input,
+  textarea {
+    width: 100%;
+    font: inherit;
+    font-size: 1rem;
+    color: var(--text);
+    background: rgb(0 0 0 / 25%);
+    border: 1px solid rgb(255 255 255 / 12%);
+    border-radius: 14px;
+    padding: 12px 14px;
+    transition:
+      border-color 0.2s,
+      background 0.2s;
+  }
+  input:focus,
+  textarea:focus {
+    outline: none;
+    border-color: var(--teal);
+    background: rgb(0 0 0 / 35%);
+  }
+  textarea {
+    resize: vertical;
+  }
+  .chips {
+    border: 0;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .chips legend {
+    margin-bottom: 10px;
+  }
+  .chip input {
+    position: absolute;
+    opacity: 0;
+    width: 1px;
+    height: 1px;
+  }
+  .chip span {
+    display: inline-block;
+    padding: 8px 14px;
+    border-radius: 999px;
+    font-size: 0.88rem;
+    color: var(--text-2);
+    background: rgb(255 255 255 / 6%);
+    box-shadow: inset 0 0 0 1px rgb(255 255 255 / 12%);
+    cursor: pointer;
+    transition: all 0.2s;
+    margin: 0;
+  }
+  .chip input:checked + span {
+    color: #06121a;
+    background: linear-gradient(120deg, #99f6e4, #93c5fd);
+    box-shadow: inset 0 1px 0 rgb(255 255 255 / 60%);
+  }
+  .chip input:focus-visible + span {
+    outline: 2px solid var(--teal);
+    outline-offset: 2px;
+  }
+  .hp {
+    position: absolute;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+  }
+  .submit {
+    justify-self: start;
+  }
+  .submit:disabled {
+    opacity: 0.6;
+    cursor: wait;
+  }
+  .status:empty {
+    display: none;
+  }
+  .status {
+    margin: 0;
+    padding: 10px 14px;
+    border-radius: 12px;
+  }
+  .status.ok {
+    background: rgb(94 234 212 / 12%);
+    color: var(--teal);
+  }
+  .status.err {
+    background: rgb(244 114 182 / 12%);
+    color: #fbcfe8;
+  }
+  .fine {
+    margin: 0;
+  }
 </style>

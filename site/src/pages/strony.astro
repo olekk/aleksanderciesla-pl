@@ -11,7 +11,7 @@ const agency = agencyName ? `agencji ${agencyName}` : 'agencji marketingowej, w 
 >
   <section class="hero">
     <div class="wrap">
-      <p class="eyebrow"><a href="/#przyklady">Przykłady</a> · Strony</p>
+      <p class="eyebrow"><a href="/#realizacje">Realizacje</a> · Strony</p>
       <h1>Strony z czasów pracy w agencji</h1>
       <p class="lead narrow">
         Projekt graficzny: designerka {agency}. Wdrożenie, czyli kod, animacje i wersja na telefon: ja.
@@ -21,11 +21,11 @@ const agency = agencyName ? `agencji ${agencyName}` : 'agencji marketingowej, w 
   </section>
 
   {agencySites.map((s, i) => (
-    <section class:list={[{ band: i % 2 === 1 }]}>
+    <section class="reveal">
       <div class="wrap site">
         <div class="text">
           <h2>{s.name}</h2>
-          <p>{s.tagline}</p>
+          <p class="muted">{s.tagline}</p>
         </div>
         <Showcase video={s.video} label={s.name} />
       </div>

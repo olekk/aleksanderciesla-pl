@@ -16,8 +16,16 @@
   },
   "vars": {
     // Na tym hoście nie dokładamy noindex.
-    "PRODUCTION_HOST": "aleksanderciesla.pl"
+    "PRODUCTION_HOST": "aleksanderciesla.pl",
+    // Powiadomienia z formularza (Cloudflare Email Routing, działa po podpięciu domeny).
+    // MAIL_TO musi być zweryfikowanym adresem docelowym w Email Routing.
+    "MAIL_FROM": "formularz@aleksanderciesla.pl",
+    "MAIL_TO": ""
   },
+  // Odkomentować po utworzeniu bazy (TODO.md): npx wrangler d1 create aleksanderciesla-pl
+  // "d1_databases": [{ "binding": "DB", "database_name": "aleksanderciesla-pl", "database_id": "<id z komendy>", "migrations_dir": "migrations" }],
+  // Odkomentować po włączeniu Email Routing dla domeny:
+  // "send_email": [{ "name": "MAILER" }],
   // Domena dojdzie po kupnie: "routes": [{ "pattern": "aleksanderciesla.pl", "custom_domain": true }, { "pattern": "www.aleksanderciesla.pl", "custom_domain": true }]
   "env": {
     "podglad": {

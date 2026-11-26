@@ -1,0 +1,32 @@
+---
+// Proste ikony liniowe (SVG w HTML, bez biblioteki).
+interface Props {
+  name: 'site' | 'ads' | 'ai' | 'map' | 'inbox' | 'bolt' | 'chat' | 'chart' | 'doc' | 'rocket';
+}
+const { name } = Astro.props;
+const paths: Record<Props['name'], string> = {
+  site: 'M3 5h18v14H3z M3 9h18 M7 7h.01 M10 7h.01',
+  ads: 'M4 14V9a1 1 0 0 1 1-1h3l7-4v16l-7-4H5a1 1 0 0 1-1-1z M8 16l1.5 4 M19 9a4 4 0 0 1 0 6',
+  ai: 'M12 3l1.8 4.7L18.5 9.5l-4.7 1.8L12 16l-1.8-4.7L5.5 9.5l4.7-1.8z M19 15l.9 2.1L22 18l-2.1.9L19 21l-.9-2.1L16 18l2.1-.9z',
+  map: 'M12 21s-7-6.2-7-11a7 7 0 0 1 14 0c0 4.8-7 11-7 11z M12 12.5a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z',
+  inbox: 'M3 13l3-8h12l3 8v6H3z M3 13h5l1.5 2.5h5L16 13h5',
+  bolt: 'M13 2L4 14h7l-1 8 9-12h-7z',
+  chat: 'M4 5h16v11H9l-5 4z M8 10h8 M8 13h5',
+  chart: 'M4 20V4 M4 20h16 M8 16l3-4 3 2 5-7',
+  doc: 'M6 3h9l4 4v14H6z M14 3v5h5 M9 13h7 M9 17h5',
+  rocket:
+    'M12 15l-3-3c1.5-5 5-8 10-9-1 5-4 8.5-9 10z M9 12l-4 1 2-4h4 M12 15l-1 4 4-2v-4 M6 18c-1 1-1.5 3-1.5 3s2-.5 3-1.5',
+};
+---
+
+<svg
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="1.7"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  aria-hidden="true"
+>
+  <path d={paths[name]}></path>
+</svg>

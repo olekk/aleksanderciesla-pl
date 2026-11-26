@@ -1,43 +1,97 @@
 ---
 import { site } from '../config/site';
-const path = Astro.url.pathname;
 const links = [
-  { href: '/#przyklady', label: 'Przykłady' },
+  { href: '/#uslugi', label: 'Usługi' },
+  { href: '/#realizacje', label: 'Realizacje' },
   { href: '/#ceny', label: 'Ceny' },
-  { href: '/#wspolpraca', label: 'Jak pracuję' },
-  { href: '/#kontakt', label: 'Kontakt' },
+  { href: '/#faq', label: 'Pytania' },
 ];
 ---
+
 <header class="site-header">
-  <div class="wrap bar">
-    <a href="/" class="brand" aria-current={path === '/' ? 'page' : undefined}>
+  <div class="pill glass">
+    <a href="/" class="brand">
       <span class="mono" aria-hidden="true">AC</span>
-      <span>{site.brandName}</span>
+      <span class="name">{site.brandName}</span>
     </a>
     <nav aria-label="Główna">
       {links.map((l) => <a href={l.href}>{l.label}</a>)}
     </nav>
+    <a class="btn btn-primary cta" href="/#kontakt">Bezpłatna rozmowa</a>
   </div>
 </header>
 
 <style>
   .site-header {
-    position: sticky; top: 0; z-index: 20;
-    background: color-mix(in srgb, var(--paper) 88%, transparent);
-    backdrop-filter: saturate(140%) blur(10px);
-    border-bottom: 1px solid var(--line);
+    position: sticky;
+    top: 12px;
+    z-index: 50;
+    padding: 12px 16px 0;
   }
-  .bar { display: flex; align-items: center; justify-content: space-between; gap: 16px; min-height: 64px; }
-  .brand { display: inline-flex; align-items: center; gap: 10px; font-weight: 700; color: var(--ink); text-decoration: none; white-space: nowrap; }
+  .pill {
+    width: min(100%, var(--max));
+    margin-inline: auto;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 8px 8px 8px 14px;
+    border-radius: 999px;
+  }
+  .brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 650;
+    color: var(--text);
+    text-decoration: none;
+    white-space: nowrap;
+    letter-spacing: -0.01em;
+  }
   .mono {
-    display: grid; place-items: center; width: 34px; height: 34px; border-radius: 50%;
-    background: var(--accent); color: var(--accent-ink); font: 600 0.8rem/1 var(--sans); letter-spacing: 0.04em;
+    display: grid;
+    place-items: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: var(--grad);
+    color: #06121a;
+    font-size: 0.75rem;
+    font-weight: 750;
+    letter-spacing: 0.02em;
   }
-  nav { display: flex; gap: 22px; }
-  nav a { color: var(--ink-2); text-decoration: none; font-size: 0.95rem; font-weight: 500; }
-  nav a:hover { color: var(--accent); }
-  @media (max-width: 760px) {
-    nav a:not(:last-child) { display: none; }
-    nav a:last-child { color: var(--accent); font-weight: 600; }
+  nav {
+    display: flex;
+    gap: 4px;
+    margin-left: auto;
+  }
+  nav a {
+    color: var(--text-2);
+    text-decoration: none;
+    font-size: 0.93rem;
+    font-weight: 500;
+    padding: 8px 14px;
+    border-radius: 999px;
+    transition: background 0.2s;
+  }
+  nav a:hover {
+    color: var(--text);
+    background: rgb(255 255 255 / 8%);
+  }
+  .cta {
+    padding: 0.7em 1.2em;
+    font-size: 0.92rem;
+  }
+  @media (max-width: 860px) {
+    nav {
+      display: none;
+    }
+    .cta {
+      margin-left: auto;
+    }
+  }
+  @media (max-width: 420px) {
+    .name {
+      display: none;
+    }
   }
 </style>

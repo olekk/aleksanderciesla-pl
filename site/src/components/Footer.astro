@@ -2,28 +2,80 @@
 import { site } from '../config/site';
 const year = new Date().getFullYear();
 ---
+
 <footer class="site-footer">
   <div class="wrap cols">
     <div>
-      <strong>{site.personName}</strong>
-      <p class="muted small">Strony, Google Ads i porządek z zapytaniami dla małych firm. {site.area}.</p>
+      <a href="/" class="brand"><span class="mono" aria-hidden="true">AC</span>{site.brandName}</a>
+      <p class="muted small">Strony, Google Ads i widoczność w AI dla małych firm. {site.area}.</p>
       {site.companyInfo && <p class="muted small">{site.companyInfo}</p>}
     </div>
+    <nav class="small" aria-label="Stopka">
+      <a href="/art-papier/">Art Papier</a>
+      <a href="/hc-instal/">HC INSTAL</a>
+      <a href="/strony/">Strony</a>
+      <a href="/#kontakt">Kontakt</a>
+    </nav>
     <div class="small">
       {site.phone && <p><a href={`tel:${site.phoneHref || site.phone}`}>{site.phone}</a></p>}
       {site.email && <p><a href={`mailto:${site.email}`}>{site.email}</a></p>}
     </div>
   </div>
-  <div class="wrap small muted fine">
-    <p>© {year} {site.personName}. Ta strona jest zbudowana w Astro i stoi na darmowym hostingu Cloudflare, tak jak strony moich klientów. Bez ciasteczek śledzących.</p>
-  </div>
+  <div class="wrap fine small muted">© {year} {site.personName}</div>
 </footer>
 
 <style>
-  .site-footer { background: var(--ink); color: #e9e5dc; padding: 48px 0 24px; }
-  .site-footer a { color: #fff; }
-  .site-footer .muted { color: #b5afa3; }
-  .cols { display: grid; gap: 24px; }
-  @media (min-width: 760px) { .cols { grid-template-columns: 2fr 1fr; } }
-  .fine { border-top: 1px solid #3a3833; margin-top: 24px; padding-top: 16px; }
+  .site-footer {
+    border-top: 1px solid var(--line);
+    padding: 56px 0 28px;
+    background: rgb(0 0 0 / 35%);
+  }
+  .cols {
+    display: grid;
+    gap: 28px;
+  }
+  @media (min-width: 760px) {
+    .cols {
+      grid-template-columns: 2fr 1fr 1fr;
+    }
+  }
+  .brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--text);
+    font-weight: 650;
+    text-decoration: none;
+    margin-bottom: 12px;
+  }
+  .mono {
+    display: grid;
+    place-items: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: var(--grad);
+    color: #06121a;
+    font-size: 0.7rem;
+    font-weight: 750;
+  }
+  nav {
+    display: grid;
+    gap: 8px;
+    align-content: start;
+  }
+  nav a,
+  .site-footer p a {
+    color: var(--text-2);
+    text-decoration: none;
+  }
+  nav a:hover,
+  .site-footer p a:hover {
+    color: var(--text);
+  }
+  .fine {
+    border-top: 1px solid var(--line);
+    margin-top: 32px;
+    padding-top: 18px;
+  }
 </style>

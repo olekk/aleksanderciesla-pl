@@ -20,7 +20,7 @@ zapada trwała decyzja dla tego projektu, dopisz ją do Karty albo do sekcji „
 | Źródła               | Plan strony: https://claude.ai/artifact/3zDWoqhtv7JazgwNF9h737 (25.11.2026); eksport Art Papier i kontekst „Mój Marketing” (projekt Claude); nagrania stron `portfolio-nagrania/*.mp4` (desktop + mobile) |
 | Języki               | tylko polski                                                                                                                                                                                         |
 | Tagi i pomiar        | brak GTM/GA4/Ads na start; Cloudflare Web Analytics (bez ciasteczek, bez banera) – token w `site/src/config/site.ts`                                                                                 |
-| Formularze           | na start brak – telefon i `mailto:`; formularz (Worker + D1 + SMTP z MX) w drugim kroku                                                                                                              |
+| Formularze           | kontakt: `POST /api/kontakt` w Workerze → D1 + Cloudflare Email Routing (`send_email`, domena bez skrzynki pocztowej)                                                                             |
 | Sklep                | nie                                                                                                                                                                                                  |
 | Repo / Worker        | `github.com/olekk/aleksanderciesla-pl` (prywatne), Worker `aleksanderciesla-pl` (+ `aleksanderciesla-pl-podglad`) na koncie Cloudflare `teletubis28`                                               |
 | Port lokalny         | **4323**                                                                                                                                                                                             |
@@ -445,5 +445,8 @@ Skrypty przenosić i dostosowywać (domena, prefiks ciasteczka, ID tagów, nazwy
   kilku wpisach prościej (decyzja Claude, do korekty).
 - Nagrania: źródła MP4 poza repo; `npm run videos -- <katalog>` koduje je do `site/public/media/` (H.264, 1280 px
   desktop / 520 px telefon, CRF 28, bez dźwięku, plakat WebP). Wideo startuje dopiero, gdy jest widoczne.
-- Ton: pierwsza osoba, na „Ty”, krótko; każda liczba z eksportu Art Papier (bez liczb bez źródła). Ceny jawne, netto.
+- Ton: pierwsza osoba, na „Ty”, krótko, korzyść przed opisem; każda liczba z eksportu Art Papier (bez liczb bez źródła). Ceny jawne, netto: strona od 3 000 zł, marketing 2 500 zł/mies. (zniżki Olek daje indywidualnie, nie na stronie), budżet reklam od ok. 300 zł/mies.
+- Wygląd: ciemny motyw w stylu Liquid Glass (klasa `.glass` w `global.css`, poświaty `.aurora`), font Inter lokalnie (na prośbę Olka 26.11.2026).
+- HC INSTAL pokazujemy jak osobną firmę (klienta), bez wzmianki o zarządzie (na prośbę Olka 26.11.2026).
+- Bez sekcji „co nie wyszło” i bez zdań o ciasteczkach w stopce (na prośbę Olka 26.11.2026).
 - Strony z agencji: zawsze dopisek „projekt graficzny: agencja, wdrożenie: ja”.

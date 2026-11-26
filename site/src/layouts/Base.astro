@@ -1,4 +1,5 @@
 ---
+import '@fontsource-variable/inter';
 import '../styles/global.css';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
@@ -7,14 +8,18 @@ import { site } from '../config/site';
 interface Props {
   title?: string;
   description?: string;
+  jsonLd?: Record<string, unknown>[];
 }
 
 const {
   title,
-  description = 'Strony internetowe, Google Ads i porządek z zapytaniami dla małych firm. Jawne ceny, jedna osoba odpowiedzialna za wynik. Trójmiasto i Śląsk.',
+  description = 'Strony internetowe, Google Ads i widoczność w AI dla małych firm. Zrobię to za Ciebie i co miesiąc pokażę, ile zapytań to dało. Jawne ceny. Trójmiasto i Śląsk.',
+  jsonLd: extraLd = [],
 } = Astro.props;
 
-const fullTitle = title ? `${title} | ${site.brandName}` : `${site.brandName} - strony, Google Ads i zapytania dla małych firm`;
+const fullTitle = title
+  ? `${title} | ${site.brandName}`
+  : `${site.brandName} – strony, Google Ads i widoczność w AI dla małych firm`;
 const canonical = new URL(Astro.url.pathname, site.url).href;
 
 const jsonLd = {
@@ -35,30 +40,36 @@ const jsonLd = {
       name: site.brandName,
       url: site.url,
       founder: { '@id': `${site.url}/#person` },
-      areaServed: ['Trójmiasto', 'Gdańsk', 'Gdynia', 'Gliwice', 'Śląsk'],
+      areaServed: ['Trójmiasto', 'Gdańsk', 'Gdynia', 'Gliwice', 'Śląsk', 'Polska'],
     },
+    ...extraLd,
   ],
 };
 ---
+
 <!doctype html>
 <html lang="pl">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <title>{fullTitle}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
-    <meta name="theme-color" content="#faf7f1" />
+    <meta name="theme-color" content="#06070b" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="pl_PL" />
     <meta property="og:title" content={fullTitle} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
-    <meta property="og:image" content={new URL('/media/seedpaper-desktop.webp', site.url).href} />
+    <meta property="og:image" content={new URL('/media/gibmeble-desktop.webp', site.url).href} />
+    <script is:inline>
+      document.documentElement.classList.add('js');
+    </script>
     <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
   </head>
   <body>
+    <div class="aurora" aria-hidden="true"><span></span><span></span><span></span></div>
     <a class="skip" href="#tresc">Przejdź do treści</a>
     <Header />
     <main id="tresc">
@@ -66,35 +77,64 @@ const jsonLd = {
     </main>
     <Footer />
     <script>
-      // Nagrania startują dopiero, gdy są widoczne, i zatrzymują się poza ekranem.
       const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      // Nagrania startują dopiero, gdy są widoczne, i zatrzymują się poza ekranem.
       const videos = document.querySelectorAll<HTMLVideoElement>('video[data-autoplay]');
       if (reduce) {
         videos.forEach((v) => (v.controls = true));
-      } else if ('IntersectionObserver' in window) {
-        const io = new IntersectionObserver(
+      } else {
+        const vio = new IntersectionObserver(
           (entries) => {
             for (const e of entries) {
               const v = e.target as HTMLVideoElement;
               if (e.isIntersecting) {
                 if (v.preload === 'none') v.preload = 'auto';
                 v.play().catch(() => {});
-              } else {
-                v.pause();
-              }
+              } else v.pause();
             }
           },
-          { threshold: 0.35 },
+          { threshold: 0.3 },
         );
-        videos.forEach((v) => io.observe(v));
+        videos.forEach((v) => vio.observe(v));
+      }
+
+      // Sekcje wjeżdżają przy przewijaniu.
+      const rio = new IntersectionObserver(
+        (entries) => {
+          for (const e of entries)
+            if (e.isIntersecting) {
+              e.target.classList.add('in');
+              rio.unobserve(e.target);
+            }
+        },
+        { rootMargin: '0px 0px -8% 0px' },
+      );
+      document.querySelectorAll('.reveal').forEach((el) => rio.observe(el));
+
+      // Odblask na szkle podąża za kursorem (tylko mysz, nie dotyk).
+      if (!reduce && matchMedia('(pointer: fine)').matches) {
+        document.addEventListener(
+          'pointermove',
+          (ev) => {
+            const el = (ev.target as Element).closest<HTMLElement>('.glass');
+            if (!el) return;
+            const r = el.getBoundingClientRect();
+            el.style.setProperty('--mx', `${ev.clientX - r.left}px`);
+            el.style.setProperty('--my', `${ev.clientY - r.top}px`);
+          },
+          { passive: true },
+        );
       }
     </script>
-    {site.cfAnalyticsToken && (
-      <script
-        defer
-        src="https://static.cloudflareinsights.com/beacon.min.js"
-        data-cf-beacon={JSON.stringify({ token: site.cfAnalyticsToken })}
-      />
-    )}
+    {
+      site.cfAnalyticsToken && (
+        <script
+          defer
+          src="https://static.cloudflareinsights.com/beacon.min.js"
+          data-cf-beacon={JSON.stringify({ token: site.cfAnalyticsToken })}
+        />
+      )
+    }
   </body>
 </html>

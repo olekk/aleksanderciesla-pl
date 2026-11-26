@@ -1,5 +1,5 @@
 ---
-// Nagranie strony: wersja komputerowa w ramce przeglądarki + wersja na telefon obok.
+// Nagranie strony: wersja komputerowa w szklanej ramce przeglądarki + wersja na telefon obok.
 interface Props {
   video: string;
   label: string;
@@ -9,8 +9,9 @@ interface Props {
 const { video, label, url, mobile = true } = Astro.props;
 const host = url ? new URL(url).host : label;
 ---
+
 <figure class="showcase" class:list={[{ 'no-phone': !mobile }]}>
-  <div class="browser">
+  <div class="browser glass">
     <div class="chrome" aria-hidden="true">
       <span></span><span></span><span></span>
       <em>{host}</em>
@@ -29,45 +30,112 @@ const host = url ? new URL(url).host : label;
       <source src={`/media/${video}-desktop.mp4`} type="video/mp4" />
     </video>
   </div>
-  {mobile && (
-    <div class="phone">
-      <video
-        data-autoplay
-        muted
-        loop
-        playsinline
-        preload="none"
-        width="520"
-        height="886"
-        poster={`/media/${video}-mobile.webp`}
-        aria-label={`Nagranie strony ${label} na telefonie`}
-      >
-        <source src={`/media/${video}-mobile.mp4`} type="video/mp4" />
-      </video>
-    </div>
-  )}
+  {
+    mobile && (
+      <div class="phone">
+        <video
+          data-autoplay
+          muted
+          loop
+          playsinline
+          preload="none"
+          width="520"
+          height="886"
+          poster={`/media/${video}-mobile.webp`}
+          aria-label={`Nagranie strony ${label} na telefonie`}
+        >
+          <source src={`/media/${video}-mobile.mp4`} type="video/mp4" />
+        </video>
+      </div>
+    )
+  }
 </figure>
 
 <style>
-  .showcase { position: relative; margin: 0; padding-right: 13%; padding-bottom: 6%; }
-  .showcase.no-phone { padding: 0; }
+  .showcase {
+    position: relative;
+    margin: 0;
+    padding-right: 12%;
+    padding-bottom: 7%;
+  }
+  .showcase.no-phone {
+    padding: 0;
+  }
   .browser {
-    border-radius: 12px; overflow: hidden; background: #fff;
-    border: 1px solid var(--line); box-shadow: var(--shadow);
+    padding: 0 6px 6px;
+    border-radius: 18px;
   }
-  .chrome { display: flex; align-items: center; gap: 6px; padding: 8px 12px; background: #efebe3; border-bottom: 1px solid var(--line); }
-  .chrome span { width: 9px; height: 9px; border-radius: 50%; background: #d4cdbf; }
+  .chrome {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 10px 8px;
+  }
+  .chrome span {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: rgb(255 255 255 / 22%);
+  }
   .chrome em {
-    font-style: normal; font-size: 0.72rem; color: var(--ink-3); margin-left: 10px;
-    background: #fff; border-radius: 6px; padding: 2px 10px; flex: 1; max-width: 60%;
-    overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+    font-style: normal;
+    font-size: 0.72rem;
+    color: var(--text-3);
+    margin: 0 auto;
+    background: rgb(255 255 255 / 7%);
+    border-radius: 8px;
+    padding: 3px 14px;
+    max-width: 55%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
-  .browser video { width: 100%; height: auto; aspect-ratio: 16 / 10; object-fit: cover; object-position: top; background: #eee; }
+  .browser video {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16 / 10;
+    object-fit: cover;
+    object-position: top;
+    border-radius: 12px;
+    background: #111;
+  }
   .phone {
-    position: absolute; right: 0; bottom: 0; width: 24%;
-    border: 5px solid #1d1c1a; border-radius: 22px; overflow: hidden; background: #1d1c1a;
-    box-shadow: 0 12px 30px rgb(0 0 0 / 22%);
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: 24%;
+    padding: 5px;
+    border-radius: 26px;
+    background: linear-gradient(160deg, rgb(255 255 255 / 35%), rgb(255 255 255 / 8%) 40%, rgb(255 255 255 / 18%));
+    -webkit-backdrop-filter: var(--blur);
+    backdrop-filter: var(--blur);
+    box-shadow:
+      inset 0 1px 0 rgb(255 255 255 / 40%),
+      0 24px 50px rgb(0 0 0 / 55%);
   }
-  .phone video { width: 100%; height: auto; aspect-ratio: 390 / 664; object-fit: cover; object-position: top; border-radius: 16px; background: #eee; }
-  @media (max-width: 560px) { .phone { border-width: 3px; border-radius: 14px; } .phone video { border-radius: 10px; } }
+  .phone video {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 390 / 664;
+    object-fit: cover;
+    object-position: top;
+    border-radius: 21px;
+    background: #111;
+  }
+  @media (max-width: 560px) {
+    .phone {
+      padding: 3px;
+      border-radius: 16px;
+    }
+    .phone video {
+      border-radius: 13px;
+    }
+    .browser {
+      border-radius: 14px;
+      padding: 0 4px 4px;
+    }
+    .chrome {
+      padding: 7px 6px;
+    }
+  }
 </style>

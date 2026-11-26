@@ -13,6 +13,7 @@
     "deploy:podglad": "npm run build && wrangler deploy --env podglad"
   },
   "dependencies": {
+    "@fontsource-variable/inter": "^5.2.8",
     "astro": "7.4.10"
   },
   "devDependencies": {

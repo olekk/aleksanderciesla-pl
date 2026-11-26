@@ -28,8 +28,8 @@ export const site = {
   prices: {
     net: true,
     website: 'od 3 000 zł',
-    marketing: '2 000 - 2 500 zł / mies.',
-    adBudget: 'zwykle od ok. 600 zł / mies.',
+    marketing: '2 500 zł / mies.',
+    adBudget: 'od ok. 300 zł / mies.',
     // TODO(Olek): kwota za porządek z zapytaniami (CRM). Puste = "wycena po rozmowie".
     crm: '',
   },

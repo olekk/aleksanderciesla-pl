@@ -5,36 +5,42 @@ import Contact from '../components/Contact.astro';
 import { featured } from '../data/projects';
 const hc = featured[1];
 ---
+
 <Base
-  title="HC INSTAL - strona i marketing własnej firmy"
-  description="HC INSTAL to rodzinna firma elektryczna ze Śląska, w której jestem w zarządzie. Strona hcinstal.pl i marketing robię sam."
+  title="HC INSTAL – strona i marketing"
+  description="Strona hcinstal.pl dla firmy elektrycznej ze Śląska: automatyka budynkowa Loxone, instalacje i pomiary elektryczne."
 >
   <section class="hero">
     <div class="wrap">
-      <p class="eyebrow"><a href="/#przyklady">Przykłady</a> · Własna firma</p>
-      <h1>HC INSTAL: robię to też dla własnej firmy</h1>
+      <p class="eyebrow"><a href="/#realizacje">Realizacje</a> · HC INSTAL</p>
+      <h1>HC INSTAL: <span class="grad">inteligentny dom</span> pokazany prosto</h1>
       <p class="lead narrow">
-        HC INSTAL to rodzinna firma elektryczna ze Śląska: pomiary elektryczne, instalacje i automatyka budynkowa.
-        Prezesem jest mój tata, ja jestem w zarządzie. Stronę i marketing robię sam.
+        HC INSTAL to firma elektryczna ze Śląska: automatyka budynkowa Loxone, instalacje i pomiary elektryczne. Zrobiłem
+        stronę i prowadzę marketing.
       </p>
       <div class="media"><Showcase video={hc.video} label={hc.name} url={hc.url} /></div>
       <p class="muted small">Strona na żywo: <a href={hc.url} rel="noopener" target="_blank">hcinstal.pl</a></p>
     </div>
   </section>
 
-  <section class="band">
-    <div class="wrap narrow">
-      <h2>Dlaczego to pokazuję</h2>
-      <p>
-        To nie jest klient z zewnątrz i nie udaję, że jest. Pokazuję go, bo tu za reklamy i za każdą godzinę płacę
-        z własnej kieszeni. Rozwiązania, które sprawdzam u siebie, potem proponuję klientom.
-      </p>
-      <ul class="check">
-        <li>Strona o automatyce budynkowej (Loxone) i usługach elektrycznych.</li>
-        <li>Wersja na telefon z szybkim kontaktem.</li>
-        <li>Kilka wersji językowych.</li>
-      </ul>
-      <p class="muted">Liczby z kampanii HC INSTAL dopiszę, kiedy zbiorę pełny okres danych.</p>
+  <section>
+    <div class="wrap grid grid-2">
+      <div class="glass card reveal">
+        <h2 class="h3">Zadanie</h2>
+        <p>
+          Automatyka budynkowa to temat, który łatwo przegadać technicznym językiem. Strona miała pokazać inwestorowi w kilka
+          sekund, co zyskuje: wygodę, prywatność i niższe rachunki za energię.
+        </p>
+      </div>
+      <div class="glass card reveal">
+        <h2 class="h3">Co zrobiłem</h2>
+        <ul class="check">
+          <li>Stronę z korzyściami na pierwszym ekranie i wyraźnym kontaktem</li>
+          <li>Dopracowaną wersję na telefon</li>
+          <li>Kilka wersji językowych</li>
+          <li>Kampanie i widoczność w Google</li>
+        </ul>
+      </div>
     </div>
   </section>
 
@@ -42,7 +48,16 @@ const hc = featured[1];
 </Base>
 
 <style>
-  .hero { padding-top: clamp(40px, 7vw, 80px); }
-  .media { margin: 36px 0 12px; }
-  .eyebrow a { color: inherit; }
+  .hero {
+    padding-top: clamp(48px, 7vw, 96px);
+  }
+  .media {
+    margin: 40px 0 12px;
+  }
+  .eyebrow a {
+    color: inherit;
+  }
+  .h3 {
+    font-size: 1.5rem;
+  }
 </style>

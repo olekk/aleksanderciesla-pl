@@ -30,7 +30,7 @@ export const featured: Project[] = [
     name: 'Art Papier (seedpaper.pl)',
     url: 'https://seedpaper.pl',
     video: 'seedpaper',
-    tagline: 'Czerpalnia papieru z nasionami spod Gliwic. Strona, sklep, Google Ads i porządek z zapytaniami.',
+    tagline: 'Czerpalnia papieru z nasionami spod Gliwic. Nowa strona, sklep B2B, Google Ads, widoczność w AI i system, w którym żadne zapytanie nie ginie.',
     stats: [
       { value: '75,80 → 33,29 zł', label: 'koszt zapytania z Google Ads w 2 tygodnie' },
       { value: '15 dni', label: 'od decyzji do działającego sklepu' },
@@ -43,7 +43,7 @@ export const featured: Project[] = [
     name: 'HC INSTAL (hcinstal.pl)',
     url: 'https://hcinstal.pl',
     video: 'hcinstal',
-    tagline: 'Rodzinna firma elektryczna, w której jestem w zarządzie. Strona o automatyce budynkowej i pomiarach.',
+    tagline: 'Firma elektryczna ze Śląska: automatyka budynkowa Loxone, instalacje i pomiary. Strona z ofertą inteligentnego domu i szybkim kontaktem.',
     page: '/hc-instal/',
   },
 ];
