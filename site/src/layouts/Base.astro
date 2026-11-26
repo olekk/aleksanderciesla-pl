@@ -158,12 +158,10 @@ const jsonLd = {
           rio.observe(el);
         });
 
-      // "Bezwładne" przewijanie (na prośbę Olka 26.11.2026): przy przewijaniu sekcje lekko wyprzedzają stronę,
-      // a po zahamowaniu wracają na miejsce jednym płynnym ruchem (sprężyna prawie krytycznie tłumiona, bez
-      // drgań). Sekcje dalej w kierunku ruchu zostają odrobinę bardziej, więc odstępy tylko się rozciągają:
-      // przesunięcia rosną monotonicznie od góry do dołu i sekcje nigdy na siebie nie nachodzą.
-      // Przewinięcie kółkiem za górę / dół strony rozciąga całość.
-      // Tylko transformy (bez zmian układu), wyłączone przy prefers-reduced-motion.
+      // "Elastyczne" przewijanie (pierwsza wersja, przywrócona na prośbę Olka 26.11.2026): przy szybkim przewijaniu
+      // odstępy między sekcjami lekko się rozciągają, po zatrzymaniu wracają ze sprężynowaniem; przewinięcie za
+      // górę / dół strony rozciąga całość. Przesunięcia rosną monotonicznie od góry do dołu, więc sekcje nigdy na
+      // siebie nie nachodzą. Tylko transformy (bez zmian układu), wyłączone przy prefers-reduced-motion.
       const layer = document.querySelector<HTMLElement>('.aurora-layer');
       // Tło jedzie w tę samą stronę co treść, ale dużo wolniej: tak, żeby warstwa (300vh) starczyła do końca strony,
       // najwyżej 0,15 prędkości treści.
@@ -175,11 +173,10 @@ const jsonLd = {
       fitParallax();
       const items = Array.from(document.querySelectorAll<HTMLElement>('main > *, body > footer'));
       if (!reduce && items.length) {
-        const K = 1.1; // jak bardzo sekcje zostają w tyle przy danej prędkości
-        const SPREAD = 0.25; // o ile bardziej zostają sekcje dalej w kierunku ruchu
-        const MAX = 70; // maks. przesunięcie sekcji w px
-        const STIFF = 0.07; // sztywność sprężyny
-        const DAMP = 0.6; // tłumienie: przy 0.07 / 0.6 brak przestrzelenia, dojazd ok. 0,5 s
+        const K = 1.4; // siła rozciągania od prędkości
+        const MAX = 90; // maks. przesunięcie sekcji w px
+        const STIFF = 0.085; // sztywność sprężyny
+        const DAMP = 0.8; // tłumienie: lekkie sprężynowanie po zatrzymaniu
         const n = items.length;
         let centers: number[] = [];
         const x = new Float64Array(n);
@@ -210,8 +207,7 @@ const jsonLd = {
           let moving = Math.abs(speed) > 0.05 || pull !== 0;
           for (let i = 0; i < n; i++) {
             const d = Math.max(-2, Math.min(2, (centers[i] - mid) / vh));
-            // Minus: sekcje wyprzedzają ruch (bezwładność), a po zahamowaniu cofają się na miejsce (na prośbę Olka 26.11.2026).
-            let target = Math.max(-MAX, Math.min(MAX, -speed * K + Math.abs(speed) * K * SPREAD * d));
+            let target = Math.max(-MAX, Math.min(MAX, speed * K * d));
             if (pull > 0) target += pull * (0.35 + 0.18 * i);
             else if (pull < 0) target += pull * (0.35 + 0.18 * (n - 1 - i));
             vel[i] = (vel[i] + (target - x[i]) * STIFF) * DAMP;

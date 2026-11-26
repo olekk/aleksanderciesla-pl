@@ -54,7 +54,7 @@ Ostatnia aktualizacja: 26.11.2026, runda 3 (elastyczne przewijanie, logotypy, ko
 ## 0d. Runda 4 – 26.11.2026
 
 - Źródło: wiadomości Olka z 26.11.2026, 02:42 (poprawki i wynik Lighthouse z workers.dev: 77 / 100 / 100 / 69).
-- Przewijanie: sekcje zostają lekko w tyle i dojeżdżają po zahamowaniu sprężyną bez przestrzelenia (`STIFF` 0.07, `DAMP` 0.6 w `Base.astro`).
+- Przewijanie: próbowane dwie spokojniejsze wersje (bez odbicia; odwrócony kierunek), na prośbę Olka (26.11.2026, 03:22) przywrócona pierwsza wersja z rundy 3 (K 1.4, MAX 90, sprężyna 0.085 / 0.8).
 - Wykres w hero: poglądowy (linie nie są danymi dziennymi), czerwony koszt zapytania w dół, zielona liczba zapytań w górę; liczby obok z eksportu.
 - Lighthouse (lokalnie, Lighthouse 12, telefon i komputer): wszystkie strony 100 / 100 / 100 / 100, strona główna na telefonie 99 (LCP 2,2 s przez font przy symulowanym wolnym łączu). Poprawki: CLS 0,594 → 0 (poświaty tła zmieniały pozycję przy zmianie wysokości warstwy; logotypy bez wymiarów), Inter z `public/fonts/` z preloadem (polskie litery wydzielone, 5 KB zamiast 85 KB), logotypy WebP w 2× rozmiarze, plakaty nagrań ładowane blisko ekranu i mniejsze na telefonie, cache dla `/fonts/`, `/logos/`, `/img/`, płynne przewijanie do kotwic dopiero po załadowaniu (z nim Chrome nie mierzył LCP dla adresu z `#realizacje`), opis linku w nagłówku.
 - SEO 69 na workers.dev to celowy `noindex` podglądu; na domenie znika.
