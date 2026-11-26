@@ -6,6 +6,10 @@ import Icon from '../components/Icon.astro';
 import { site, priceSuffix } from '../config/site';
 import { featured, agencySites, quotes } from '../data/projects';
 
+// Szkice opinii (draft: true) nie trafiają na stronę, dopóki klienci nie zaakceptują prawdziwych słów
+// (decyzja przed indeksowaniem, 26.11.2026). Sekcja wraca sama, gdy jest choć jedna prawdziwa opinia.
+const shownQuotes = quotes.filter((q) => !q.draft);
+
 const artPapier = featured[0];
 const hc = featured[1];
 const p = site.prices;
@@ -511,7 +515,7 @@ const faqLd = {
 
   <!-- REFERENCJE -->
   {
-    quotes.length > 0 && (
+    shownQuotes.length > 0 && (
       <section data-flow>
         <div class="wrap">
           <div class="reveal narrow">
@@ -519,7 +523,7 @@ const faqLd = {
             <h2>Co mówią klienci</h2>
           </div>
           <div class="grid grid-2 quotes">
-            {quotes.map((q) => (
+            {shownQuotes.map((q) => (
               <blockquote class="quote glass reveal">
                 {q.draft && <span class="draft">przykład, do podmiany</span>}
                 <p>„{q.text}”</p>
