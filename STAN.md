@@ -60,4 +60,5 @@ Ostatnia aktualizacja: 26.11.2026, runda 3 (elastyczne przewijanie, logotypy, ko
 - SEO 69 na workers.dev to celowy `noindex` podglądu; na domenie znika.
 - Domena: `routes` z `custom_domain` dla apex i www w `wrangler.jsonc` (Olek dodał domenę do Cloudflare 26.11.2026).
 - Menu u góry: efekt soczewki (filtr SVG `feDisplacementMap` w `backdrop-filter`, mapa rysowana w `Header.astro`), na prośbę Olka 26.11.2026. Tylko przeglądarki na Chromium; Safari i Firefox nie wspierają filtrów SVG w `backdrop-filter`, tam zostaje rozmycie.
+- Obrazek podglądu linku `public/og.jpg` (1200×630, zdjęcie + hasło), szablon `site/scripts/og.html`; wcześniej podgląd brał zrzut GiB Meble. Przycisk w menu w jednej linii na telefonie, większe logo Art Papier (na prośbę Olka 26.11.2026).
 - Decyzje Claude (do korekty): w tytule strony „MŚP” zamiast pełnej nazwy (długość tytułu w Google); zdjęcie też w nagłówku zamiast monogramu „AC”.
