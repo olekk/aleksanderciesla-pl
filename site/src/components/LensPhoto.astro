@@ -1,0 +1,187 @@
+---
+// TEST (na prośbę Olka 27.11.2026): szklana soczewka WebGL nad zdjęciem, na podstawie shadera, który przysłał.
+// Wyłączenie: `experiments.lensPhoto: false` w config/site.ts (wtedy zostaje zwykłe zdjęcie).
+// Dlaczego tak, a nie nad całą stroną: shader wygina tylko obraz, który dostanie jako teksturę. Tekstu i kart
+// strony nie widzi, więc działa na zdjęciu. Rysuje tylko, gdy zdjęcie jest na ekranie, a soczewka się rusza.
+interface Props {
+  src: string;
+  alt: string;
+  width: number;
+  height: number;
+}
+const { src, alt, width, height } = Astro.props;
+---
+
+<div class="lens-photo" data-src={src}>
+  <img src={src} alt={alt} width={width} height={height} loading="lazy" decoding="async" />
+  <canvas aria-hidden="true"></canvas>
+</div>
+
+<script>
+  const FRAG = `
+precision mediump float;
+uniform vec2 iResolution;
+uniform vec2 iMouse;
+uniform sampler2D iChannel0;
+void main() {
+  vec2 uv = gl_FragCoord.xy / iResolution.xy;
+  vec2 m2 = uv - iMouse / iResolution.xy;
+  float rb = pow(abs(m2.x * iResolution.x / iResolution.y), 6.0) + pow(abs(m2.y), 6.0);
+  float rb1 = clamp((1.0 - rb * 10000.0) * 8.0, 0.0, 1.0);
+  float rb2 = clamp((0.95 - rb * 9500.0) * 16.0, 0.0, 1.0) - clamp((0.9 - rb * 9500.0) * 16.0, 0.0, 1.0);
+  float rb3 = clamp((1.5 - rb * 11000.0) * 2.0, 0.0, 1.0) - clamp((1.0 - rb * 11000.0) * 2.0, 0.0, 1.0);
+  float t = smoothstep(0.0, 1.0, rb1 + rb2);
+  vec4 base = texture2D(iChannel0, uv);
+  if (t <= 0.0) { gl_FragColor = base; return; }
+  // Soczewka powiększa to, co jest pod nią (środek = pozycja soczewki), a nie środek zdjęcia jak w oryginale.
+  vec2 mc = iMouse / iResolution.xy;
+  vec2 lens = (uv - mc) * (1.0 - rb * 5000.0) + mc;
+  vec4 c = vec4(0.0);
+  for (float x = -4.0; x <= 4.0; x++)
+    for (float y = -4.0; y <= 4.0; y++)
+      c += texture2D(iChannel0, lens + vec2(x, y) * 0.5 / iResolution.xy);
+  c /= 81.0;
+  float g = clamp((clamp(m2.y, 0.0, 0.2) + 0.1) / 2.0, 0.0, 1.0) + clamp((clamp(-m2.y, -1000.0, 0.2) * rb3 + 0.1) / 2.0, 0.0, 1.0);
+  vec4 lit = clamp(c + vec4(rb1) * g + vec4(rb2) * 0.3, 0.0, 1.0);
+  gl_FragColor = mix(base, lit, t);
+}`;
+  const VERT = 'attribute vec2 p; void main() { gl_Position = vec4(p, 0.0, 1.0); }';
+
+  document.querySelectorAll<HTMLElement>('.lens-photo').forEach((box) => {
+    const canvas = box.querySelector('canvas')!;
+    const img = box.querySelector('img')!;
+    const gl = canvas.getContext('webgl', { premultipliedAlpha: false, antialias: false });
+    if (!gl) return; // bez WebGL zostaje zwykłe zdjęcie
+
+    const sh = (type: number, src: string) => {
+      const s = gl.createShader(type)!;
+      gl.shaderSource(s, src);
+      gl.compileShader(s);
+      return s;
+    };
+    const prog = gl.createProgram()!;
+    gl.attachShader(prog, sh(gl.VERTEX_SHADER, VERT));
+    gl.attachShader(prog, sh(gl.FRAGMENT_SHADER, FRAG));
+    gl.linkProgram(prog);
+    if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) return;
+    gl.useProgram(prog);
+    gl.bindBuffer(gl.ARRAY_BUFFER, gl.createBuffer());
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 1, -1, -1, 1, 1, 1]), gl.STATIC_DRAW);
+    const pLoc = gl.getAttribLocation(prog, 'p');
+    gl.enableVertexAttribArray(pLoc);
+    gl.vertexAttribPointer(pLoc, 2, gl.FLOAT, false, 0, 0);
+    const uRes = gl.getUniformLocation(prog, 'iResolution');
+    const uMouse = gl.getUniformLocation(prog, 'iMouse');
+
+    let ready = false;
+    let visible = false;
+    let pointer: [number, number] | null = null; // pozycja kursora / palca w pikselach canvasu
+    let lastPointer = 0;
+    const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const t0 = performance.now();
+
+    const size = () => {
+      // Maks. 2× gęstości pikseli: ostre na Retinie, a shader liczy mniej punktów.
+      const dpr = Math.min(devicePixelRatio || 1, 2);
+      canvas.width = Math.round(box.clientWidth * dpr);
+      canvas.height = Math.round(box.clientHeight * dpr);
+    };
+
+    const draw = (now: number) => {
+      let mx: number;
+      let my: number;
+      if (pointer && now - lastPointer < 2500) [mx, my] = pointer;
+      else {
+        // Bez kursora soczewka powoli krąży po zdjęciu (przy reduced motion stoi na środku).
+        const t = reduce ? 0 : (now - t0) / 1000;
+        mx = canvas.width * (0.5 + 0.22 * Math.sin(t * 0.5));
+        my = canvas.height * (0.5 + 0.18 * Math.sin(t * 0.37 + 1));
+      }
+      gl.viewport(0, 0, canvas.width, canvas.height);
+      gl.uniform2f(uRes, canvas.width, canvas.height);
+      gl.uniform2f(uMouse, mx, my);
+      gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+    };
+
+    let raf = 0;
+    const loop = (now: number) => {
+      raf = 0;
+      if (!ready || !visible) return;
+      draw(now);
+      if (!reduce || (pointer && now - lastPointer < 2500)) raf = requestAnimationFrame(loop);
+    };
+    const kick = () => (raf ||= requestAnimationFrame(loop));
+
+    const start = () => {
+      const tex = gl.createTexture();
+      gl.bindTexture(gl.TEXTURE_2D, tex);
+      gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true); // WebGL liczy od dołu, obrazek od góry
+      gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, img);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+      size();
+      ready = true;
+      box.classList.add('on');
+      kick();
+    };
+
+    const onPointer = (e: PointerEvent) => {
+      const r = canvas.getBoundingClientRect();
+      pointer = [((e.clientX - r.left) / r.width) * canvas.width, ((r.bottom - e.clientY) / r.height) * canvas.height];
+      lastPointer = performance.now();
+      kick();
+    };
+    box.addEventListener('pointermove', onPointer);
+    box.addEventListener('pointerdown', onPointer);
+
+    new ResizeObserver(() => ready && (size(), kick())).observe(box);
+    // Ładujemy i rysujemy dopiero blisko ekranu; poza ekranem pętla stoi (zero pracy GPU).
+    new IntersectionObserver(
+      ([e]) => {
+        visible = e.isIntersecting;
+        if (!visible) return;
+        if (!ready) {
+          if (img.complete && img.naturalWidth) start();
+          else img.addEventListener('load', start, { once: true });
+        } else kick();
+      },
+      { rootMargin: '100px' },
+    ).observe(box);
+  });
+</script>
+
+<style>
+  .lens-photo {
+    position: relative;
+    width: min(100%, 360px);
+    aspect-ratio: 1;
+    border-radius: 36px;
+    overflow: hidden;
+    box-shadow:
+      inset 0 1px 0 rgb(255 255 255 / 30%),
+      0 30px 60px rgb(0 0 0 / 50%);
+    touch-action: pan-y;
+  }
+  .lens-photo img,
+  .lens-photo canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .lens-photo canvas {
+    opacity: 0;
+    transition: opacity 0.4s;
+  }
+  .lens-photo.on canvas {
+    opacity: 1;
+  }
+  @media (max-width: 899px) {
+    .lens-photo {
+      width: 160px;
+      border-radius: 28px;
+    }
+  }
+</style>

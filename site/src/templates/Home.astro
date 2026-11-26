@@ -6,6 +6,7 @@ import Showcase from '../components/Showcase.astro';
 import Contact from '../components/Contact.astro';
 import Icon from '../components/Icon.astro';
 import LangSwitch from '../components/LangSwitch.astro';
+import LensPhoto from '../components/LensPhoto.astro';
 import { site, prices } from '../config/site';
 import { featured, agencySites, quotes } from '../data/projects';
 import { type Lang, tr, href } from '../i18n';
@@ -801,7 +802,9 @@ const faqLd = {
     <div class="wrap about">
       <div class="portrait reveal">
         {
-          site.photo ? (
+          site.photo && site.experiments.lensPhoto ? (
+            <LensPhoto src={site.photo} alt={T(`${site.personName}, uśmiechnięty, na tle jeziora o zachodzie słońca`, `${site.personName}, smiling, by a lake at sunset`)} width={720} height={720} />
+          ) : site.photo ? (
             <img src={site.photo} alt={T(`${site.personName}, uśmiechnięty, na tle jeziora o zachodzie słońca`, `${site.personName}, smiling, by a lake at sunset`)} width="720" height="720" loading="lazy" decoding="async" />
           ) : (
             <div class="portrait-ph" aria-hidden="true">

@@ -42,6 +42,12 @@ export const site = {
   // Ilu firm naraz pilnuję (sekcja „Maksymalnie 3 firmy”).
   maxClients: 3,
 
+  // Eksperymenty, łatwe do cofnięcia: false = wyłączone.
+  experiments: {
+    // Szklana soczewka WebGL nad zdjęciem w „O mnie” (test na prośbę Olka 27.11.2026).
+    lensPhoto: true,
+  },
+
   // TODO(Olek): token Cloudflare Web Analytics (bez ciasteczek). Puste = brak skryptu.
   cfAnalyticsToken: '',
 } as const;
