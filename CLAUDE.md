@@ -452,5 +452,5 @@ Skrypty przenosić i dostosowywać (domena, prefiks ciasteczka, ID tagów, nazwy
 - Strony z agencji: zawsze dopisek „projekt graficzny: agencja, wdrożenie: ja”.
 - Bez „bez umowy na rok”; własność konta, domeny i strony wspominamy raz (FAQ). Lokalizacja tylko raz: spotkanie osobiście, jeśli Trójmiasto albo Śląsk (na prośbę Olka 26.11.2026).
 - Maks. 3 firmy naraz, cena marketingu tłumaczona czasem pracy (`marketingTime` w `site.ts`); strona „3 000 zł” bez „od”, hosting 0 zł wyraźnie (na prośbę Olka 26.11.2026).
-- Referencje-szkice tylko z `draft: true` (plakietka „przykład, do podmiany”); przed startem domeny zastąpić prawdziwymi.
+- Referencje: 3 opinie (Flawiusz Pietrzyk, Henryk C., Monika M.) napisane na podstawie opisu współpracy od Olka, zgoda osób potwierdzona przez Olka 26.11.2026. Nowa opinia tylko za zgodą osoby; `draft: true` ukrywa wpis.
 - Elastyczne przewijanie i paralaksa tła w `Base.astro` (tylko transformy, monotoniczne przesunięcia, wyłączone przy reduced motion).

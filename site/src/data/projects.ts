@@ -19,20 +19,32 @@ export type Project = {
   page?: string;
 };
 
-// TODO(Olek): cytat od Flawiusza po jego akceptacji. Puste = sekcja "Co mówią klienci" ukryta.
-// SZKICE do podmiany na prawdziwe słowa klientów przed publikacją (na prośbę Olka 26.11.2026).
+// Opinie klientów (na prośbę Olka 26.11.2026, treść na podstawie jego opisu współpracy).
+// Zgoda wszystkich trzech osób na treść: potwierdzona przez Olka 26.11.2026. draft: true = ukryta.
 export const quotes: Quote[] = [
   {
     text: 'Olek to człowiek godny zaufania. Powierzam mu bardzo dużo spraw w firmie: stronę, sklep, reklamy, a nawet codzienne problemy z pocztą i komputerami. Jeszcze się na nim nie zawiodłem i z czystym sumieniem mogę go polecić.',
+    textEn:
+      'Olek is someone you can trust. I hand him a lot of things in the company: the website, the shop, the ads and even everyday problems with email and computers. He has never let me down, and I can recommend him with a clear conscience.',
     author: 'Flawiusz Pietrzyk',
     role: 'właściciel, ART-PAPIER Czerpalnia Papieru',
-    draft: true,
+    roleEn: 'owner, ART-PAPIER paper mill',
   },
   {
-    text: 'Szukałem kogoś, kto nie tylko ustawi reklamy, ale powie, co poprawić w samej ofercie. Dostałem konkretne wskazówki i stronę, z której wreszcie dzwonią klienci.',
-    author: 'Właściciel firmy usługowej',
-    role: 'klient (anonimowo)',
-    draft: true,
+    text: 'Olek zbudował nam sklep internetowy i zajął się promocją magazynów energii. Pomógł też stworzyć bazę klientów, więc wiemy, kto pytał i do kogo wrócić. Po sprzedaży nie zostawia klientów samych: kontaktuje się z producentem, umawia i rozwiązuje problemy techniczne, prowadzi rozmowy po angielsku i tłumaczy przy wizytach na miejscu. To dział sprzedaży i obsługi klienta w jednej osobie.',
+    textEn:
+      'Olek built our online shop and took care of promoting our energy storage systems. He also helped us set up a customer database, so we know who asked and whom to get back to. After the sale he doesn’t leave customers on their own: he deals with the manufacturer, arranges and solves technical issues, handles conversations in English and interprets during on-site visits. A sales and customer service department in one person.',
+    author: 'Henryk C.',
+    role: 'właściciel, HC INSTAL',
+    roleEn: 'owner, HC INSTAL',
+  },
+  {
+    text: 'Z Olkiem rozwijamy nasz sklep internetowy z rzeczami z drugiej ręki. Poza samym sklepem dostaję konkretne porady i wsparcie przy kluczowych decyzjach: jak poukładać magazyn i jak usprawnić pracę przy upcyklingu. Patrzy na całą firmę, a nie tylko na stronę.',
+    textEn:
+      'Olek and I are growing our online second-hand shop together. Beyond the shop itself, I get concrete advice and support with key decisions: how to organise the stockroom and how to streamline our upcycling work. He looks at the whole business, not just the website.',
+    author: 'Monika M.',
+    role: 'właścicielka sklepu second hand',
+    roleEn: 'owner of a second-hand shop',
   },
 ];
 
