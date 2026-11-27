@@ -39,8 +39,8 @@ export const site = {
     crm: '',
   },
 
-  // Ilu firm naraz pilnuję (sekcja „Maksymalnie 3 firmy”).
-  maxClients: 3,
+  // Ilu firm naraz pilnuję (sekcja „Pracuję maksymalnie z N firmami”, FAQ).
+  maxClients: 4,
 
   // Eksperymenty, łatwe do cofnięcia: false = wyłączone.
   experiments: {

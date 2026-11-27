@@ -20,6 +20,7 @@ Ostatnia aktualizacja: 26.11.2026, runda 3 (elastyczne przewijanie, logotypy, ko
 
 ## Dziennik zmian
 
+- 27.11.2026 – Maks. 4 firmy naraz zamiast 3 (na prośbę Olka): `maxClients` w `site.ts`, FAQ liczy z tego pola.
 - 27.11.2026 – Prawdziwa opinia Flawiusza Pietrzyka (przesłana przez Olka) zamiast tekstu roboczego; odświeżony zrzut odbicia w menu.
 - 27.11.2026 – TEST na prośbę Olka: w menu na iPhonie, w Safari i Firefoksie przy górnej i dolnej krawędzi przewija się odbity w pionie zrzut strony (`public/img/odbicie-*.webp`, ok. 100 kB, ładowany po wczytaniu strony, tylko strona główna); wyłączenie `experiments.reflection: false`.
 - 27.11.2026 – Menu: rozmycie soczewki 3 → 2 px, w wersji dla Safari i Firefoksa 20 → 10 px (na prośbę Olka).
