@@ -23,9 +23,10 @@ export type Project = {
 // Zgoda wszystkich trzech osób na treść: potwierdzona przez Olka 26.11.2026. draft: true = ukryta.
 export const quotes: Quote[] = [
   {
-    text: 'Olek to człowiek godny zaufania. Powierzam mu bardzo dużo spraw w firmie: stronę, sklep, reklamy, a nawet codzienne problemy z pocztą i komputerami. Jeszcze się na nim nie zawiodłem i z czystym sumieniem mogę go polecić.',
+    // Prawdziwa opinia od Flawiusza (przesłana przez Olka 27.11.2026), słowo w słowo.
+    text: 'Profesjonalna firma zaangażowana w obsługę, odpowiadająca na potrzeby klienta. Strona, sklep internetowy, reklama, poczta czy konfiguracja hostingu – wszystko OK. Polecam.',
     textEn:
-      'Olek is someone you can trust. I hand him a lot of things in the company: the website, the shop, the ads and even everyday problems with email and computers. He has never let me down, and I can recommend him with a clear conscience.',
+      'A professional business, committed to service and responsive to the customer’s needs. Website, online shop, advertising, email and hosting setup – all OK. Recommended.',
     author: 'Flawiusz Pietrzyk',
     role: 'właściciel, ART-PAPIER Czerpalnia Papieru',
     roleEn: 'owner, ART-PAPIER paper mill',
